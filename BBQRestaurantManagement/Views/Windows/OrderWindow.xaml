@@ -11,7 +11,8 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"     
+        FontFamily="{DynamicResource MaterialDesignFont}"    
+        Name="orderWindow"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="OrderWindow" Height="700" Width="1200">
@@ -47,7 +48,8 @@
                             Height="50"
                             Margin="4"
                             BorderBrush="{DynamicResource PrimaryHueMidBrush}"
-                            IsChecked="True"
+                            Command="{Binding ShowMenuView}"
+                            IsChecked="{Binding StatusMenuView}"
                             Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Silverware" />
@@ -57,6 +59,8 @@
                         <RadioButton
                             Height="50"
                             Margin="4"
+                             Command="{Binding ShowTableEmptyView}"
+                            IsChecked="{Binding StatusTableEmptyView}"
                             BorderBrush="{DynamicResource PrimaryHueMidBrush}"
                             Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
                             <StackPanel Orientation="Horizontal">
@@ -76,7 +80,9 @@
                         </RadioButton>
                         <RadioButton
                             Height="50"
-                            Margin="4"                
+                            Margin="4"        
+                            Command="{Binding ShowCheckInOutView}"
+                            IsChecked="{Binding StatusCheckInOutView}"
                             BorderBrush="{DynamicResource PrimaryHueMidBrush}"
                             Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
                             <StackPanel Orientation="Horizontal">
@@ -141,6 +147,7 @@
                         <Button HorizontalAlignment="Right"  
                             Height="80"
                             Width="50"
+                            Command="{Binding ShowMenuView}"
                             Style="{StaticResource MaterialDesignIconButton}"                                     
                             BorderThickness="0">
                             <materialDesign:PackIcon Kind="Silverware" Foreground="White" />
@@ -149,13 +156,15 @@
                             Height="80"
                             Width="50"
                             Margin="0 50"
+                            Command="{Binding ShowTableEmptyView}"
                             Style="{StaticResource MaterialDesignIconButton}"                                                              
                             BorderThickness="0">
                             <materialDesign:PackIcon Kind="TableFurniture" Foreground="White" />
                         </Button>
                         <Button HorizontalAlignment="Right"          
                             Height="80"
-                            Width="50"                         
+                            Width="50"     
+                            Command="{Binding ShowCheckInOutView}"
                             Style="{StaticResource MaterialDesignIconButton}"                                                             
                             BorderThickness="0">
                             <materialDesign:PackIcon Kind="TimerCheck" Foreground="White" />
@@ -200,6 +209,7 @@
                             <ColumnDefinition Width="auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Button Content="Tính tiền"
+                                Command="{Binding ShowInvoiceView}"
                                 Background="#880e4f"
                                 BorderThickness="0"
                                 Grid.Column="0"
