@@ -70,10 +70,31 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="ViewModels\UserControls\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\Windows\OrderViewModel.cs" />
+    <Compile Include="Views\UserControls\CheckInOutUC.xaml.cs">
+      <DependentUpon>CheckInOutUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\MenuUC.xaml.cs">
+      <DependentUpon>MenuUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\TableEmptyUC.xaml.cs">
+      <DependentUpon>TableEmptyUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\OrderWindow.xaml.cs">
       <DependentUpon>OrderWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\UserControls\CheckInOutUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\InvoiceUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\MenuUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\TableEmptyUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
