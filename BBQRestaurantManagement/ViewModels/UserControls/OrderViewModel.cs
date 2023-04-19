@@ -1,24 +1,24 @@
 ﻿using BBQRestaurantManagement.ViewModels.Base;
-using System.Windows.Controls;
-using System.Windows.Data;
-using BBQRestaurantManagement.Views;
 using BBQRestaurantManagement.Views.UserControls;
-using System.Windows.Input;
-using System.CodeDom.Compiler;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Input;
 
-namespace BBQRestaurantManagement.ViewModels.Windows
+namespace BBQRestaurantManagement.ViewModels.UserControls
 {
     public class OrderViewModel : BaseViewModel
     {
-
         private MenuUC MenuView = new MenuUC();
         private InvoiceUC InvoiceView = new InvoiceUC();
         private TableEmptyUC TableEmptyView = new TableEmptyUC();
         private CheckInOutUC CheckInOutView = new CheckInOutUC();
 
-        private bool statusMenuView=false;
-        public bool StatusMenuView {get => statusMenuView; set { statusMenuView = value; OnPropertyChanged(); } }
+        private bool statusMenuView = false;
+        public bool StatusMenuView { get => statusMenuView; set { statusMenuView = value; OnPropertyChanged(); } }
 
         private bool statusInvoiceView = false;
         public bool StatusInvoiceView { get => statusInvoiceView; set { statusInvoiceView = value; OnPropertyChanged(); } }
@@ -31,13 +31,12 @@ namespace BBQRestaurantManagement.ViewModels.Windows
 
 
         private ContentControl currentChildView = new ContentControl();
-        public ContentControl CurrentChildView { get { return currentChildView; }  set { currentChildView = value; OnPropertyChanged(); } }
+        public ContentControl CurrentChildView { get { return currentChildView; } set { currentChildView = value; OnPropertyChanged(); } }
 
         public ICommand ShowMenuView { get; set; }
         public ICommand ShowInvoiceView { get; set; }
         public ICommand ShowTableEmptyView { get; set; }
-        public ICommand ShowCheckInOutView { get; set; } 
-
+        public ICommand ShowCheckInOutView { get; set; }
         public OrderViewModel()
         {
             SetCommand();
@@ -51,7 +50,6 @@ namespace BBQRestaurantManagement.ViewModels.Windows
             ShowTableEmptyView = new RelayCommand<object>(ExecuteShowTableEmptyView);
             ShowCheckInOutView = new RelayCommand<object>(ExecuteShowCheckInOutView);
         }
-
         private void ExecuteShowCheckInOutView(object obj)
         {
             CurrentChildView = CheckInOutView;

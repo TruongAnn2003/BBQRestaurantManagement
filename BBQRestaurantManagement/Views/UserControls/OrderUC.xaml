@@ -1,21 +1,20 @@
-﻿<Window x:Class="BBQRestaurantManagement.Views.Windows.OrderWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BBQRestaurantManagement.Views.Windows"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal"
-        TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"    
-        Name="orderWindow"
-        WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d"
-        Title="OrderWindow" Height="700" Width="1200">
+﻿<UserControl x:Class="BBQRestaurantManagement.Views.UserControls.OrderUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}" 
+             Name="orderUC"
+             mc:Ignorable="d" 
+             MinHeight="50" MinWidth="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -147,6 +146,7 @@
                         <Button HorizontalAlignment="Right"  
                             Height="80"
                             Width="50"
+                                Margin="0 50"
                             Command="{Binding ShowMenuView}"
                             Style="{StaticResource MaterialDesignIconButton}"                                     
                             BorderThickness="0">
@@ -155,7 +155,6 @@
                         <Button HorizontalAlignment="Right"          
                             Height="80"
                             Width="50"
-                            Margin="0 50"
                             Command="{Binding ShowTableEmptyView}"
                             Style="{StaticResource MaterialDesignIconButton}"                                                              
                             BorderThickness="0">
@@ -163,7 +162,8 @@
                         </Button>
                         <Button HorizontalAlignment="Right"          
                             Height="80"
-                            Width="50"     
+                            Width="50"
+                            Margin="0 50"                                
                             Command="{Binding ShowCheckInOutView}"
                             Style="{StaticResource MaterialDesignIconButton}"                                                             
                             BorderThickness="0">
@@ -200,7 +200,7 @@
                                VerticalAlignment="Center"></TextBlock>
                 </materialDesign:ColorZone>
                 <ListView  Grid.Row="1" Margin="5">
-                    
+
                 </ListView>
                 <Border Grid.Row="2"  BorderBrush="#880e4f"  BorderThickness="0.5">
                     <Grid>
@@ -223,9 +223,7 @@
                         </Button>
                     </Grid>
                 </Border>
-               
-
             </Grid>
         </Border>
     </Grid>
-</Window>
+</UserControl>
