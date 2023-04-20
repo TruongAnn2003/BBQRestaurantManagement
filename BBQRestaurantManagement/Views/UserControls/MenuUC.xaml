@@ -4,8 +4,53 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="White"
+            FontFamily="{DynamicResource MaterialDesignFont}" 
              mc:Ignorable="d" >
     <Grid>
-        <TextBlock Text="Menu nè" HorizontalAlignment="Center" VerticalAlignment="Center" ></TextBlock>
+        <TabControl  Style="{StaticResource MaterialDesignFilledTabControl}"
+                      materialDesign:ColorZoneAssist.Background="#b25476"
+                        TabStripPlacement="Left" >
+
+            <TabItem Height="100"
+                 Header="Foods">
+                <Border BorderBrush="Pink" BorderThickness="0.5">
+                    <TextBlock
+                      Margin="8"
+                      Text="đồ uống nè" />
+                </Border>
+                
+            </TabItem>
+            <TabItem Height="100"
+                Header="Drinks">
+                <Border BorderBrush="Pink" BorderThickness="0.5">
+                    <TextBlock
+                      Margin="8"
+                      Text="đồ uống nè" />
+                </Border>
+            </TabItem>
+            <TabItem Height="100"
+                Header="Buffet">
+                <Border BorderBrush="Pink" BorderThickness="0.5">
+                    <TextBlock
+                      Margin="8"
+                      Text="các dịch vụ ở đây" />
+                </Border>
+            </TabItem>
+            <TabItem Height="100"
+                Header="Services">
+                <Border BorderBrush="Pink" BorderThickness="0.5">
+                    <TextBlock
+                      Margin="8"
+                      Text="các dịch vụ ở đây" />
+                </Border>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

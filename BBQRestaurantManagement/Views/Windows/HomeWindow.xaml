@@ -11,11 +11,11 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-        FontFamily="{DynamicResource MaterialDesignFont}"    
+        FontFamily="{DynamicResource MaterialDesignFont}"   
         Name="homeWindow"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="HomeWindow" Height="750" Width="1200">
+        Height="750" Width="1200">
     <Border BorderBrush="#ad1457"  BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
@@ -28,18 +28,18 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <Button HorizontalAlignment="Right"  
-                        
+                    <Button HorizontalAlignment="Right"            
                         Margin="5"
                         Background="White"
                         Command="{Binding ShowHomeView}"
                         Style="{StaticResource MaterialDesignIconButton}"                                     
                         BorderThickness="0">
-                        <materialDesign:PackIcon Kind="Home" Foreground="#ad1457" />
+                        <Image Source="/Pictures/LogoBBQ.png"></Image>
                     </Button>
-                    <TextBlock Text="BBQ Restaurant"
+                    <TextBlock Text="Barbeque Restaurant"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
+                               FontFamily="Century Gothic"
                                Margin="10 0"
                                FontSize="20"
                                FontWeight="Bold"
