@@ -1,6 +1,8 @@
-﻿using BBQRestaurantManagement.ViewModels.Base;
+﻿using BBQRestaurantManagement.Services;
+using BBQRestaurantManagement.ViewModels.Base;
 using BBQRestaurantManagement.ViewModels.UserControls;
 using BBQRestaurantManagement.Views.UserControls;
+using MaterialDesignThemes.Wpf;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -73,7 +75,7 @@ namespace BBQRestaurantManagement.ViewModels.Windows
             VisibilityTabView = Visibility.Visible;
             CurrentChildView = HomeView;
             StatusReservationView = false;
-            StatusLoginView = false;
+            StatusLoginView = false;     
         }
 
         private void ExecuteShowReservationView(object obj)
