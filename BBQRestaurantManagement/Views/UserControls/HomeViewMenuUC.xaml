@@ -14,7 +14,95 @@
         FontFamily="{DynamicResource MaterialDesignFont}" 
              mc:Ignorable="d" 
              MinHeight="700" MinWidth="1200">
-    <Grid>
-        <TextBlock Text="Đây là Menu của nhà hàng nè" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+    <Grid Background="#342D23">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="461*"/>
+            <ColumnDefinition Width="139*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Margin ="30,30,30,30"
+              Background="#342D23" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Vertical"
+                        Background="#342D23">
+                <StackPanel>
+                    <Label Content="Cửa Hàng BBQ"
+                   FontSize="50"
+                   HorizontalAlignment="Center"
+                   FontFamily="Papyrus"
+                   Foreground="#C6A881"
+                   FontWeight="Bold"/>
+                    <Label Content="Nhóm 1 Nướng"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   FontFamily="Papyrus"
+                   Foreground="#C6A881"
+                   FontWeight="Bold"/>
+                </StackPanel>
+                <Grid Background="#342D23" Margin="0,10"
+                      Height="340">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="11*"/>
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Grid.ColumnSpan="2">
+                            <!-- Element in column 0 -->
+                            <Border Grid.Column="0" 
+                                        BorderBrush="#C6A881" 
+                                        BorderThickness="1" 
+                                        Margin="0" 
+                                        Height="50" Width="350" 
+                                        HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Label Grid.Column ="0" 
+                                                   Content="CÁC MÓN" 
+                                                   FontWeight="Bold" 
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                   FontSize="30" 
+                                                   Foreground="#C6A881" 
+                                                   Background="#342D23" 
+                                                   FontFamily="Times New Roman" >
+                                </Label>
+                            </Border>
+                            <Label Content="THỊT LỢN HẦM (20)" FontWeight="Bold" Margin="0,10,0,0" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                            <Label Content="Vai lợn xông khói trong 16 giờ" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                            <Label Content="THỊT GÀ HẦM (25)" FontWeight="Bold" Margin="0,10,0,0" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                            <Label Content="Một con gà thả vườn nhóm 1 nuôi" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                            <Label Content="ỨC BÒ THÁI (30)" FontWeight="Bold" Margin="0,10,0,0" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                            <Label Content="Một miếng thịt nướng kiểu Texas, tiêu đen xát lên bề mặt" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                            <Label Content="THỊT GÀ XÔNG KHÓI (23)" FontWeight="Bold" Margin="0,10,0,0" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                            <Label Content="Gà tây ướp trong 5 giờ và đem đi xông khói" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                        </StackPanel>
+
+                    </Grid>
+                    <StackPanel Grid.Column="1">
+                        <Border Grid.Column="1" BorderBrush="#C6A881" BorderThickness="1" Margin="0" Height="50" Width="350" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <Label Grid.Column ="1" Content="MÓN NƯỚNG" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman" ></Label>
+                        </Border>
+                        <Label Content="SƯỜN NƯỚNG (20)" FontWeight="Bold" Margin="0,10,0,0" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                        <Label Content="Một miếng sườn bò Kobe ướp tiêu xanh" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                        <Label Content="THỊT BÒ NƯỚNG TẢNG (25)" FontWeight="Bold" Margin="0,10,0,0" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                        <Label Content="Một miếng bò việt nam được nuôi từ trang trại Nhóm 1" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                        <Label Content="HẢI SẢN NƯỚNG (30)" FontWeight="Bold" Margin="0,10,0,0" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                        <Label Content="Nguồn hải sản tươi được nhập về mỗi ngày từ vùng biển Caribe" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                        <Label Content="SƯỜN HEO NƯỚNG (23)" FontWeight="Bold" Margin="0,10,0,0" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                        <Label Content="Heo được nuôi từ trang trại chất lượng cao" FontSize="20" Foreground="#C6A881" Background="#342D23" FontFamily="Times New Roman"></Label>
+                    </StackPanel>
+
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image Source="/Pictures/HomeView.jpg" Stretch="Fill" Height="100" Width="150" Margin="20"></Image>
+                    <Image Source="/Pictures/HomeView.jpg" Stretch="Fill" Height="100" Width="150" Margin="20"></Image>
+                    <Image Source="/Pictures/HomeView.jpg" Stretch="Fill" Height="100" Width="150" Margin="20"></Image>
+                    <Image Source="/Pictures/HomeView.jpg" Stretch="Fill" Height="100" Width="150" Margin="20"></Image>
+                    <Image Source="/Pictures/HomeView.jpg" Stretch="Fill" Height="100" Width="150" Margin="20"></Image>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
