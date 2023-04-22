@@ -4,9 +4,9 @@
 *.user
 *.psess
 *.vsp
-.vs/
-bin/
-obj/
+BBQRestaurantManagement/.vs/
+BBQRestaurantManagement/bin/
+BBQRestaurantManagement/obj/
 
 # Ignore Rider files
 .idea/
