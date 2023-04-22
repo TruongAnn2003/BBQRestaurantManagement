@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>BBQRestaurantManagement</RootNamespace>
     <AssemblyName>BBQRestaurantManagement</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -16,6 +16,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -66,16 +67,116 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Views\Windows\OrderWindow.xaml.cs">
-      <DependentUpon>OrderWindow.xaml</DependentUpon>
+    <Compile Include="Database\CustomerDAO.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Services\AlertDialogService.cs" />
+    <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\InvoiceViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\OrderViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ReservationViewModel.cs" />
+    <Compile Include="ViewModels\Windows\HomeViewModel.cs" />
+    <Compile Include="Views\Dialogs\AlertDialog.xaml.cs">
+      <DependentUpon>AlertDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\BookingBufferTicketUC.xaml.cs">
+      <DependentUpon>BookingBufferTicketUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\BookingServicesUC.xaml.cs">
+      <DependentUpon>BookingServicesUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\BookingTableUC.xaml.cs">
+      <DependentUpon>BookingTableUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\CheckInOutUC.xaml.cs">
+      <DependentUpon>CheckInOutUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\HomeViewMenuUC.xaml.cs">
+      <DependentUpon>HomeViewMenuUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\HomeViewServicesUC.xaml.cs">
+      <DependentUpon>HomeViewServicesUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\HomeViewUC.xaml.cs">
+      <DependentUpon>HomeViewUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\LoginUC.xaml.cs">
+      <DependentUpon>LoginUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\MenuUC.xaml.cs">
+      <DependentUpon>MenuUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\OrderUC.xaml.cs">
+      <DependentUpon>OrderUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ReservationUC.xaml.cs">
+      <DependentUpon>ReservationUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\TableEmptyUC.xaml.cs">
+      <DependentUpon>TableEmptyUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\HomeWindow.xaml.cs">
+      <DependentUpon>HomeWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\Dialogs\AlertDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\BookingBufferTicketUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\BookingServicesUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\BookingTableUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\CheckInOutUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\HomeViewMenuUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\HomeViewServicesUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\HomeViewUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\InvoiceUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\UserControls\LoginUC.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\MenuUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\OrderUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\ReservationUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\TableEmptyUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\HomeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -86,14 +187,6 @@
     <Compile Include="Views\UserControls\InvoiceUC.xaml.cs">
       <DependentUpon>InvoiceUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Views\Windows\OrderWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -123,10 +216,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Databases\" />
-    <Folder Include="Models\" />
-    <Folder Include="ViewModels\UserControl\" />
-    <Folder Include="ViewModels\Window\" />
+    <Resource Include="Pictures\Staff.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\HomeView.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\LogoBBQ.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets')" />

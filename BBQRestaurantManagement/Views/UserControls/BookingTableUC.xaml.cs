@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BBQRestaurantManagement.Views.Windows
+namespace BBQRestaurantManagement.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for BookingTableUC.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class BookingTableUC : UserControl
     {
-        public MainWindow()
+        public BookingTableUC()
         {
             InitializeComponent();
         }

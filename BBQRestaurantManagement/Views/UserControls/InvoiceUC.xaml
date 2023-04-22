@@ -4,9 +4,93 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"    
+            mc:Ignorable="d" MinHeight="700" >
     <Grid>
-            
+        <Border Margin="10" >
+            <StackPanel Margin="5">
+                <Border BorderBrush="Gray" BorderThickness="0.2">
+                    <TextBlock Text="Hóa đơn" 
+                           Margin="10"
+                           HorizontalAlignment="Center"
+                           FontSize="18"
+                           FontWeight="Bold"></TextBlock>
+                </Border>
+                <Grid MinHeight="580">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0"  BorderBrush="Gray" BorderThickness="0.2">
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" 
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Mã hóa đơn:" Margin="10 0"></TextBlock>
+                                <TextBlock Text="12234445" Margin="10 0"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" 
+                                         Grid.Column="1"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Thời gian:" Margin="10 0"></TextBlock>
+                                <TextBlock Text="11/2/2023 12:30:30" Margin="10 0"></TextBlock>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" 
+                                         Grid.Column="2"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Người tạo:" Margin="10 0"></TextBlock>
+                                <TextBlock Text="02351855235" Margin="10 0"></TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0.2">
+                        <ScrollViewer>
+                            
+                        </ScrollViewer>
+                    </Border>
+                    <Border Grid.Row="2"  BorderBrush="Gray" BorderThickness="0.2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" 
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="Tổng tiền:" Margin="10 0"></TextBlock>
+                                <TextBlock Text="560.000" Margin="10 0"></TextBlock>
+                            </StackPanel>
+                            <ComboBox
+                                Grid.Column="1"
+                                MinWidth="100"
+                                VerticalAlignment="Center"
+                                materialDesign:HintAssist.Hint="Phương thức thanh toán"
+                                IsEditable="True">
+                                <ComboBoxItem Content="Tiền mặt" />
+                                <ComboBoxItem Content="Ngân hàng" />
+                                <ComboBoxItem Content="Momo" />
+                            </ComboBox>
+                            <Button Grid.Column="2" Content="Thanh toán" Margin="20 10">
+                                
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

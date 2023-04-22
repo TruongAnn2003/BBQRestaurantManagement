@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace BBQRestaurantManagement.Views.Windows
+namespace BBQRestaurantManagement.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for OrderWindow.xaml
+    /// Interaction logic for MenuUC.xaml
     /// </summary>
-    public partial class OrderWindow : Window
+    public partial class MenuUC : UserControl
     {
-        public OrderWindow()
+        public MenuUC()
         {
             InitializeComponent();
         }
