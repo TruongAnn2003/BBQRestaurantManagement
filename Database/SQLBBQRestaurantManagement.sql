@@ -100,6 +100,13 @@ CREATE TABLE Staff
 	CONSTRAINT RightStaffID CHECK(StaffID LIKE 'STA%')
 );
 
+CREATE TABLE Account
+(
+	AccountID nvarchar(10) CONSTRAINT AccountIDkey PRIMARY KEY,
+	Passwords nvarchar(20) NOT NULL,
+	CONSTRAINT FK_AccountID FOREIGN KEY (AccountID) REFERENCES Staff(StaffID)
+);
+
 CREATE TABLE Product
 (
 	ProductID nvarchar(10) CONSTRAINT Productkey PRIMARY KEY,
