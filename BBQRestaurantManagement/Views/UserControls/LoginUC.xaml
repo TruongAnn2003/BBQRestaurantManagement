@@ -39,8 +39,8 @@
                     <TextBox
                         Height="50"
                         VerticalAlignment="Top"
-                        Text="{Binding Username}"
-                        materialDesign:HintAssist.Hint="Tên Đăng Nhập"
+                        Text="{Binding ID}"
+                        materialDesign:HintAssist.Hint="Mã nhân viên"
                         materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding Path=IsChecked, ElementName=MaterialDesignFilledTextBoxTextCountComboBox, Converter={StaticResource BooleanToVisibilityConverter}}"
                         MaxLength="40"
                         Style="{StaticResource MaterialDesignFilledTextBox}"
@@ -50,6 +50,7 @@
                     <PasswordBox
                         Name="FloatingPasswordBox"
                         Height="50"
+                        materialDesign:PasswordBoxAssist.Password="{Binding Password}"
                         materialDesign:HintAssist.HelperText="ít nhất 8 ký tự"
                         materialDesign:HintAssist.Hint="Mật Khẩu"
                         materialDesign:TextFieldAssist.HasClearButton="True"
