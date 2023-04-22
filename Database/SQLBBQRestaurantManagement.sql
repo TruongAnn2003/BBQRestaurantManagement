@@ -151,3 +151,26 @@ CREATE TABLE Orders
 	CONSTRAINT FK_DetailsID FOREIGN KEY (DetailsID) REFERENCES OrderDetails(OrderDetailsID),
 	CONSTRAINT FK_OrderStaff FOREIGN KEY (OrderStaff) REFERENCES Staff(StaffID)
 );
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Staff(StaffID,NameStaff,NumberPhone,Position) VALUES
+('STAFF001',N'Nguyễn Trường An','0364969450','Manager'),
+('STAFF002',N'Nguyễn Thành Lợi','0364125263','Manager'),
+('STAFF003',N'Huỳnh Minh Trí','0364956256','Manager'),
+('STAFF004',N'Trần Đỗ Thanh An','0364562321','Manager'),
+('STAFF005',N'Mai Anh Khoa','0364562321','Cashier'),
+('STAFF006',N'Lê Minh Anh','0364562321','Cashier'),
+('STAFF007',N'Trần Đức Trung','0364562321','Waitresses'),
+('STAFF008',N'Nguyễn Văn Hoàng','0364562321','Waitresses'),
+('STAFF009',N'Lê Xuân Huỳnh','0364562321','Waitresses')
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Account(AccountID,Passwords) VALUES
+('STAFF001','@123456'),
+('STAFF002','@123456'),
+('STAFF003','@123456'),
+('STAFF004','@123456'),
+('STAFF005','@123456'),
+('STAFF006','@123456'),
+('STAFF007','@123456'),
+('STAFF008','@123456'),
+('STAFF009','@123456')
