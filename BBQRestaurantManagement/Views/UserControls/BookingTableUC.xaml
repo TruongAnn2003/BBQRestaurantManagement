@@ -76,7 +76,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
             </StackPanel>
             <StackPanel Margin="10 0" Grid.Column="1">
-                <Label Content="Chọn ngày đặt bàn"
+                <Label Content="Chọn giờ đặt bàn"
                    FontSize="17"
                    FontWeight="Bold"/>
                 <materialDesign:TimePicker MinWidth="229"
