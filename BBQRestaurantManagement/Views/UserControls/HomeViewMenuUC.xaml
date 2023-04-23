@@ -16,8 +16,8 @@
              MinHeight="700" MinWidth="1200">
     <Grid Background="#342D23">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="461*"/>
-            <ColumnDefinition Width="139*"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid Margin ="30,30,30,30"
               Background="#342D23" Grid.ColumnSpan="2">

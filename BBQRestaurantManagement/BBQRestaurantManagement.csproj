@@ -109,8 +109,14 @@
     <Compile Include="Views\UserControls\OrderUC.xaml.cs">
       <DependentUpon>OrderUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\OtherService.xaml.cs">
+      <DependentUpon>OtherService.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\ReservationUC.xaml.cs">
       <DependentUpon>ReservationUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\RoomServiceUC.xaml.cs">
+      <DependentUpon>RoomServiceUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\TableEmptyUC.xaml.cs">
       <DependentUpon>TableEmptyUC.xaml</DependentUpon>
@@ -166,7 +172,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControls\OtherService.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\ReservationUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\RoomServiceUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
