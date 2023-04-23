@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
+             xmlns:uc="clr-namespace:BBQRestaurantManagement.Views.UserControls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             TextElement.FontWeight="Regular"
@@ -64,7 +64,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Margin="5 0" Grid.Column="0">
                 <Expander  Background="White" 
@@ -72,7 +72,7 @@
                            FontWeight="Bold" 
                            Header="Đặt dịch vụ phòng">
                     <Border Background="Gray" BorderThickness="0.3">
-                    <local:RoomServiceUC></local:RoomServiceUC>
+                        <uc:RoomServiceUC></uc:RoomServiceUC>
                     </Border>
                 </Expander>
             </StackPanel>
@@ -82,7 +82,7 @@
                            FontWeight="Bold" 
                            Header="Đặt dịch vụ ngoài">
                     <Border Background="Gray" BorderThickness="0.3">
-                        <local:OtherService></local:OtherService>
+                        <uc:OtherService></uc:OtherService>
                     </Border>
                 </Expander>
             </StackPanel>
@@ -112,8 +112,8 @@
                 </StackPanel>
                 <StackPanel Margin="10 0" Grid.Column="1">
                     <Label Content="Chọn giờ đặt bàn"
-                   FontSize="17"
-                   FontWeight="Bold"/>
+                       FontSize="17"
+                       FontWeight="Bold"/>
                     <materialDesign:TimePicker MinWidth="229"
                                        materialDesign:HintAssist.Hint="Chọn giờ đặt bàn"
                                        Style="{StaticResource MaterialDesignFloatingHintTimePicker}"/>
