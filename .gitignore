@@ -8,6 +8,12 @@ BBQRestaurantManagement/.vs/
 BBQRestaurantManagement/bin/
 BBQRestaurantManagement/obj/
 
+BBQRestaurantManagement/App.config
+BBQRestaurantManagement/BBQRestaurantManagementDataSet.Designer.cs
+BBQRestaurantManagement/BBQRestaurantManagementDataSet.xsc
+BBQRestaurantManagement/BBQRestaurantManagementDataSet.xsd
+BBQRestaurantManagement/BBQRestaurantManagementDataSet.xss
+
 # Ignore Rider files
 .idea/
 *.sln.DotSettings.user

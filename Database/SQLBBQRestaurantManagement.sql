@@ -100,6 +100,13 @@ CREATE TABLE Staff
 	CONSTRAINT RightStaffID CHECK(StaffID LIKE 'STA%')
 );
 
+CREATE TABLE Account
+(
+	AccountID nvarchar(10) CONSTRAINT AccountIDkey PRIMARY KEY,
+	Passwords nvarchar(20) NOT NULL,
+	CONSTRAINT FK_AccountID FOREIGN KEY (AccountID) REFERENCES Staff(StaffID)
+);
+
 CREATE TABLE Product
 (
 	ProductID nvarchar(10) CONSTRAINT Productkey PRIMARY KEY,
@@ -144,3 +151,26 @@ CREATE TABLE Orders
 	CONSTRAINT FK_DetailsID FOREIGN KEY (DetailsID) REFERENCES OrderDetails(OrderDetailsID),
 	CONSTRAINT FK_OrderStaff FOREIGN KEY (OrderStaff) REFERENCES Staff(StaffID)
 );
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Staff(StaffID,NameStaff,NumberPhone,Position) VALUES
+('STA001',N'Nguyễn Trường An','0364969450','Manager'),
+('STA002',N'Nguyễn Thành Lợi','0364125263','Manager'),
+('STA003',N'Huỳnh Minh Trí','0364956256','Manager'),
+('STA004',N'Trần Đỗ Thanh An','0364562321','Manager'),
+('STA005',N'Mai Anh Khoa','0364562321','Cashier'),
+('STA006',N'Lê Minh Anh','0364562321','Cashier'),
+('STA007',N'Trần Đức Trung','0364562321','Waitresses'),
+('STA008',N'Nguyễn Văn Hoàng','0364562321','Waitresses'),
+('STA009',N'Lê Xuân Huỳnh','0364562321','Waitresses')
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Account(AccountID,Passwords) VALUES
+('STA001','@123456'),
+('STA002','@123456'),
+('STA003','@123456'),
+('STA004','@123456'),
+('STA005','@123456'),
+('STA006','@123456'),
+('STA007','@123456'),
+('STA008','@123456'),
+('STA009','@123456')
