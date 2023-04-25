@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
+             xmlns:uc="clr-namespace:BBQRestaurantManagement.Views.UserControls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             TextElement.FontWeight="Regular"
@@ -14,6 +14,132 @@
         FontFamily="{DynamicResource MaterialDesignFont}"  
              mc:Ignorable="d">
     <Grid>
-        <TextBlock Text="Đặt dịch vụ khác ở đây"></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label FontSize="20"
+               Grid.Row="0"
+               Margin="5"
+               FontWeight="Bold"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top">
+            Đặt dịch vụ
+        </Label>
+        <StackPanel Grid.Row="1"
+                    Margin="10">
+            <Label Content="Họ và tên"
+                   FontSize="17"
+                   FontWeight="Bold"/>
+            <TextBox materialDesign:HintAssist.Hint="Điền họ và tên"
+                     FontSize="15"/>
+        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="10 0" 
+                        Grid.Column="0">
+                <Label Content="Email"
+                   FontSize="17"
+                   FontWeight="Bold"/>
+                <TextBox materialDesign:HintAssist.Hint="Điền địa chỉ email"
+                     FontSize="15"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1"
+                    Margin="10 0">
+                <Label Content="Số điện thoại"
+                   FontSize="17"
+                   FontWeight="Bold"/>
+                <TextBox materialDesign:HintAssist.Hint="Điền số điện thoại"
+                     FontSize="15"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3" Margin="10" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="150"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="5 0" Grid.Column="0">
+                <Expander  Background="White" 
+                           Foreground="#00796b"
+                           FontWeight="Bold" 
+                           Header="Đặt dịch vụ phòng">
+                    <Border Background="Gray" BorderThickness="0.3">
+                        <uc:RoomServiceUC></uc:RoomServiceUC>
+                    </Border>
+                </Expander>
+            </StackPanel>
+            <StackPanel Margin="5 0" Grid.Column="1">
+                <Expander  Background="White" 
+                           Foreground="#00796b"
+                           FontWeight="Bold" 
+                           Header="Đặt dịch vụ ngoài">
+                    <Border Background="Gray" BorderThickness="0.3">
+                        <uc:OtherService></uc:OtherService>
+                    </Border>
+                </Expander>
+            </StackPanel>
+            <StackPanel Margin="10 0" Grid.Column="2">
+                <Label Content="Số người"
+                FontSize="17"
+                FontWeight="Bold"/>
+                <TextBox materialDesign:HintAssist.Hint="Điền số người"
+                     FontSize="15" Height="35"/>
+            </StackPanel>
+        </Grid>
+        <StackPanel  Margin="10" 
+                     Grid.Row="4">
+            <Grid Grid.Row="3" Margin="10" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10 0" Grid.Column="0">
+                    <Label Content="Chọn ngày đặt bàn"
+                   FontSize="17"
+                   FontWeight="Bold"/>
+                    <DatePicker MinWidth="229"
+                        materialDesign:HintAssist.Hint="Chọn ngày đặt bàn"
+                        materialDesign:TextFieldAssist.HasClearButton="True"
+                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
+                </StackPanel>
+                <StackPanel Margin="10 0" Grid.Column="1">
+                    <Label Content="Chọn giờ đặt bàn"
+                       FontSize="17"
+                       FontWeight="Bold"/>
+                    <materialDesign:TimePicker MinWidth="229"
+                                       materialDesign:HintAssist.Hint="Chọn giờ đặt bàn"
+                                       Style="{StaticResource MaterialDesignFloatingHintTimePicker}"/>
+                </StackPanel>
+            </Grid>
+            <Label Content="Ghi chú"
+                   FontSize="17"
+                   FontWeight="Bold"/>
+            <TextBox Height="60"
+                     AcceptsReturn="True"
+                     IsEnabled="{Binding IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"/>
+        </StackPanel>
+        <Button Margin="100 10"
+                Height="40"
+                Content="Đặt"
+                FontSize="17"
+                FontWeight="Bold"
+                Foreground="White"
+                Background="#880e4f"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                ToolTip="Resource name: MaterialDesignRaisedLightButton" 
+                 Grid.Row="5"
+                HorizontalAlignment="Center"/>
     </Grid>
 </UserControl>

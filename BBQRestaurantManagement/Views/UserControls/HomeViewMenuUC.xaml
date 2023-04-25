@@ -21,13 +21,13 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-                    <Label Content="BBQ     RESTAURANT"
+            <Label Content="BBQ     RESTAURANT"
                        FontSize="30"
                        HorizontalAlignment="Center"
                        FontFamily="Papyrus"
                        Foreground="#C6A881"
                        FontWeight="Bold"/>
-                    <Label Content="Nhóm 1 Nướng"
+            <Label Content="Nhóm 1 Nướng"
                        FontSize="20"
                        HorizontalAlignment="Center"
                        FontFamily="Papyrus"
