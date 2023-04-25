@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Database
 {
-    internal class CustomerDAO
+    public class ViewDao : BaseDao
     {
+
     }
 }
