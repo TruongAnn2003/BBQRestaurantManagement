@@ -91,13 +91,20 @@ CREATE TABLE Booking
 	--Trạng thái đặt bàn sẽ bao gồm xác nhận đặt bàn thành công, đã nhận bàn và huỷ đặt bàn
 );
 
+CREATE TABLE Staff_Position
+(
+	IDPosition nvarchar(10) CONSTRAINT Staff_PositionIDkey PRIMARY KEY,
+	Position nvarchar(50) NOT NULL
+);
+
 CREATE TABLE Staff
 (
 	StaffID nvarchar(10) CONSTRAINT StaffIDkey PRIMARY KEY,
 	NameStaff nvarchar(100) NOT NULL,
 	NumberPhone nvarchar(20) NOT NULL,
-	Position nvarchar(50) NOT NULL,
-	CONSTRAINT RightStaffID CHECK(StaffID LIKE 'STA%')
+	Position nvarchar(10) NOT NULL,
+	CONSTRAINT RightStaffID CHECK(StaffID LIKE 'STA%'),
+	CONSTRAINT FK_Position FOREIGN KEY (Position) REFERENCES Staff_Position(IDPosition)
 );
 
 CREATE TABLE Account
@@ -107,15 +114,33 @@ CREATE TABLE Account
 	CONSTRAINT FK_AccountID FOREIGN KEY (AccountID) REFERENCES Staff(StaffID)
 );
 
+CREATE TABLE Product_Type
+(
+	IDType nvarchar(10) CONSTRAINT Product_Typekey PRIMARY KEY,
+	ProductType nvarchar(50) NOT NULL
+);
+
 CREATE TABLE Product
 (
 	ProductID nvarchar(10) CONSTRAINT Productkey PRIMARY KEY,
 	NameProduct nvarchar(100) NOT NULL,
 	Price BIGINT NOT NULL,
-	Describe nvarchar(500),
+	Description nvarchar(500),
 	ProductState bit, -- 2 tình trạng còn (1), hết (0)
+	Product_Type nvarchar(10),
+	CONSTRAINT FK_Product_Type FOREIGN KEY (Product_Type) REFERENCES Product_Type(IDType),
 	CONSTRAINT RightProductID CHECK(ProductID LIKE 'PRO%'),
 	CONSTRAINT RightPriceProduct CHECK(Price >= 0)
+);
+
+---Thêm vào ERD
+CREATE TABLE Service_Product 
+(
+	IDProduct nvarchar(10) ,
+	IDServices nvarchar(10) ,
+	CONSTRAINT Service_Combokey PRIMARY KEY(IDProduct,IDServices),
+	CONSTRAINT FK_IDCombo FOREIGN KEY (IDProduct) REFERENCES Product(ProductID),
+	CONSTRAINT FK_IDServices FOREIGN KEY (IDServices) REFERENCES TypeServices(IDType)
 );
 
 CREATE TABLE OrderDetails
@@ -152,6 +177,7 @@ CREATE TABLE Orders
 	CONSTRAINT FK_OrderStaff FOREIGN KEY (OrderStaff) REFERENCES Staff(StaffID)
 );
 
+---INSERT DATA--------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Staff(StaffID,NameStaff,NumberPhone,Position) VALUES
 ('STA001',N'Nguyễn Trường An','0364969450','Manager'),
@@ -174,3 +200,32 @@ INSERT INTO Account(AccountID,Passwords) VALUES
 ('STA007','@123456'),
 ('STA008','@123456'),
 ('STA009','@123456')
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Customers (CustomerID, NameCustomer, NumberPhone)
+VALUES ('CUS001', 'John Smith', '123-456-7890'),
+       ('CUS002', 'Jane Doe', '555-555-1212'),
+       ('CUS003', 'Bob Johnson', '999-999-9999'),
+	   ('CUS004', 'Sarah Johnson', '555-123-4567'),
+       ('CUS005', 'David Lee', '777-888-9999'),
+       ('CUS006', 'Emily Chen', '123-456-7890');
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Services(IDServices ,NameServices)
+VALUES ('SER111', 'Room services'),
+       ('SER222', 'Attachment services'),
+       ('SER333', 'Promotion services')
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO TypeServices(IDType,NameType,IDServices,Price)
+VALUES ('TYP111', 'Buffet room','SER111',400000),
+       ('TYP112', 'Normal private room','SER111',200000),
+       ('TYP113', 'VIP private room','SER111',300000),
+       ('TYP114', 'Common dining room','SER111',50000),
+       ('TYP211', 'Event organization','SER222',20000000),
+       ('TYP212', 'VIP service staff','SER222',100000),
+       ('TYP311', 'Guitar music','SER333',0), --combo tình nhân
+       ('TYP312', 'Piano music','SER333',0),  --combo gia đình
+       ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+-----TRIGGER----------------------------
+-----VIEW-------------------------------
+-----STORED-PROCEDURE/FUNCTION----------
+-----TRANSACTION------------------------
