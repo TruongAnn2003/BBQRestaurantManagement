@@ -31,7 +31,8 @@ CREATE TABLE Customer_TypeServices
 	CustomerID nvarchar(10) ,
 	IDTypeServices nvarchar(10) ,
 	CONSTRAINT IDCus_SerKey PRIMARY KEY(CustomerID,IDTypeServices),
-	CONSTRAINT FK_Customer_Services FOREIGN KEY (IDTypeServices) REFERENCES TypeServices(IDType),
+	CONSTRAINT FK_TypeServices FOREIGN KEY (IDTypeServices) REFERENCES TypeServices(IDType),
+	CONSTRAINT FK_Customer FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
 	Quantity int NOT NULL,
 	TotalMoney BIGINT NOT NULL
 );
@@ -79,6 +80,7 @@ CREATE TABLE Booking
 	BookingStatus nvarchar(50) NOT NULL,
 	Duration int,
 	Note nvarchar(100),
+	NumberCustomer int,
 	CustomerBooking nvarchar(10),
 	ServiceBooking nvarchar(10),
 	TableBooking nvarchar(10), 
@@ -87,8 +89,9 @@ CREATE TABLE Booking
 	CONSTRAINT FK_ServiceBooking FOREIGN KEY (ServiceBooking) REFERENCES TypeServices(IDType),
 	CONSTRAINT FK_TableBooking FOREIGN KEY (TableBooking) REFERENCES TablesCustomer(TablesID),
 	CONSTRAINT FK_BookingInvoice FOREIGN KEY (BookingInvoice) REFERENCES Invoive(InvoiceID),
-	CONSTRAINT BookingStatus CHECK(BookingStatus LIKE 'Success' or BookingStatus LIKE 'Received' or BookingStatus LIKE 'Cancel')
+	CONSTRAINT BookingStatus CHECK(BookingStatus LIKE 'Success' or BookingStatus LIKE 'Received' or BookingStatus LIKE 'Cancel'),
 	--Trạng thái đặt bàn sẽ bao gồm xác nhận đặt bàn thành công, đã nhận bàn và huỷ đặt bàn
+	CONSTRAINT RightNumberCustomer CHECK(NumberCustomer >= 1)
 );
 
 CREATE TABLE Staff_Position
@@ -226,6 +229,143 @@ VALUES ('TYP111', 'Buffet room','SER111',400000),
        ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 -----TRIGGER----------------------------
+GO
+CREATE OR ALTER TRIGGER tg_DeleteCustomer
+ON	  Customers
+FOR	  DELETE
+AS
+	DECLARE 	@IDCus 	nvarchar(10)
+	SELECT @IDCus = CustomerID
+	FROM DELETED
+	
+	DELETE FROM Customer_TypeServices WHERE CustomerID =@IDCus
+	DELETE FROM Booking WHERE CustomerBooking =@IDCus
+	DELETE FROM Orders WHERE CustomerOrder =@IDCus
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteStaff
+ON	  Staff
+FOR	  DELETE
+AS
+	DECLARE 	@StaID 	nvarchar(10)
+	SELECT @StaID=StaffID
+	FROM DELETED
+	
+	DELETE FROM Orders WHERE OrderStaff=@StaID
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteStaff_Position
+ON	  Staff_Position
+FOR	  DELETE
+AS
+	DECLARE 	@IDPos 	nvarchar(10)
+	SELECT @IDPos=IDPosition
+	FROM DELETED
+	
+	DELETE FROM Staff WHERE Position=@IDPos
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteProduct
+ON	  Product
+FOR	  DELETE
+AS
+	DECLARE 	@ProID 	nvarchar(10)
+	SELECT @ProID=ProductID
+	FROM DELETED
+	
+	DELETE FROM ProductOrderDetails WHERE ProductID=@ProID
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteProductOrderDetails
+ON	  ProductOrderDetails
+FOR	  DELETE
+AS
+	DECLARE 	@OrdDetailsID 	nvarchar(10)
+	SELECT @OrdDetailsID=OrderDetailsID
+	FROM DELETED
+	
+	DELETE FROM Orders WHERE DetailsID=@OrdDetailsID
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteProduct_Type
+ON	  Product_Type
+FOR	  DELETE
+AS
+	DECLARE 	@IDTypePro 	nvarchar(10)
+	SELECT @IDTypePro=IDType
+	FROM DELETED
+	
+	DELETE FROM Product WHERE Product_Type=@IDTypePro
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteServices
+ON	  Services
+FOR	  DELETE
+AS
+	DECLARE 	@IDSer 	nvarchar(10)
+	SELECT @IDSer=IDServices
+	FROM DELETED
+	
+	DELETE FROM TypeServices WHERE IDType= @IDSer
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteTypeServices
+ON	  TypeServices
+FOR	  DELETE
+AS
+	DECLARE 	@IDTypeSer 	nvarchar(10)
+	SELECT @IDTypeSer=IDType
+	FROM DELETED
+	
+	DELETE FROM TablesCustomer WHERE RoomType= @IDTypeSer
+	DELETE FROM Customer_TypeServices WHERE IDTypeServices= @IDTypeSer
+	DELETE FROM Booking WHERE ServiceBooking= @IDTypeSer
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteTablesCustomer
+ON	  TablesCustomer
+FOR	  DELETE
+AS
+	DECLARE 	@TabID 	nvarchar(10)
+	SELECT @TabID=TablesID
+	FROM DELETED
+	
+	DELETE FROM Booking WHERE TableBooking= @TabID
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteInvoive
+ON	  Invoive
+FOR	  DELETE
+AS
+	DECLARE 	@InvID 	nvarchar(10)
+	SELECT @InvID=InvoiceID
+	FROM DELETED
+	
+	DELETE FROM Booking WHERE BookingInvoice= @InvID
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteStatusInvoive
+ON	  StatusInvoive
+FOR	  DELETE
+AS
+	DECLARE 	@StatusInvID 	nvarchar(10)
+	SELECT @StatusInvID=StatusInvoiceID
+	FROM DELETED
+	
+	DELETE FROM StatusInvoive_Details WHERE StatusInvoive= @StatusInvID
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteStatusInvoive_Details
+ON	  StatusInvoive_Details
+FOR	  DELETE
+AS
+	DECLARE 	@InvDetailsID 	nvarchar(10)
+	SELECT @InvDetailsID=InvoiceDetailsID
+	FROM DELETED
+	
+	DELETE FROM Invoive WHERE InvoiceDetails= @InvDetailsID
+
+
 -----VIEW-------------------------------
 -----STORED-PROCEDURE/FUNCTION----------
 -----TRANSACTION------------------------
