@@ -184,8 +184,6 @@ CREATE TABLE Orders
 	CONSTRAINT FK_OrderStaff FOREIGN KEY (OrderStaff) REFERENCES Staff(StaffID)
 );
 
-
--------------------------------------------------------------------------------------------------------------------------------------------------------
 -----TRIGGER----------------------------
 GO
 CREATE OR ALTER TRIGGER tg_DeleteCustomer
@@ -358,7 +356,27 @@ VALUES ('CUS001', 'John Smith', '123-456-7890'),
        ('CUS003', 'Bob Johnson', '999-999-9999'),
 	   ('CUS004', 'Sarah Johnson', '555-123-4567'),
        ('CUS005', 'David Lee', '777-888-9999'),
-       ('CUS006', 'Emily Chen', '123-456-7890');
+       ('CUS006', 'Emily Chen', '123-456-7890'),
+	   ('CUS007', 'Jason White', '443-234-9820'),
+	   ('CUS008', 'William Holmes', '531-238-4920'),
+	   ('CUS009', 'Martin Abbott', '321-235-1123'),
+	   ('CUS010', 'Susan Bafford', '320-123-4029'),
+	   ('CUS011', 'Emily Watson', '123-342-2048'),
+	   ('CUS012', 'Thiago Silva', '130-452-1938'),
+	   ('CUS013', 'Edouard Mendy', '372-381-8753'),
+	   ('CUS014', 'Mason Mount', '333-123-5482'),
+	   ('CUS015', 'Joao Felix', '123-319-1219'),
+	   ('CUS016', 'Hakim Ziyech', '343-339-3821'),
+	   ('CUS017', 'LeBron James', '333-112-3462'),
+	   ('CUS018', 'Nikola Jokic', '172-001-3481'),
+	   ('CUS019', 'Stephen Curry', '772-092-1893'),
+	   ('CUS020', 'Trae Young', '871-333-2917'),
+	   ('CUS021', 'Kevon Looney', '882-198-4781'),
+	   ('CUS022', 'Bol Bol', '222-111-3339'),
+	   ('CUS023', 'Leonardo DiCaprio', '103-838-3920'),
+	   ('CUS024', 'Michael Jordan', '131-332-4910'),
+	   ('CUS025', 'Kevin Hart', '910-312-4456'),
+	   ('CUS026', 'Dwayne Johnson', '392-222-3213');
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Services(IDServices ,NameServices)
 VALUES ('SER111', 'Room services'),
