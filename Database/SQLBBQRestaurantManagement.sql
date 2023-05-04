@@ -1,4 +1,8 @@
+Create Database BBQRestaurantManagement
+go
 USE BBQRestaurantManagement
+-----------------------------------------------------------------------------------
+
 CREATE TABLE Customers
 (
 	CustomerID nvarchar(10) CONSTRAINT IDkey PRIMARY KEY,
@@ -180,53 +184,7 @@ CREATE TABLE Orders
 	CONSTRAINT FK_OrderStaff FOREIGN KEY (OrderStaff) REFERENCES Staff(StaffID)
 );
 
----INSERT DATA--------------------------
--------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO Staff(StaffID,NameStaff,NumberPhone,Position) VALUES
-('STA001',N'Nguyễn Trường An','0364969450','Manager'),
-('STA002',N'Nguyễn Thành Lợi','0364125263','Manager'),
-('STA003',N'Huỳnh Minh Trí','0364956256','Manager'),
-('STA004',N'Trần Đỗ Thanh An','0364562321','Manager'),
-('STA005',N'Mai Anh Khoa','0364562321','Cashier'),
-('STA006',N'Lê Minh Anh','0364562321','Cashier'),
-('STA007',N'Trần Đức Trung','0364562321','Waitresses'),
-('STA008',N'Nguyễn Văn Hoàng','0364562321','Waitresses'),
-('STA009',N'Lê Xuân Huỳnh','0364562321','Waitresses')
--------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO Account(AccountID,Passwords) VALUES
-('STA001','@123456'),
-('STA002','@123456'),
-('STA003','@123456'),
-('STA004','@123456'),
-('STA005','@123456'),
-('STA006','@123456'),
-('STA007','@123456'),
-('STA008','@123456'),
-('STA009','@123456')
--------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO Customers (CustomerID, NameCustomer, NumberPhone)
-VALUES ('CUS001', 'John Smith', '123-456-7890'),
-       ('CUS002', 'Jane Doe', '555-555-1212'),
-       ('CUS003', 'Bob Johnson', '999-999-9999'),
-	   ('CUS004', 'Sarah Johnson', '555-123-4567'),
-       ('CUS005', 'David Lee', '777-888-9999'),
-       ('CUS006', 'Emily Chen', '123-456-7890');
--------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO Services(IDServices ,NameServices)
-VALUES ('SER111', 'Room services'),
-       ('SER222', 'Attachment services'),
-       ('SER333', 'Promotion services')
--------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO TypeServices(IDType,NameType,IDServices,Price)
-VALUES ('TYP111', 'Buffet room','SER111',400000),
-       ('TYP112', 'Normal private room','SER111',200000),
-       ('TYP113', 'VIP private room','SER111',300000),
-       ('TYP114', 'Common dining room','SER111',50000),
-       ('TYP211', 'Event organization','SER222',20000000),
-       ('TYP212', 'VIP service staff','SER222',100000),
-       ('TYP311', 'Guitar music','SER333',0), --combo tình nhân
-       ('TYP312', 'Piano music','SER333',0),  --combo gia đình
-       ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 -----TRIGGER----------------------------
 GO
@@ -365,7 +323,106 @@ AS
 	
 	DELETE FROM Invoive WHERE InvoiceDetails= @InvDetailsID
 
-
+-------INSERT DATA--------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Staff_Position(IDPosition,Position) VALUES
+('POS001',N'Quản lí'),
+('POS002',N'Thu Ngân'),
+('POS003',N'Phục vụ')
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Staff(StaffID,NameStaff,NumberPhone,Position) VALUES
+('STA001',N'Nguyễn Trường An','0364969450','POS001'),
+('STA002',N'Nguyễn Thành Lợi','0364125263','POS001'),
+('STA003',N'Huỳnh Minh Trí','0364956256','POS001'),
+('STA004',N'Trần Đỗ Thanh An','0364562321','POS001'),
+('STA005',N'Mai Anh Khoa','0364562321','POS002'),
+('STA006',N'Lê Minh Anh','0364562321','POS002'),
+('STA007',N'Trần Đức Trung','0364562321','POS003'),
+('STA008',N'Nguyễn Văn Hoàng','0364562321','POS003'),
+('STA009',N'Lê Xuân Huỳnh','0364562321','POS003')
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Account(AccountID,Passwords) VALUES
+('STA001','@123456'),
+('STA002','@123456'),
+('STA003','@123456'),
+('STA004','@123456'),
+('STA005','@123456'),
+('STA006','@123456'),
+('STA007','@123456'),
+('STA008','@123456'),
+('STA009','@123456')
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Customers (CustomerID, NameCustomer, NumberPhone)
+VALUES ('CUS001', 'John Smith', '123-456-7890'),
+       ('CUS002', 'Jane Doe', '555-555-1212'),
+       ('CUS003', 'Bob Johnson', '999-999-9999'),
+	   ('CUS004', 'Sarah Johnson', '555-123-4567'),
+       ('CUS005', 'David Lee', '777-888-9999'),
+       ('CUS006', 'Emily Chen', '123-456-7890');
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Services(IDServices ,NameServices)
+VALUES ('SER111', 'Room services'),
+       ('SER222', 'Attachment services'),
+       ('SER333', 'Promotion services')
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO TypeServices(IDType,NameType,IDServices,Price)
+VALUES ('TYP111', 'Buffet room','SER111',400000),
+       ('TYP112', 'Normal private room','SER111',200000),
+       ('TYP113', 'VIP private room','SER111',300000),
+       ('TYP114', 'Common dining room','SER111',50000),
+       ('TYP211', 'Event organization','SER222',20000000),
+       ('TYP212', 'VIP service staff','SER222',100000),
+       ('TYP311', 'Guitar music','SER333',0), --combo tình nhân
+       ('TYP312', 'Piano music','SER333',0),  --combo gia đình
+       ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
 -----VIEW-------------------------------
 -----STORED-PROCEDURE/FUNCTION----------
+------- Lấy sản phẩm theo loại
+go
+CREATE OR ALTER PROC proc_GetAllProductsByType(@typeProductID varchar)
+AS
+BEGIN
+	SELECT *
+	FROM Product
+	WHERE Product_Type = @typeProductID
+END
+------- 
+go
+CREATE OR ALTER PROC CheckIn(@invoiceID varchar)
+AS
+BEGIN
+	UPDATE StatusInvoive_Details 
+	SET CheckIn_Time = GETDATE(), StatusInvoive = '1'
+	WHERE InvoiceDetailsID = (	SELECT InvoiceDetails
+								FROM Invoive
+								WHERE InvoiceID = @invoiceID)
+END
+------
 -----TRANSACTION------------------------
+
+
+
+--Drop Table
+/*
+Drop table ProductOrderDetails
+Drop table Service_Product
+Drop table Product
+Drop table Product_Type
+Drop table Account
+Drop table Booking
+Drop table TypeServices
+Drop table Invoive
+Drop table StatusInvoive_Details
+Drop table StatusInvoive
+Drop table Orders
+Drop table OrderDetails
+Drop table TablesCustomer
+Drop table Staff
+Drop table Staff_Position
+Drop table Customer_TypeServices
+Drop table Customers
+Drop table TypeSerVices
+Drop table Services */
+
+
+
