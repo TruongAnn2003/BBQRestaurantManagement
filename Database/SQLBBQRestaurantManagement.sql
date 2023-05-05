@@ -153,16 +153,6 @@ CREATE TABLE Service_Product
 	CONSTRAINT FK_IDServices FOREIGN KEY (IDServices) REFERENCES TypeServices(IDType)
 );
 
-CREATE TABLE OrderDetails
-(
-	OrderDetailsID nvarchar(10) CONSTRAINT OrderDetailskey PRIMARY KEY,
-	ProductID nvarchar(10),
-	Quantity nvarchar(100) NOT NULL
-	CONSTRAINT RightOrderDetailsID CHECK(OrderDetailsID LIKE 'OD%'),
-	CONSTRAINT FK_Product FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
-
-);
-
 CREATE TABLE Orders
 (
 	OrderID nvarchar(10) CONSTRAINT Orderskey PRIMARY KEY,
@@ -170,13 +160,23 @@ CREATE TABLE Orders
 	Total_Unit_Price BIGINT NOT NULL,
 	StateOrder bit NOT NULL,
 	CustomerOrder nvarchar(10),
-	DetailsID nvarchar(10),
 	OrderStaff nvarchar(10),
 	CONSTRAINT RightOrderID CHECK(OrderID LIKE 'ORD%'),
 	CONSTRAINT RightTotal_Unit_Price CHECK(Total_Unit_Price >= 0),
 	CONSTRAINT FK_CustomerOrder FOREIGN KEY (CustomerOrder) REFERENCES Customers(CustomerID),
-	CONSTRAINT FK_DetailsID FOREIGN KEY (DetailsID) REFERENCES OrderDetails(OrderDetailsID),
 	CONSTRAINT FK_OrderStaff FOREIGN KEY (OrderStaff) REFERENCES Staff(StaffID)
+);
+
+CREATE TABLE OrderDetails
+(
+	OrderDetailsID nvarchar(10) ,
+	ProductID nvarchar(10),
+	Quantity int NOT NULL,
+	OrderID nvarchar(10),
+	CONSTRAINT RightOrderDetailsID CHECK(OrderDetailsID LIKE 'OD%'),
+	CONSTRAINT FK_Product FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
+	CONSTRAINT OrderDetailskey PRIMARY KEY(OrderDetailsID,ProductID),
+	CONSTRAINT FK_OrderID FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
 
 -----TRIGGER----------------------------
@@ -621,25 +621,25 @@ END
 
 --Drop Table
 
-Drop table ProductOrderDetails
-Drop table Service_Product
-Drop table Product
-Drop table Product_Type
-Drop table Account
-Drop table Booking
-Drop table TypeServices
-Drop table Invoive
-Drop table StatusInvoive_Details
-Drop table StatusInvoive
-Drop table Orders
-Drop table OrderDetails
-Drop table TablesCustomer
-Drop table Staff
-Drop table Staff_Position
-Drop table Customer_TypeServices
-Drop table Customers
-Drop table TypeServices
-Drop table Services 
+--Drop table ProductOrderDetails
+--Drop table Service_Product
+--Drop table Product
+--Drop table Product_Type
+--Drop table Account
+--Drop table Booking
+--Drop table TypeServices
+--Drop table Invoive
+--Drop table StatusInvoive_Details
+--Drop table StatusInvoive
+--Drop table Orders
+--Drop table OrderDetails
+--Drop table TablesCustomer
+--Drop table Staff
+--Drop table Staff_Position
+--Drop table Customer_TypeServices
+--Drop table Customers
+--Drop table TypeServices
+--Drop table Services 
 
 
 
