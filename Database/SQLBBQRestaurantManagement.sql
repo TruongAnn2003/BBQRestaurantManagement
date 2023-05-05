@@ -394,7 +394,9 @@ VALUES ('TYP111', 'Buffet room','SER111',400000),
        ('TYP312', 'Piano music','SER333',0),  --combo gia đình
        ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
 -----VIEW-------------------------------
+
 -----STORED-PROCEDURE/FUNCTION----------
+
 ------- Lấy sản phẩm theo loại
 go
 CREATE OR ALTER PROC proc_GetAllProductsByType(@typeProductID varchar)
@@ -404,7 +406,7 @@ BEGIN
 	FROM Product
 	WHERE Product_Type = @typeProductID
 END
-------- 
+------- Check In 
 go
 CREATE OR ALTER PROC CheckIn(@invoiceID varchar)
 AS
@@ -415,7 +417,65 @@ BEGIN
 								FROM Invoive
 								WHERE InvoiceID = @invoiceID)
 END
-------
+------ Check out
+go
+CREATE OR ALTER PROC CheckOut(@invoiceID varchar)
+AS
+BEGIN
+	UPDATE StatusInvoive_Details 
+	SET CheckOut_Time = GETDATE(), StatusInvoive = '2'
+	WHERE InvoiceDetailsID = (	SELECT InvoiceDetails
+								FROM Invoive
+								WHERE InvoiceID = @invoiceID)
+END
+
+------  Hủy
+go
+CREATE OR ALTER PROC Cancel(@invoiceID varchar)
+AS
+BEGIN
+	UPDATE StatusInvoive_Details 
+	SET  StatusInvoive = '0'
+	WHERE InvoiceDetailsID = (	SELECT InvoiceDetails
+								FROM Invoive
+								WHERE InvoiceID = @invoiceID)
+END
+------  Lọc Sản phẩm theo loại
+go
+CREATE OR ALTER PROC GetAllProductsByType(@typeProductName nvarchar)
+AS
+BEGIN
+	SELECT * 
+	FROM Product P, Product_Type T
+	WHERE P.Product_Type = T.IDType 
+	AND T.ProductType = @typeProductName
+END
+------ Lọc hóa đơn theo ngày
+go
+CREATE OR ALTER PROC GetAllInvoicesByDate(@date DateTime)
+AS
+BEGIN
+	SELECT *
+	FROM Invoive I
+	WHERE I.CreationTime = @date
+END
+------ Lọc bàn trống
+
+
+------ Tạo hóa đơn
+
+
+
+------ Tính tổng tiền hóa đơn
+--go
+--CREATE OR ALTER FUNCTION  Bill(@invoiceID varchar) RETURNS float
+--AS
+--BEGIN
+	
+--END
+
+
+
 -----TRANSACTION------------------------
 
 
