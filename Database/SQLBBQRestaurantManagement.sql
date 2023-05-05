@@ -156,19 +156,11 @@ CREATE TABLE Service_Product
 CREATE TABLE OrderDetails
 (
 	OrderDetailsID nvarchar(10) CONSTRAINT OrderDetailskey PRIMARY KEY,
-	Quantity nvarchar(100) NOT NULL,
-	IntoMoney BIGINT NOT NULL,
-	CONSTRAINT RightOrderDetailsID CHECK(OrderDetailsID LIKE 'OD%'),
-	CONSTRAINT RightIntoMoney CHECK(IntoMoney >= 0)
-);
-
-CREATE TABLE ProductOrderDetails
-(
-	OrderDetailsID nvarchar(10),
 	ProductID nvarchar(10),
-	CONSTRAINT FK_OrderDetails FOREIGN KEY (OrderDetailsID) REFERENCES OrderDetails(OrderDetailsID),
+	Quantity nvarchar(100) NOT NULL
+	CONSTRAINT RightOrderDetailsID CHECK(OrderDetailsID LIKE 'OD%'),
 	CONSTRAINT FK_Product FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
-	CONSTRAINT keyID_POD PRIMARY KEY(OrderDetailsID,ProductID),
+
 );
 
 CREATE TABLE Orders
@@ -364,7 +356,7 @@ BEGIN
 	BEGIN
 		UPDATE Customers SET CustomerID = CONCAT('CUS',@CusID) WHERE CustomerID = @CusID
 	END
-	ELSE IF @CusID IN (SELECT CustomerID FROM  Customers)
+	ELSE IF (SELECT COUNT(CustomerID) FROM  Customers WHERE CustomerID = @CusID) > 1
 	BEGIN
 		ROLLBACK TRAN
 		PRINT 'CustomerID already exist'
@@ -395,7 +387,7 @@ BEGIN
 	BEGIN
 		UPDATE Services SET IDServices = CONCAT('SER',@IDSer) WHERE IDServices = @IDSer
 	END
-	ELSE IF @IDSer IN (SELECT IDServices FROM  Services)
+	ELSE IF (SELECT COUNT(IDServices) FROM  Services WHERE IDServices = @IDSer) > 1
 	BEGIN
 		ROLLBACK TRAN
 		PRINT 'IDServices already exist'
@@ -432,7 +424,7 @@ BEGIN
 	BEGIN
 		UPDATE TypeServices SET IDType = CONCAT('TYP3',@IDType) WHERE IDType = @IDType
 	END
-	ELSE IF @IDType IN (SELECT IDType FROM  TypeServices)
+	ELSE IF (SELECT COUNT(IDType) FROM  TypeServices WHERE IDType = @IDType) > 1
 	BEGIN
 		ROLLBACK TRAN
 		PRINT 'IDType already exist'
@@ -509,31 +501,6 @@ BEGIN
 END
 
 GO
-CREATE TABLE StatusInvoive
-(
-	StatusInvoiceID nvarchar(10) CONSTRAINT StatusInvoivekey PRIMARY KEY,
-	NameStatusInvoive nvarchar(100) NOT NULL,
-)
-
-CREATE TABLE StatusInvoive_Details
-(
-	InvoiceDetailsID nvarchar(10) CONSTRAINT IDInvoiceDetailskey PRIMARY KEY,
-	CheckIn_Time time NOT NULL,
-	CheckOut_Time time ,
-	StatusInvoive nvarchar(10),
-	CONSTRAINT FK_StatusInvoive FOREIGN KEY (StatusInvoive) REFERENCES StatusInvoive(StatusInvoiceID),
-	CONSTRAINT RightCheck_Time CHECK(CheckIn_Time<CheckOut_Time)
-)
-
-CREATE TABLE Invoive
-(
-	InvoiceID nvarchar(10) CONSTRAINT InvoiceIDkey PRIMARY KEY,
-	CreationTime datetime NOT NULL,
-	Price BIGINT NOT NULL,
-	InvoiceDetails nvarchar(10),
-	CONSTRAINT FK_InvoiceDetails FOREIGN KEY (InvoiceDetails) REFERENCES StatusInvoive_Details(InvoiceDetailsID),
-	CONSTRAINT RightPriceInvoive CHECK(Price >= 0)
-)
 CREATE OR ALTER TRIGGER tg_InsertInvoice
 ON	  Invoive 
 FOR	  INSERT
@@ -653,7 +620,7 @@ END
 
 
 --Drop Table
-/*
+
 Drop table ProductOrderDetails
 Drop table Service_Product
 Drop table Product
@@ -671,8 +638,8 @@ Drop table Staff
 Drop table Staff_Position
 Drop table Customer_TypeServices
 Drop table Customers
-Drop table TypeSerVices
-Drop table Services */
+Drop table TypeServices
+Drop table Services 
 
 
 
