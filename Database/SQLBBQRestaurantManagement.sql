@@ -110,6 +110,7 @@ CREATE TABLE Staff
 	CONSTRAINT FK_Position FOREIGN KEY (Position) REFERENCES Staff_Position(IDPosition)
 );
 
+---Thêm vào ERD
 CREATE TABLE Account
 (
 	AccountID nvarchar(10) CONSTRAINT AccountIDkey PRIMARY KEY,
@@ -136,7 +137,6 @@ CREATE TABLE Product
 	CONSTRAINT RightPriceProduct CHECK(Price >= 0)
 );
 
----Thêm vào ERD
 CREATE TABLE Service_Product 
 (
 	IDProduct nvarchar(10) ,
@@ -229,6 +229,7 @@ VALUES ('TYP111', 'Buffet room','SER111',400000),
        ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 -----TRIGGER----------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 GO
 CREATE OR ALTER TRIGGER tg_DeleteCustomer
 ON	  Customers
@@ -252,6 +253,7 @@ AS
 	FROM DELETED
 	
 	DELETE FROM Orders WHERE OrderStaff=@StaID
+	DELETE FROM Account WHERE AccountID=@StaID
 
 GO
 CREATE OR ALTER TRIGGER tg_DeleteStaff_Position
@@ -364,8 +366,234 @@ AS
 	FROM DELETED
 	
 	DELETE FROM Invoive WHERE InvoiceDetails= @InvDetailsID
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+GO
+CREATE OR ALTER TRIGGER tg_Combo
+ON	  ProductOrderDetails
+FOR	  INSERT, UPDATE
+AS
+	DECLARE 	@DetID 	nvarchar(10), @TypSerID 	nvarchar(10), @ProID 	nvarchar(10)
+	SELECT @DetID = i.OrderDetailsID, @TypSerID= sp.IDServices, @ProID = i.ProductID
+	FROM INSERTED i INNER JOIN Service_Product sp ON i.ProductID = sp.IDProduct
 
+	IF @ProID NOT IN (SELECT IDProduct FROM Service_Product)
+		return;
+	DECLARE 	@CusOrder 	nvarchar(10)
+	SELECT @CusOrder = CustomerOrder
+	FROM Orders 
+	WHERE DetailsID = @DetID
 
+	INSERT INTO Customer_TypeServices(CustomerID,IDTypeServices,Quantity,TotalMoney)
+	VALUES (@CusOrder,@TypSerID,1,0)
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+GO
+CREATE OR ALTER TRIGGER tg_CustomersInsertInvalidvalue
+ON	  Customers
+FOR	  INSERT, UPDATE
+AS
+BEGIN
+	DECLARE 	@CusID 	nvarchar(10), @NumPhone 	nvarchar(10)
+	SELECT @CusID = i.CustomerID, @NumPhone= i.NumberPhone
+	FROM INSERTED i
+
+	IF @CusID IS NULL
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'CustomerID NOT NULL'
+	END
+	ELSE IF @CusID NOT LIKE 'CUS%'
+	BEGIN
+		UPDATE Customers SET CustomerID = CONCAT('CUS',@CusID) WHERE CustomerID = @CusID
+	END
+	ELSE IF @CusID IN (SELECT CustomerID FROM  Customers)
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'CustomerID already exist'
+	END
+	IF @NumPhone IS NULL
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'NumberPhone NOT NULL'
+	END
+END
+
+GO
+CREATE OR ALTER TRIGGER tg_ServicesInsertInvalidvalue
+ON	  Services
+FOR	  INSERT, UPDATE
+AS
+BEGIN
+	DECLARE 	@IDSer 	nvarchar(10), @NameSer 	nvarchar(100)
+	SELECT @IDSer = i.IDServices, @NameSer= i.NameServices
+	FROM INSERTED i
+
+	IF @IDSer IS NULL
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'IDServices NOT NULL'
+	END
+	ELSE IF @IDSer NOT LIKE 'SER%'
+	BEGIN
+		UPDATE Services SET IDServices = CONCAT('SER',@IDSer) WHERE IDServices = @IDSer
+	END
+	ELSE IF @IDSer IN (SELECT IDServices FROM  Services)
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'IDServices already exist'
+	END
+	IF @NameSer IS NULL
+	BEGIN
+		ROLLBACK TRAN
+		PRINT '@NameSer NOT NULL'
+	END
+	ELSE IF @NameSer IN (SELECT NameServices FROM  Services)
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'NameServices already exist'
+	END
+END
+
+GO
+CREATE OR ALTER TRIGGER tg_TypeServicesInsertInvalidvalue
+ON	  TypeServices
+FOR	  INSERT, UPDATE
+AS
+BEGIN 
+	DECLARE 	@IDType 	nvarchar(10), @NameType 	nvarchar(100)
+	, @IDSer 	nvarchar(10), @Price BIGINT
+	SELECT @IDType = i.IDType , @NameType= i.NameType, @IDSer= i.IDServices, @Price =i.Price
+	FROM INSERTED i
+
+	IF @IDType IS NULL
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'IDType NOT NULL'
+	END
+	ELSE IF @IDType NOT LIKE 'SER%'
+	BEGIN
+		UPDATE TypeServices SET IDType = CONCAT('TYP3',@IDType) WHERE IDType = @IDType
+	END
+	ELSE IF @IDType IN (SELECT IDType FROM  TypeServices)
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'IDType already exist'
+	END
+
+	IF @NameType IS NULL
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'NameType NOT NULL'
+	END
+	ELSE IF @NameType IN (SELECT NameType FROM  TypeServices)
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'NameServices already exist'
+	END
+
+	IF @IDSer IS NULL
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'IDServices NOT NULL'
+	END
+	ELSE IF @IDSer LIKE 'TYP3%'
+	BEGIN
+		UPDATE TypeServices SET Price = 0 WHERE IDType = @IDType
+	END
+	ELSE IF @IDSer NOT LIKE 'TYP1%' and @IDType NOT LIKE 'TYP2%' and @IDType NOT LIKE 'TYP3%'
+	BEGIN
+		UPDATE TypeServices SET IDServices = CONCAT('SER',@IDSer) WHERE IDType = @IDType
+	END
+	ELSE IF @IDSer NOT IN (SELECT IDServices FROM  Services)
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'IDServices not in Services'
+	END
+
+	IF @Price<0
+		UPDATE TypeServices SET Price = 0 WHERE IDType = @IDType
+END
+
+GO
+CREATE OR ALTER TRIGGER tg_Customer_TypeServicesInsertInvalidvalue
+ON	  Customer_TypeServices
+FOR	  INSERT, UPDATE
+AS
+BEGIN 
+	DECLARE 	@Quantity 	int, @TotalMoney 	BIGINT, @CusID nvarchar(10),@IDTypeSer nvarchar(10)
+
+	SELECT @Quantity = i.Quantity , @TotalMoney= i.TotalMoney, @CusID = CustomerID, @IDTypeSer =IDTypeServices
+	FROM INSERTED i
+
+	IF @Quantity <= 0
+		UPDATE Customer_TypeServices SET Quantity =1 WHERE CustomerID = @CusID and IDTypeServices = @IDTypeSer
+	IF @TotalMoney < 0
+		UPDATE Customer_TypeServices SET TotalMoney =0 WHERE CustomerID = @CusID and IDTypeServices = @IDTypeSer
+
+END
+
+GO
+CREATE OR ALTER TRIGGER tg_TablesCustomerInsertInvalidvalue
+ON	  TablesCustomer
+FOR	  INSERT, UPDATE
+AS
+BEGIN 
+	DECLARE 	@MaxSeats 	int, @TabID nvarchar(10)
+
+	SELECT @MaxSeats = i.MaxSeats , @TabID= i.TablesID
+	FROM INSERTED i
+	IF @TabID NOT LIKE 'TAB%'
+		UPDATE TablesCustomer SET TablesID = CONCAT('TAB',@TabID) WHERE TablesID = @TabID
+	IF @MaxSeats <=0 
+		UPDATE TablesCustomer SET MaxSeats = 1 WHERE TablesID = @TabID
+	IF @MaxSeats >10
+		UPDATE TablesCustomer SET MaxSeats = 10 WHERE TablesID = @TabID
+END
+
+GO
+CREATE TABLE StatusInvoive
+(
+	StatusInvoiceID nvarchar(10) CONSTRAINT StatusInvoivekey PRIMARY KEY,
+	NameStatusInvoive nvarchar(100) NOT NULL,
+)
+
+CREATE TABLE StatusInvoive_Details
+(
+	InvoiceDetailsID nvarchar(10) CONSTRAINT IDInvoiceDetailskey PRIMARY KEY,
+	CheckIn_Time time NOT NULL,
+	CheckOut_Time time ,
+	StatusInvoive nvarchar(10),
+	CONSTRAINT FK_StatusInvoive FOREIGN KEY (StatusInvoive) REFERENCES StatusInvoive(StatusInvoiceID),
+	CONSTRAINT RightCheck_Time CHECK(CheckIn_Time<CheckOut_Time)
+)
+
+CREATE TABLE Invoive
+(
+	InvoiceID nvarchar(10) CONSTRAINT InvoiceIDkey PRIMARY KEY,
+	CreationTime datetime NOT NULL,
+	Price BIGINT NOT NULL,
+	InvoiceDetails nvarchar(10),
+	CONSTRAINT FK_InvoiceDetails FOREIGN KEY (InvoiceDetails) REFERENCES StatusInvoive_Details(InvoiceDetailsID),
+	CONSTRAINT RightPriceInvoive CHECK(Price >= 0)
+)
+CREATE OR ALTER TRIGGER tg_InsertInvoice
+ON	  Invoive 
+FOR	  INSERT
+AS
+BEGIN 
+	DECLARE  @IDDet int, @IDInv int
+
+	SELECT @IDInv = i.InvoiceID
+	FROM INSERTED i
+
+	SELECT @IDDet = COUNT(*) + 1
+	FROM StatusInvoive_Details
+
+	INSERT INTO StatusInvoive_Details(InvoiceDetailsID,CheckIn_Time,CheckOut_Time,StatusInvoive) 
+	VALUES (@IDDet,GETDATE(),null,'1'); --'1' là chưa thanh toán 
+
+	UPDATE Invoive SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv
+	END
+END
 -----VIEW-------------------------------
 -----STORED-PROCEDURE/FUNCTION----------
 -----TRANSACTION------------------------
