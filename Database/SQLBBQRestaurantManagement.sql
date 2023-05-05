@@ -435,7 +435,7 @@ BEGIN
 		ROLLBACK TRAN
 		PRINT 'NameType NOT NULL'
 	END
-	ELSE IF @NameType IN (SELECT NameType FROM  TypeServices)
+	ELSE IF (SELECT COUNT(NameType) FROM  TypeServices WHERE IDType = @NameType) > 1
 	BEGIN
 		ROLLBACK TRAN
 		PRINT 'NameServices already exist'
@@ -520,8 +520,10 @@ BEGIN
 	UPDATE Invoive SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv
 	END
 END
+
 -------INSERT DATA--------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------
+go
 INSERT INTO Staff_Position(IDPosition,Position) VALUES
 ('POS001',N'Quản lí'),
 ('POS002',N'Thu Ngân'),
