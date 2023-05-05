@@ -394,6 +394,59 @@ VALUES ('TYP111', 'Buffet room','SER111',400000),
        ('TYP312', 'Piano music','SER333',0),  --combo gia đình
        ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
 -----VIEW-------------------------------
+Go
+CREATE VIEW FoodsView
+AS
+SELECT	p.NameProduct, p.Price, p.Description
+FROM	Product p, Product_Type pt
+WHERE	pt.IDType = p.Product_Type	
+		AND 
+		pt.ProductType = 'Food' 
+--SELECT * FROM FoodsView
+
+Go
+CREATE VIEW DrinksView
+AS
+SELECT	p.NameProduct, p.Price, p.Description
+FROM	Product p, Product_Type pt
+WHERE	pt.IDType = p.Product_Type	
+		AND 
+		pt.ProductType = 'Drink' 
+--SELECT * FROM DrinksView
+
+Go
+CREATE VIEW ServicesView
+AS
+SELECT	s.NameServices, ts.NameType, ts.Price
+FROM	Services s, TypeServices ts
+WHERE	s.IDServices = ts.IDServices
+--SELECT * FROM ServicesView
+
+Go 
+CREATE VIEW BuffetView
+AS
+SELECT	pt.ProductType, Description, Price, ProductState
+FROM	Product p, Product_Type pt, Service_Product sp, Services s
+WHERE	p.Product_Type = pt.IDType
+		AND sp.IDProduct = p.ProductID
+		AND sp.IDServices = s.IDServices
+		AND s.NameServices = 'Buffet'
+
+--SELECT * FROM BuffetView
+
+Go
+CREATE VIEW CustomerBookingView
+AS
+SELECT	c.NameCustomer, c.NumberPhone, i.InvoiceID, b.BookingDate, i.Price, sd.StatusInvoive
+FROM	Customers c, Booking b, Invoive i, StatusInvoive_Details sd, TablesCustomer tc, TypeServices ts
+WHERE	c.CustomerID = b.CustomerBooking
+		AND sd.InvoiceDetailsID = i.InvoiceID
+		AND i.InvoiceID = b.BookingInvoice
+		--AND tc.RoomType = ts.IDType 
+		--AND ts.IDType = b.ServiceBooking
+		--AND tc.TablesID = b.TableBooking
+--SELECT * FROM CustomerBookingView
+
 -----STORED-PROCEDURE/FUNCTION----------
 ------- Lấy sản phẩm theo loại
 go
