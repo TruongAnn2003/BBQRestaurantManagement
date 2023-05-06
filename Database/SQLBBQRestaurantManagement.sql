@@ -166,6 +166,11 @@ CREATE TABLE Orders
 	CONSTRAINT FK_CustomerOrder FOREIGN KEY (CustomerOrder) REFERENCES Customers(CustomerID),
 	CONSTRAINT FK_OrderStaff FOREIGN KEY (OrderStaff) REFERENCES Staff(StaffID)
 );
+ALTER TABLE Orders
+ADD Invoive nvarchar(10);
+
+ALTER TABLE Orders
+ADD CONSTRAINT FK_Invoive FOREIGN KEY (Invoive) REFERENCES Invoive(InvoiceID);
 
 CREATE TABLE OrderDetails
 (
@@ -284,6 +289,7 @@ AS
 	FROM DELETED
 	
 	DELETE FROM Booking WHERE BookingInvoice= @InvID
+	DELETE FROM Orders WHERE Invoive= @InvID
 
 GO
 CREATE OR ALTER TRIGGER tg_DeleteStatusInvoive
@@ -306,14 +312,26 @@ AS
 	FROM DELETED
 	
 	DELETE FROM Invoive WHERE InvoiceDetails= @InvDetailsID
+
+GO
+CREATE OR ALTER TRIGGER tg_DeleteOrderDetails
+ON	  OrderDetails
+FOR	  DELETE
+AS
+	DECLARE 	@OrderID 	nvarchar(10)
+	SELECT @OrderID=OrderID
+	FROM DELETED
+	
+	DELETE FROM Orders WHERE OrderID= @OrderID
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 GO
+
 CREATE OR ALTER TRIGGER tg_Combo
-ON	  ProductOrderDetails
+ON	  OrderDetails
 FOR	  INSERT, UPDATE
 AS
-	DECLARE 	@DetID 	nvarchar(10), @TypSerID 	nvarchar(10), @ProID 	nvarchar(10)
-	SELECT @DetID = i.OrderDetailsID, @TypSerID= sp.IDServices, @ProID = i.ProductID
+	DECLARE 	@OrderID 	nvarchar(10), @TypSerID 	nvarchar(10), @ProID 	nvarchar(10)
+	SELECT @OrderID = i.OrderID, @TypSerID= sp.IDServices, @ProID = i.ProductID
 	FROM INSERTED i INNER JOIN Service_Product sp ON i.ProductID = sp.IDProduct
 
 	IF @ProID NOT IN (SELECT IDProduct FROM Service_Product)
@@ -321,7 +339,7 @@ AS
 	DECLARE 	@CusOrder 	nvarchar(10)
 	SELECT @CusOrder = CustomerOrder
 	FROM Orders 
-	WHERE DetailsID = @DetID
+	WHERE OrderID = @OrderID
 
 	INSERT INTO Customer_TypeServices(CustomerID,IDTypeServices,Quantity,TotalMoney)
 	VALUES (@CusOrder,@TypSerID,1,0)
@@ -487,6 +505,7 @@ BEGIN
 		UPDATE TablesCustomer SET MaxSeats = 1 WHERE TablesID = @TabID
 	IF @MaxSeats >10
 		UPDATE TablesCustomer SET MaxSeats = 10 WHERE TablesID = @TabID
+	UPDATE TablesCustomer SET Status = 0 WHERE TablesID = @TabID
 END
 
 GO
