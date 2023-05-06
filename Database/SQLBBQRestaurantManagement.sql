@@ -226,18 +226,7 @@ AS
 	SELECT @ProID=ProductID
 	FROM DELETED
 	
-	DELETE FROM ProductOrderDetails WHERE ProductID=@ProID
-
-GO
-CREATE OR ALTER TRIGGER tg_DeleteProductOrderDetails
-ON	  ProductOrderDetails
-FOR	  DELETE
-AS
-	DECLARE 	@OrdDetailsID 	nvarchar(10)
-	SELECT @OrdDetailsID=OrderDetailsID
-	FROM DELETED
-	
-	DELETE FROM Orders WHERE DetailsID=@OrdDetailsID
+	DELETE FROM OrderDetails WHERE ProductID=@ProID
 
 GO
 CREATE OR ALTER TRIGGER tg_DeleteProduct_Type
@@ -518,7 +507,7 @@ BEGIN
 	VALUES (@IDDet,GETDATE(),null,'1'); --'1' là chưa thanh toán 
 
 	UPDATE Invoive SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv
-	END
+
 END
 
 -------INSERT DATA--------------------------
