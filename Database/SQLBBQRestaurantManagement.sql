@@ -245,39 +245,39 @@ INSERT INTO Customers (CustomerID, NameCustomer, NumberPhone)VALUES
 ('CUS026', 'Dwayne Johnson', '392-222-3213'); 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO StatusInvoice(StatusInvoiceID, NameStatusInvoice) VALUES
-('STA001', 'Pending'),
-('STA002', 'Paid'),
-('STA003', 'Cancelled'),
-('STA004', 'Checked in'),
-('STA005', 'Checked out')
+('STATUS001', 'Pending'),
+('STATUS002', 'Paid'),
+('STATUS003', 'Cancelled'),
+('STATUS004', 'Checked in'),
+('STATUS005', 'Checked out')
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO StatusInvoice_Details(InvoiceDetailsID, CheckIn_Time, CheckOut_Time, StatusInvoice) VALUES
-('DEID001', null, null, 'STA002'),
-('DEID002', null, null, 'STA002'),
-('DEID003', null, null, 'STA001'),
-('DEID004', '09:49:12', null, 'STA004'),
-('DEID005', null, null, 'STA003'),
-('DEID006', '12:30:23', '13:41:32', 'STA005'),
-('DEID007', null, null, 'STA002'),
-('DEID008', null, null, 'STA003'),
-('DEID009', '18:22:32', null, 'STA004'),
-('DEID010', '08:13:21', '09:32:02', 'STA005'),
-('DEID011', null, null, 'STA001'),
-('DEID012', '18:32:32', '19:32:32', 'STA005'),
-('DEID013', '15:33:23', '16:32:32', 'STA005'),
-('DEID014', '09:00:32', '10:32:32', 'STA005'),
-('DEID015', '11:10:21', '12:32:01', 'STA005'),
-('DEID016', '08:00:11', '09:15:21', 'STA005'),
-('DEID017', '18:21:33', '19:00:32', 'STA005'),
-('DEID018', null, null, 'STA002'),
-('DEID019', '20:00:32', '21:12:09', 'STA005'),
-('DEID020', '17:00:32', '18:18:09', 'STA005'),
-('DEID021', '14:52:33', '16:10:11', 'STA005'),
-('DEID022', '19:01:22', '20:09:31', 'STA005'),
-('DEID023', '13:32:32', '14:32:32', 'STA005'),
-('DEID024', '18:54:21', '20:00:03', 'STA005'),
-('DEID025', '15:33:11', '16:32:32', 'STA005'),
-('DEID026', '18:32:43', '19:32:32', 'STA005');
+('DEID001', null, null, 'STATUS002'),
+('DEID002', null, null, 'STATUS002'),
+('DEID003', null, null, 'STATUS001'),
+('DEID004', '09:49:12', null, 'STATUS004'),
+('DEID005', null, null, 'STATUS003'),
+('DEID006', '12:30:23', '13:41:32', 'STATUS005'),
+('DEID007', null, null, 'STATUS002'),
+('DEID008', null, null, 'STATUS003'),
+('DEID009', '18:22:32', null, 'STATUS004'),
+('DEID010', '08:13:21', '09:32:02', 'STATUS005'),
+('DEID011', null, null, 'STATUS001'),
+('DEID012', '18:32:32', '19:32:32', 'STATUS005'),
+('DEID013', '15:33:23', '16:32:32', 'STATUS005'),
+('DEID014', '09:00:32', '10:32:32', 'STATUS005'),
+('DEID015', '11:10:21', '12:32:01', 'STATUS005'),
+('DEID016', '08:00:11', '09:15:21', 'STATUS005'),
+('DEID017', '18:21:33', '19:00:32', 'STATUS005'),
+('DEID018', null, null, 'STATUS002'),
+('DEID019', '20:00:32', '21:12:09', 'STATUS005'),
+('DEID020', '17:00:32', '18:18:09', 'STATUS005'),
+('DEID021', '14:52:33', '16:10:11', 'STATUS005'),
+('DEID022', '19:01:22', '20:09:31', 'STATUS005'),
+('DEID023', '13:32:32', '14:32:32', 'STATUS005'),
+('DEID024', '18:54:21', '20:00:03', 'STATUS005'),
+('DEID025', '15:33:11', '16:32:32', 'STATUS005'),
+('DEID026', '18:32:43', '19:32:32', 'STATUS005');
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
 ('IN001', '2023/02/12 18:32:43', 1200000, 'DEID001'),
@@ -839,7 +839,7 @@ ON	  Invoice
 FOR	  INSERT
 AS
 BEGIN 
-	DECLARE  @IDDet nvarchar, @IDInv nvarchar
+	DECLARE  @IDDet nvarchar(10), @IDInv nvarchar(10)
 
 	SELECT @IDInv = i.InvoiceID
 	FROM INSERTED i
@@ -994,24 +994,24 @@ END
 
 --Drop Table
 
---Drop table Service_Product
---Drop table Product
---Drop table Product_Type
---Drop table Account
---Drop table Booking
---Drop table TypeServices
---Drop table Invoice
---Drop table StatusInvoice_Details
---Drop table StatusInvoice
---Drop table Orders
---Drop table OrderDetails
---Drop table TablesCustomer
---Drop table Staff
---Drop table Staff_Position
---Drop table Customer_TypeServices
---Drop table Customers
---Drop table TypeServices
---Drop table Services 
+Drop table Service_Product
+Drop table Product
+Drop table Product_Type
+Drop table Account
+Drop table Booking
+Drop table TypeServices
+Drop table Invoice
+Drop table StatusInvoice_Details
+Drop table StatusInvoice
+Drop table Orders
+Drop table OrderDetails
+Drop table TablesCustomer
+Drop table Staff
+Drop table Staff_Position
+Drop table Customer_TypeServices
+Drop table Customers
+Drop table TypeServices
+Drop table Services 
 
 
 
