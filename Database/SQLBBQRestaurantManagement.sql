@@ -526,8 +526,8 @@ BEGIN
 	VALUES (@IDDet,GETDATE(),null,'1'); --'1' là chưa thanh toán 
 
 	UPDATE Invoive SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv
-
 END
+
 
 -------INSERT DATA--------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -824,6 +824,7 @@ END
 	
 --END
 
+------ Kiểm Tra Login
 
 
 -----TRANSACTION------------------------
