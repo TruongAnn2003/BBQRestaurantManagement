@@ -889,22 +889,13 @@ WHERE	s.IDServices = ts.IDServices
 Go
 CREATE VIEW CustomerBookingView
 AS
-SELECT	c.NameCustomer, c.NumberPhone, i.InvoiceID, b.BookingDate, i.Price, sd.StatusInvoice
-FROM	Customers c, Booking b, Invoice i, StatusInvoice_Details sd, TablesCustomer tc, TypeServices ts
-WHERE	c.CustomerID = b.CustomerBooking
-		AND sd.InvoiceDetailsID = i.InvoiceID
-		AND i.InvoiceID = b.BookingInvoice
-		--AND tc.RoomType = ts.IDType 
-		--AND ts.IDType = b.ServiceBooking
-		--AND tc.TablesID = b.TableBooking
+SELECT	c.NameCustomer, c.NumberPhone, i.InvoiceID, b.BookingDate, i.Price, s.NameStatusInvoice
+FROM	Customers c, Invoice i, Booking b, StatusInvoice_Details sd, StatusInvoice s
+WHERE	i.InvoiceDetails = sd.InvoiceDetailsID
+		AND sd.StatusInvoice = s.StatusInvoiceID
+		AND c.CustomerID = b.CustomerBooking
+		AND i.InvoiceID = b.BookingInvoice	
 --SELECT * FROM CustomerBookingView
-select * from Customers
-select * from Booking
-select * from Invoive
-select * from StatusInvoive
-select * from TablesCustomer
-select * from TypeServices
-select * from Customer_TypeServices
 
 -----STORED-PROCEDURE/FUNCTION----------
 
