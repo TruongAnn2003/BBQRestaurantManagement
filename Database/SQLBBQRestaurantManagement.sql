@@ -322,6 +322,102 @@ INSERT INTO TypeServices(IDType,NameType,IDServices,Price) VALUES
 ('TYP311', 'Guitar music','SER333',0), --combo tình nhân
 ('TYP312', 'Piano music','SER333',0),  --combo gia đình
 ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO Service_Product (IDProduct, IDServices) VALUES
+('PRO001', 'TYP111'),
+('PRO002', 'TYP112'),
+('PRO003', 'TYP113'),
+('PRO004', 'TYP114'),
+('PRO005', 'TYP211'),
+('PRO006', 'TYP212'),
+('PRO007', 'TYP311'),
+('PRO008', 'TYP312'),
+('PRO009', 'TYP313'),
+('PRO010', 'TYP313'),
+('PRO011', 'TYP312'),
+('PRO012', 'TYP111'),
+('PRO013', 'TYP111'),
+('PRO014', 'TYP112'),
+('PRO015', 'TYP112'),
+('PRO016', 'TYP113'),
+('PRO017', 'TYP113'),
+('PRO018', 'TYP114'),
+('PRO019', 'TYP114'),
+('PRO020', 'TYP212'),
+('PRO021', 'TYP311');
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO TablesCustomer(TablesID,MaxSeats,RoomType,Status) VALUES
+('TAB001', 4,'TYP111',1),
+('TAB002', 4,'TYP111',1),
+('TAB003', 4,'TYP111',1),
+('TAB004', 5,'TYP112',1),
+('TAB005', 5,'TYP112',1),
+('TAB006', 5,'TYP112',1),
+('TAB007', 6,'TYP113',1),
+('TAB008', 6,'TYP113',1),
+('TAB009', 6,'TYP113',1),
+('TAB010', 5,'TYP114',1),
+('TAB011', 5,'TYP114',1),
+('TAB012', 5,'TYP114',1);
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Customer_TypeServices(CustomerID, IDTypeServices, Quantity, TotalMoney) VALUES
+('CUS001', 'TYP111',1,400000),
+('CUS002', 'TYP112',1,200000),
+('CUS003', 'TYP113',1,300000),
+('CUS004', 'TYP114',1,50000),
+('CUS005', 'TYP211',1,20000000),
+('CUS006', 'TYP212',1,100000),
+('CUS007', 'TYP311',1,0),
+('CUS008', 'TYP312',1,0),
+('CUS009', 'TYP313',1,0),
+('CUS010', 'TYP111',1,400000),
+('CUS011', 'TYP112',1,200000),
+('CUS012', 'TYP113',1,300000),
+('CUS013', 'TYP114',1,50000),
+('CUS014', 'TYP211',1,20000000),
+('CUS015', 'TYP212',1,100000),
+('CUS016', 'TYP311',1,0),
+('CUS017', 'TYP312',1,0),
+('CUS018', 'TYP313',1,0),
+('CUS019', 'TYP111',1,400000),
+('CUS020', 'TYP112',1,200000),
+('CUS021', 'TYP113',1,300000),
+('CUS022', 'TYP114',1,50000),
+('CUS023', 'TYP211',1,20000000),
+('CUS024', 'TYP212',1,100000),
+('CUS025', 'TYP311',1,0),
+('CUS026', 'TYP312',1,0);
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+INSERT INTO Booking (BookingID,BookingDate,BookingStatus,Duration,Note,NumberCustomer,CustomerBooking,ServiceBooking,TableBooking,BookingInvoice) VALUES	
+('BI001','2022/03/04','Success',3,'None note',1,'CUS001','TYP111','TAB001','IN001'),
+('BI002','2021/03/04','Received',4,'None note',2,'CUS002','TYP112','TAB002','IN002'),
+('BI003','2023/06/01','Cancel',5,'None note',3,'CUS003','TYP113','TAB003','IN003'),
+('BI004','2023/06/04','Success',2,'None note',4,'CUS004','TYP114','TAB004','IN004'),
+('BI005','2023/01/04','Received',6,'None note',5,'CUS005','TYP111','TAB005','IN005'),
+('BI006','2022/02/04','Cancel',3,'None note',4,'CUS006','TYP112','TAB006','IN006'),
+('BI007','2022/03/03','Success',3,'None note',3,'CUS007','TYP113','TAB007','IN007'),
+('BI008','2022/03/05','Cancel',2,'None note',3,'CUS008','TYP114','TAB008','IN008'),
+('BI009','2022/03/07','Success',3,'None note',2,'CUS009','TYP111','TAB009','IN009'),
+('BI010','2023/03/08','Success',4,'None note',2,'CUS010','TYP112','TAB010','IN010'),
+('BI011','2023/03/09','Received',3,'None note',6,'CUS011','TYP113','TAB011','IN011'),
+('BI012','2022/05/04','Success',5,'None note',7,'CUS012','TYP114','TAB012','IN012'),
+('BI013','2022/06/04','Success',3,'None note',5,'CUS013','TYP111','TAB001','IN013'),
+('BI014','2022/08/04','Received',2,'None note',5,'CUS014','TYP112','TAB002','IN014'),
+('BI015','2022/07/04','Success',3,'None note',3,'CUS015','TYP113','TAB003','IN015'),
+('BI016','2022/03/06','Success',4,'None note',5,'CUS016','TYP114','TAB004','IN016'),
+('BI017','2022/03/05','Received',4,'None note',5,'CUS017','TYP111','TAB005','IN017'),
+('BI018','2022/06/04','Success',3,'None note',5,'CUS018','TYP112','TAB006','IN018'),
+('BI019','2022/04/04','Received',5,'None note',6,'CUS019','TYP113','TAB007','IN019'),
+('BI020','2022/03/04','Success',5,'None note',2,'CUS020','TYP114','TAB008','IN020'),
+('BI021','2022/02/04','Success',3,'None note',7,'CUS021','TYP111','TAB009','IN021'),
+('BI022','2022/03/04','Cancel',3,'None note',3,'CUS022','TYP112','TAB010','IN022'),
+('BI023','2022/01/04','Cancel',3,'None note',3,'CUS023','TYP113','TAB011','IN023'),
+('BI024','2022/02/04','Success',2,'None note',5,'CUS024','TYP114','TAB012','IN024'),
+('BI025','2022/03/01','Success',3,'None note',6,'CUS025','TYP111','TAB011','IN025'),
+('BI026','2022/03/02','Success',4,'None note',6,'CUS026','TYP112','TAB001','IN026');
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Product_Type (IDType, ProductType) VALUES
 ('PROTYPE001', 'Barbecue'),
@@ -762,21 +858,24 @@ END
 Go
 CREATE VIEW FoodsView
 AS
-SELECT	p.NameProduct, p.Price, p.Description
+SELECT	p.NameProduct, p.Price, p.Description, p.ProductState
 FROM	Product p, Product_Type pt
 WHERE	pt.IDType = p.Product_Type	
-		AND 
-		pt.ProductType = 'Food' 
+		AND	(pt.ProductType = 'Barbecue' 
+		OR	pt.ProductType = 'Hotpot' 
+		OR	pt.ProductType = 'Snack')
 --SELECT * FROM FoodsView
 
 Go
 CREATE VIEW DrinksView
 AS
-SELECT	p.NameProduct, p.Price, p.Description
+SELECT	p.NameProduct, p.Price, p.Description, p.ProductState
 FROM	Product p, Product_Type pt
 WHERE	pt.IDType = p.Product_Type	
-		AND 
-		pt.ProductType = 'Drink' 
+		AND (pt.ProductType = 'Soft drink' 
+		OR pt.ProductType = 'Beer'
+		OR pt.ProductType = 'Wine'
+		OR pt.ProductType = 'Milk tea')
 --SELECT * FROM DrinksView
 
 Go
@@ -786,18 +885,6 @@ SELECT	s.NameServices, ts.NameType, ts.Price
 FROM	Services s, TypeServices ts
 WHERE	s.IDServices = ts.IDServices
 --SELECT * FROM ServicesView
-
-Go 
-CREATE VIEW BuffetView
-AS
-SELECT	pt.ProductType, Description, Price, ProductState
-FROM	Product p, Product_Type pt, Service_Product sp, Services s
-WHERE	p.Product_Type = pt.IDType
-		AND sp.IDProduct = p.ProductID
-		AND sp.IDServices = s.IDServices
-		AND s.NameServices = 'Buffet'
-
---SELECT * FROM BuffetView
 
 Go
 CREATE VIEW CustomerBookingView
@@ -811,6 +898,13 @@ WHERE	c.CustomerID = b.CustomerBooking
 		--AND ts.IDType = b.ServiceBooking
 		--AND tc.TablesID = b.TableBooking
 --SELECT * FROM CustomerBookingView
+select * from Customers
+select * from Booking
+select * from Invoive
+select * from StatusInvoive
+select * from TablesCustomer
+select * from TypeServices
+select * from Customer_TypeServices
 
 -----STORED-PROCEDURE/FUNCTION----------
 
