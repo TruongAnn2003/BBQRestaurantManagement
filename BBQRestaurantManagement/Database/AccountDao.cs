@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using BBQRestaurantManagement.Database;
+﻿using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Models;
 
 namespace BBQRestaurantManagement.Databases

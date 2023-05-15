@@ -76,10 +76,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Database\BaseDao.cs" />
-    <Compile Include="Database\CustomerDAO.cs" />
+    <Compile Include="Database\Base\BaseDao.cs" />
     <Compile Include="Database\AccountDao.cs" />
     <Compile Include="Database\DBConnection.cs" />
+    <Compile Include="Database\FunctionDao.cs" />
+    <Compile Include="Database\ViewDao.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Services\AlertDialogService.cs" />
@@ -252,6 +253,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\LogoBBQ.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\menuu.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets')" />
