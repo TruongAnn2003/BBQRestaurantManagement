@@ -16,6 +16,18 @@ namespace BBQRestaurantManagement.Database.Base
         public const string DRINKS_VIEW = "DrinksView";
         public const string SERVICES_VIEW = "ServicesView";
 
+        protected const string BOOKING_TABLE = "Booking";
+        public const string BOOKING_ID = "BookingID";
+        public const string BOOKING_DATE = "BookingDate";
+        public const string BOOKING_STATUS = "BookingStatus";
+        public const string BOOKING_DURATION = "Duration";
+        public const string BOOKING_NOTE = "Note";
+        public const string BOOKING_NUMBER_CUSTOMER = "NumberCustomer";
+        public const string BOOKING_CUSTOMER_BOOKING = "CustomerBooking";
+        public const string BOOKING_SERVICE_BOOKING = "ServiceBooking";
+        public const string BOOKING_TABLE_BOOKING = "TableBooking";
+        public const string BOOKING_INVOICE = "BookingInvoice";
+
         protected DBConnection dbConnection = new DBConnection();
     }
 }
