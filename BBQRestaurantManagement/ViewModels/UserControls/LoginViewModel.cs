@@ -9,6 +9,8 @@ using BBQRestaurantManagement.Databases;
 using BBQRestaurantManagement.Models;
 using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.ViewModels.Base;
+using BBQRestaurantManagement.Database;
+using System.Windows;
 
 namespace BBQRestaurantManagement.ViewModels.UserControls
 {
@@ -18,15 +20,17 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private string password="";
 
-        public string ID { get { return id; } set { id = value; } }
+        public string ID { get { return id; } set { id = value; OnPropertyChanged(); } }
 
-        public string Password { get { return password; } set { password = value; } }
+        public string Password { get { return password; } set { password = value; OnPropertyChanged(); } }
 
         public ICommand LoginCommand { get; set; }
 
         private Action<object> loginOrderView;
 
         public Action<object> LoginOrderView { get => loginOrderView; set { loginOrderView = value; OnPropertyChanged(); } }
+
+        private FunctionDao functionDao = new FunctionDao();
 
         public LoginViewModel()
         {
@@ -35,8 +39,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void ExecuteLoginCommand(object obj)
         {
-            Account account =new  AccountDao().SearchByUserID(ID);
-            if(account != null && account.Password == Password)
+            if (functionDao.CheckLogin(ID,Password)==1)
             {
                 LoginOrderView(null);
                 return;

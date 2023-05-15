@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using BBQRestaurantManagement.Utilities;
 
 namespace BBQRestaurantManagement.Database
@@ -75,5 +77,33 @@ namespace BBQRestaurantManagement.Database
             }
             return list;
         }
+
+
+        public object GetSingleValueFromFunction(string sqlStr, params SqlParameter[] param)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = sqlStr;
+                if (param != null)
+                    foreach (SqlParameter p in param)
+                    {
+                        cmd.Parameters.Add(p);
+                    }
+                return cmd.ExecuteScalar();
+            }
+            catch (Exception ex)
+            {
+                Log.Instance.Error(nameof(DBConnection), ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return 0;
+        }
     }
+
 }

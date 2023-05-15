@@ -62,6 +62,7 @@
                     <Grid Width="auto">
                         <Button
                             Height="50"
+                            IsDefault="True"
                             Command="{Binding LoginCommand}"
                             CommandParameter="{Binding ElementName=loginWindow}"
                             materialDesign:ButtonAssist.CornerRadius="25"

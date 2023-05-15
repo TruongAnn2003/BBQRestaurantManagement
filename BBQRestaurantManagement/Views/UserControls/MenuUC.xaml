@@ -20,10 +20,47 @@
 
             <TabItem Height="100"
                  Header="Foods">
-                <Border BorderBrush="Pink" BorderThickness="0.5">
-                    <TextBlock
-                      Margin="8"
-                      Text="đồ uống nè" />
+                <Border  Margin="5">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <Border Margin="5" BorderThickness="1">
+                                <ItemsControl>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Height="300" Width="300" BorderBrush="Pink" BorderThickness="0.5" >
+                                                <StackPanel>
+                                                    <Image Width="100" Source="/Pictures/Foods.jpg"></Image>
+                                                    <TextBox Text="{Binding Name}"  HorizontalAlignment="Center"
+                                                              materialDesign:TextFieldAssist.PrefixText="Name:" />
+                                                    <TextBox Text="{Binding Price}"  HorizontalAlignment="Center"
+                                                              materialDesign:TextFieldAssist.PrefixText="Price:"
+                                                              materialDesign:TextFieldAssist.SuffixText="$"></TextBox>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                        <Button  Style="{StaticResource MaterialDesignIconButton}">
+                                                            <materialDesign:PackIcon Kind="Minus" />
+                                                        </Button>
+                                                        <TextBox Text="{Binding Quantity}"  HorizontalAlignment="Center"
+                                                              materialDesign:TextFieldAssist.PrefixText="Quantity:" />
+                                                        <Button  Style="{StaticResource MaterialDesignIconButton}">
+                                                            <materialDesign:PackIcon Kind="Plus" />
+                                                        </Button>
+                                                    </StackPanel>
+                                                    <Button materialDesign:ButtonAssist.CornerRadius="25" 
+                                                            Content="Add"
+                                                            HorizontalAlignment="Center"></Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Border>
                 
             </TabItem>
