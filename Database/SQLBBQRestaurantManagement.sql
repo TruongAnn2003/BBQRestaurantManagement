@@ -901,90 +901,167 @@ WHERE	i.InvoiceDetails = sd.InvoiceDetailsID
 
 ------- Lấy sản phẩm theo loại
 go
-CREATE OR ALTER PROC proc_GetAllProductsByType(@typeProductID varchar)
+CREATE OR ALTER PROC proc_GetAllProductsByTypeID(@typeProductID nvarchar(10))
 AS
 BEGIN
 	SELECT *
 	FROM Product
 	WHERE Product_Type = @typeProductID
 END
+/*
+	Exec proc_GetAllProductsByTypeID 'PROTYPE001'
+*/
 ------- Check In 
 go
-CREATE OR ALTER PROC CheckIn(@invoiceID varchar)
+CREATE OR ALTER PROC proc_CheckIn(@invoiceID nvarchar(10))
 AS
 BEGIN
 	UPDATE StatusInvoice_Details 
-	SET CheckIn_Time = GETDATE(), StatusInvoice = '1'
-	WHERE InvoiceDetailsID = (	SELECT InvoiceDetails
+	SET CheckIn_Time = GETDATE(), StatusInvoice = N'STA004'
+	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
 								FROM Invoice
 								WHERE InvoiceID = @invoiceID)
 END
+/*
+	Exec CheckIn 'IN001'
+*/
 ------ Check out
 go
-CREATE OR ALTER PROC CheckOut(@invoiceID varchar)
+CREATE OR ALTER PROC proc_CheckOut(@invoiceID nvarchar(10))
 AS
 BEGIN
 	UPDATE StatusInvoice_Details 
-	SET CheckOut_Time = GETDATE(), StatusInvoice = '2'
-	WHERE InvoiceDetailsID = (	SELECT InvoiceDetails
+	SET CheckOut_Time = GETDATE(), StatusInvoice = N'STA005'
+	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
 								FROM Invoice
 								WHERE InvoiceID = @invoiceID)
 END
-
+/*
+	Exec CheckOut 'IN001'
+*/
 ------  Hủy
 go
-CREATE OR ALTER PROC Cancel(@invoiceID varchar)
+CREATE OR ALTER PROC proc_Cancel(@invoiceID nvarchar(10))
 AS
 BEGIN
 	UPDATE StatusInvoice_Details 
-	SET  StatusInvoice = '0'
-	WHERE InvoiceDetailsID = (	SELECT InvoiceDetails
+	SET  StatusInvoice = N'STA003'
+	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
 								FROM Invoice
 								WHERE InvoiceID = @invoiceID)
 END
+/*
+	Exec Cancel 'IN001'
+*/
 ------  Lọc Sản phẩm theo loại
 go
-CREATE OR ALTER PROC GetAllProductsByType(@typeProductName nvarchar)
+CREATE OR ALTER PROC proc_GetAllProductsByTypeName(@typeProductTypeName nvarchar(50))
 AS
 BEGIN
 	SELECT * 
 	FROM Product P, Product_Type T
 	WHERE P.Product_Type = T.IDType 
-	AND T.ProductType = @typeProductName
+	AND T.ProductType = @typeProductTypeName
 END
------- Lọc hóa đơn theo ngày
+/*
+	Exec proc_GetAllProductsByTypeName 'Milk tea'
+*/
+------ Lọc hóa đơn theo Tháng Năm
 go
-CREATE OR ALTER PROC GetAllInvoicesByDate(@date DateTime)
+CREATE OR ALTER PROC proc_GetAllInvoicesByYearMonth(@date DateTime)
 AS
 BEGIN
 	SELECT *
-	FROM Invoice I
-	WHERE I.CreationTime = @date
+	FROM Invoice 
+	WHERE Year(CreationTime) = Year(@date) And Month(CreationTime) = Month(@date)
 END
+
+/*
+	Exec proc_GetAllInvoicesByYearMonth '2021-04-01'
+*/
+
+------ Lọc hóa đơn theo Ngày
+go
+CREATE OR ALTER PROC proc_GetAllInvoicesByDate(@date DateTime)
+AS
+BEGIN
+	SELECT *
+	FROM Invoice 
+	WHERE Year(CreationTime) = Year(@date) And Month(CreationTime) = Month(@date) And Day(CreationTime) = Day(@date)
+END
+
+/*
+	Exec proc_GetAllInvoicesByDate '2021-01-12'
+*/
 ------ Lọc bàn trống
+go
+CREATE OR ALTER PROC proc_GetAllTablesIsEmptyByRoomType(@roomtype nvarchar(10))
+AS
+BEGIN
+	SELECT *
+	FROM TablesCustomer 
+	WHERE RoomType = @roomtype And Status = 0
+END
+
+/*
+	Exec proc_GetAllTablesIsEmptyByRoomType 'TYP111'
+*/
+------ Lấy danh sách sản phẩm order
+go
+CREATE OR ALTER FUNCTION func_GetOrders(@orderID nvarchar(10)) RETURNS @ProductOrders Table (OrderID nvarchar(10),ProductID nvarchar(10),ProductName nvarchar(100),Quantity int,Price bigint,TotalPrice bigint)
+AS
+BEGIN
+	INSERT INTO @ProductOrders(OrderID,ProductID,ProductName,Quantity,Price,TotalPrice)
+	SELECT O.OrderID,P.ProductID,P.NameProduct,O.Quantity,P.Price, O.Quantity * P.Price
+	FROM OrderDetails O, Product P
+	WHERE O.OrderID = @orderID AND O.ProductID = P.ProductID
+	RETURN 
+END
 
 
------- Tạo hóa đơn
+/*
+	Select * from  func_GetOrders('ORD001')
+*/ 
+------ Tính tổng tiền hóa đơn của order
+go
+CREATE OR ALTER FUNCTION func_Bill(@OrderID nvarchar(10)) RETURNS bigint
+AS
+BEGIN
+	Declare @TotalPriceInvoice bigint;
+	SET @TotalPriceInvoice =0;
+	SELECT @TotalPriceInvoice = SUM(TotalPrice) 
+	FROM func_GetOrders(@OrderID)
+	RETURN @TotalPriceInvoice
+END
 
-
-
------- Tính tổng tiền hóa đơn
---go
---CREATE OR ALTER FUNCTION  Bill(@invoiceID varchar) RETURNS float
---AS
---BEGIN
-	
---END
-
+/*
+print dbo.func_Bill('ORD001')
+*/
 ------ Kiểm Tra Login
+go
+CREATE OR ALTER FUNCTION func_CheckLogin(@accID nvarchar(10),@password nvarchar(20)) RETURNS Bit
+AS
+BEGIN
+	IF @accID is null RETURN 0
+	IF @password is null RETURN 0
+	DECLARE @pass nvarchar(20);
+	SELECT @pass = Passwords
+	FROM Account 
+	WHERE AccountID = @accID
+	IF @pass = @password RETURN 1
+	RETURN 0
+END
 
+/*
+print dbo.func_CheckLogin('STA001','@123456')
+*/
 
 -----TRANSACTION------------------------
 
 
 
 --Drop Table
-
+/*
 Drop table Service_Product
 Drop table Product
 Drop table Product_Type
@@ -1003,6 +1080,6 @@ Drop table Customer_TypeServices
 Drop table Customers
 Drop table TypeServices
 Drop table Services 
-
+*/
 
 

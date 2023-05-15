@@ -1,4 +1,5 @@
 ﻿using BBQRestaurantManagement.Database;
+using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Utilities;
 using System;
 using System.Collections.Generic;
