@@ -28,6 +28,14 @@ namespace BBQRestaurantManagement.Database.Base
         public const string BOOKING_TABLE_BOOKING = "TableBooking";
         public const string BOOKING_INVOICE = "BookingInvoice";
 
+        protected const string PRODUCT_TABLE = "Product";
+        public const string PRODUCT_ID = "ProductID";
+        public const string PRODUCT_NAME = "NameProduct";
+        public const string PRODUCT_PRICE = "Price";
+        public const string PRODUCT_DESCRIPTION = "Description";
+        public const string PRODUCT_STATE = "ProductState";
+        public const string PRODUCT_TYPE = "Product_Type";
+
         protected DBConnection dbConnection = new DBConnection();
     }
 }
