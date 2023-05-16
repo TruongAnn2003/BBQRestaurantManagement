@@ -2,6 +2,7 @@
 using System;
 using System.Data.SqlClient;
 using BBQRestaurantManagement.Database.Base;
+using BBQRestaurantManagement.Database;
 
 namespace BBQRestaurantManagement.Models
 {
@@ -15,6 +16,7 @@ namespace BBQRestaurantManagement.Models
         private string staffID = "";
         private string invoiceID = "";
 
+        public static OrdersDao orderDao = new OrdersDao();
         public string ID { get => id; set => id = value; }
         public DateTime DatetimeOrder { get => datetimeOrder; set => datetimeOrder = value; }
         public decimal TotalUnitPrice { get => totalUnitPrice; set => totalUnitPrice = value; }
@@ -53,6 +55,23 @@ namespace BBQRestaurantManagement.Models
             {
                 Log.Instance.Error(nameof(Order), "CAST ERROR: " + ex.Message);
             }
+        }
+
+        public static Order CreateOrderIns()
+        {
+            return new Order(AutoGenerateOrderID(), DateTime.Now, 0, 1, "", CurrentUser.Ins.Staff.ID, "");
+        }
+
+        public static string AutoGenerateOrderID()
+        {
+            string orderID;
+            Random random = new Random();
+            do
+            {
+                int number = random.Next(10000);
+                orderID = $"ORD{number:0000}";
+            } while (orderDao.SearchByID(orderID) != null);
+            return orderID;
         }
     }
 }

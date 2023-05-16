@@ -1,5 +1,6 @@
 ﻿using BBQRestaurantManagement.Database;
 using BBQRestaurantManagement.Models;
+using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.Utilities;
 using BBQRestaurantManagement.ViewModels.Base;
 using BBQRestaurantManagement.Views.UserControls;
@@ -44,18 +45,19 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         public ICommand ShowCheckInOutView { get; set; }
         public ICommand PlusCommand { get; private set; }
         public ICommand MinusCommand { get; private set; }
+        public ICommand CancelOrderCommand { get; private set; }
 
         private OrdersDao orderDao = new OrdersDao();
         private TransactionsDao transactionsDao = new TransactionsDao();
+        private StoredProceduresDao proceduresDao = new StoredProceduresDao();
+
 
         public OrderViewModel()
         {
-            SetCommand();
-            ExecuteShowMenuView(null);
-            
+            SetCommand();            
         }
 
-        private void LoadOrderItem(string  id)
+        private void LoadOrderItem(string id)
         {
             ListOrderItem = orderDao.SearchByOrderID(id);
             Log.Instance.Information(nameof(OrderViewModel), "cout item = " + ListOrderItem.Count.ToString());
@@ -69,16 +71,34 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
             ShowCheckInOutView = new RelayCommand<object>(ExecuteShowCheckInOutView);
             PlusCommand = new RelayCommand<OrderDetails>(ExecutePlusCommand);
             MinusCommand = new RelayCommand<OrderDetails>(ExecuteMinusCommand);
+            CancelOrderCommand = new RelayCommand<object>(ExecuteCancelOrderCommand);
         }
+
+        private void ExecuteCancelOrderCommand(object obj)
+        {
+            if (((MenuViewModel)menuView.DataContext).OrderIns != null)
+            {
+                //Delete ??
+                //ReturnView
+                menuView.DataContext = new MenuViewModel();
+                ((MenuViewModel)(menuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
+                CurrentChildView = menuView;
+                ((MenuViewModel)menuView.DataContext).OrderIns = null;
+                ListOrderItem = new List<OrderDetails>();
+            }    
+        }
+
         private void ExecuteMinusCommand(OrderDetails orderDetails)
         {
             if (orderDetails.Quantity == 0) return;
-            orderDetails.Quantity = orderDetails.Quantity - 1;
+            proceduresDao.AddOrderProduct(orderDetails.OrderID, orderDetails.ProductID, -1);
+            LoadOrderItem(orderDetails.OrderID);
         }
 
         private void ExecutePlusCommand(OrderDetails orderDetails)
         {
-            orderDetails.Quantity = orderDetails.Quantity + 1;
+            proceduresDao.AddOrderProduct(orderDetails.OrderID, orderDetails.ProductID, 1);
+            LoadOrderItem(orderDetails.OrderID);
         }
         private void ExecuteShowCheckInOutView(object obj)
         {
@@ -101,29 +121,21 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         private void ExecuteShowMenuView(object obj)
         {
             menuView.DataContext = new MenuViewModel();
-            var newOrder = CreateOrderIns();
-            orderDao.Add(newOrder);
-            ((MenuViewModel)menuView.DataContext).OrderIns = newOrder;
+            AlertDialogService dialog = new AlertDialogService(
+               "Order",
+               "Create new order?",
+               () => 
+               {             
+                   var newOrder = Order.CreateOrderIns();
+                   orderDao.Add(newOrder);
+                   ((MenuViewModel)menuView.DataContext).OrderIns = newOrder;
+               }, null);
             ((MenuViewModel)(menuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
             CurrentChildView = menuView;
+            dialog.Show();
             StatusMenuView = true;
         }
 
-        private Order CreateOrderIns()
-        {
-            return new Order(AutoGenerateID(), DateTime.Now, 0, 1, "", CurrentUser.Ins.Staff.ID, "");
-        }
-
-        private string AutoGenerateID()
-        {
-            string orderID;
-            Random random = new Random();
-            do
-            {
-                int number = random.Next(10000000);
-                orderID = $"ORD{number:0000000}";
-            } while (orderDao.SearchByID(orderID) != null);
-            return orderID;
-        }
+    
     }
 }

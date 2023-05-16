@@ -41,28 +41,7 @@
                                                               IsReadOnly="True"
                                                               materialDesign:TextFieldAssist.PrefixText="Price:"
                                                               materialDesign:TextFieldAssist.SuffixText="$"></TextBox>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="3">
-                                                        <Button  Style="{StaticResource MaterialDesignIconButton}" 
-                                                                 Command="{Binding ElementName=menuview,Path=DataContext.MinusCommand}"
-                                                                 CommandParameter="{Binding}"
-                                                                 Margin="5 0"
-                                                                 Height="15" 
-                                                                 Width="15">
-                                                            <materialDesign:PackIcon Kind="Minus" Height="15" Width="15" />
-                                                        </Button>
-                                                        <TextBox HorizontalAlignment="Center"
-                                                                 Text="{Binding QuantityOrder, UpdateSourceTrigger=PropertyChanged}"
-                                                              materialDesign:TextFieldAssist.PrefixText="Quantity:"/>
-                                                        <Button  Style="{StaticResource MaterialDesignIconButton}" 
-                                                                 Command="{Binding ElementName=menuview,Path=DataContext.PlusCommand}"
-                                                                 CommandParameter="{Binding}"
-                                                                 Height="15" 
-                                                                 Margin="5 0"
-                                                                 Width="15">
-                                                            <materialDesign:PackIcon Kind="Plus" Height="15" Width="15" />
-                                                        </Button>
-                                                    </StackPanel>
-                                                    <Button materialDesign:ButtonAssist.CornerRadius="25"   Margin="10"
+                                                    <Button materialDesign:ButtonAssist.CornerRadius="25"   Margin="15"
                                                             Content="Add" Width="100"
                                                             Command="{Binding ElementName=menuview,Path=DataContext.AddCommand}"
                                                             CommandParameter="{Binding}"                                                          
@@ -92,7 +71,7 @@
                                 <ItemsControl Name="ListDrinks" ItemsSource="{Binding ElementName=menuview,Path=DataContext.Drinks, UpdateSourceTrigger=PropertyChanged}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Height="300" Width="250" BorderBrush="Pink" BorderThickness="0.5" Margin="10">
+                                            <Border Height="250" Width="250" BorderBrush="Pink" BorderThickness="0.5" Margin="10">
                                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                                     <Image Width="100" Source="/Pictures/Drinks.jpg"></Image>
                                                     <TextBox Text="{Binding Name}"  
@@ -100,33 +79,12 @@
                                                              Margin="3"
                                                              IsReadOnly="True"
                                                              materialDesign:TextFieldAssist.PrefixText="Name:" />
-                                                    <TextBox Text="{Binding Price}"  
+                                                    <TextBox Text="{Binding Price, StringFormat='##,#'}"  
                                                              HorizontalAlignment="Center"
                                                               IsReadOnly="True"
                                                               materialDesign:TextFieldAssist.PrefixText="Price:"
                                                               materialDesign:TextFieldAssist.SuffixText="$"></TextBox>
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="3">
-                                                        <Button  Style="{StaticResource MaterialDesignIconButton}" 
-                                                                 Command="{Binding ElementName=menuview,Path=DataContext.MinusCommand}"
-                                                                 CommandParameter="{Binding}"
-                                                                 Margin="5 0"
-                                                                 Height="15" 
-                                                                 Width="15">
-                                                            <materialDesign:PackIcon Kind="Minus" Height="15" Width="15" />
-                                                        </Button>
-                                                        <TextBox HorizontalAlignment="Center"
-                                                                 Text="{Binding QuantityOrder, UpdateSourceTrigger=PropertyChanged}"
-                                                              materialDesign:TextFieldAssist.PrefixText="Quantity:"/>
-                                                        <Button  Style="{StaticResource MaterialDesignIconButton}" 
-                                                                 Command="{Binding ElementName=menuview,Path=DataContext.PlusCommand}"
-                                                                 CommandParameter="{Binding}"
-                                                                 Height="15" 
-                                                                 Margin="5 0"
-                                                                 Width="15">
-                                                            <materialDesign:PackIcon Kind="Plus" Height="15" Width="15" />
-                                                        </Button>
-                                                    </StackPanel>
-                                                    <Button materialDesign:ButtonAssist.CornerRadius="25"   Margin="10"
+                                                    <Button materialDesign:ButtonAssist.CornerRadius="25"   Margin="15"
                                                             Content="Add" Width="100"
                                                             Command="{Binding ElementName=menuview,Path=DataContext.AddCommand}"
                                                             CommandParameter="{Binding}"                                                          

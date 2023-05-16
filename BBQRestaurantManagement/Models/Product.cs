@@ -13,7 +13,6 @@ namespace BBQRestaurantManagement.Models
         private string description = "";
         private int state = 0;
         private string typeID = "";
-        private int quantityOrder = 0;
 
         public string ID { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
@@ -21,7 +20,6 @@ namespace BBQRestaurantManagement.Models
         public string Description { get => description; set=> description = value; }
         public int State { get => state; set => state = value; }
         public string TypeID { get => typeID; set=> typeID = value; }
-        public int QuantityOrder { get => quantityOrder; set => quantityOrder = value; }
 
         public Product() { }
         

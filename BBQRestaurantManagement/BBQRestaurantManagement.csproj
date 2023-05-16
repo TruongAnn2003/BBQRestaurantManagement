@@ -95,6 +95,7 @@
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Services\AlertDialogService.cs" />
     <Compile Include="Utilities\Log.cs" />
+    <Compile Include="Utilities\Utils.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
     <Compile Include="ViewModels\UserControls\HomeViewMenuViewModel.cs" />
     <Compile Include="ViewModels\UserControls\InvoiceViewModel.cs" />

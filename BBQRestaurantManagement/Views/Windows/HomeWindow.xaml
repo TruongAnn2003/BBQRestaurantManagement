@@ -15,7 +15,7 @@
         Name="homeWindow"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Height="750" Width="1200">
+        Height="750" Width="1300">
     <Border BorderBrush="#ad1457"  BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
