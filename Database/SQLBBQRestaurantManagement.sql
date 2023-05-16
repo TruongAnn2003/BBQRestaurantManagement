@@ -509,347 +509,347 @@ INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
 
 -----TRIGGER----------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------
-GO
-CREATE OR ALTER TRIGGER tg_DeleteCustomer
-ON	  Customers
-FOR	  DELETE
-AS
-	DECLARE 	@IDCus 	nvarchar(10)
-	SELECT @IDCus = CustomerID
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteCustomer
+--ON	  Customers
+--FOR	  DELETE
+--AS
+--	DECLARE 	@IDCus 	nvarchar(10)
+--	SELECT @IDCus = CustomerID
+--	FROM DELETED
 	
-	DELETE FROM Customer_TypeServices WHERE CustomerID =@IDCus
-	DELETE FROM Booking WHERE CustomerBooking =@IDCus
-	DELETE FROM Orders WHERE CustomerOrder =@IDCus
+--	DELETE FROM Customer_TypeServices WHERE CustomerID =@IDCus
+--	DELETE FROM Booking WHERE CustomerBooking =@IDCus
+--	DELETE FROM Orders WHERE CustomerOrder =@IDCus
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteStaff
-ON	  Staff
-FOR	  DELETE
-AS
-	DECLARE 	@StaID 	nvarchar(10)
-	SELECT @StaID=StaffID
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteStaff
+--ON	  Staff
+--FOR	  DELETE
+--AS
+--	DECLARE 	@StaID 	nvarchar(10)
+--	SELECT @StaID=StaffID
+--	FROM DELETED
 	
-	DELETE FROM Orders WHERE OrderStaff=@StaID
-	DELETE FROM Account WHERE AccountID=@StaID
+--	DELETE FROM Orders WHERE OrderStaff=@StaID
+--	DELETE FROM Account WHERE AccountID=@StaID
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteStaff_Position
-ON	  Staff_Position
-FOR	  DELETE
-AS
-	DECLARE 	@IDPos 	nvarchar(10)
-	SELECT @IDPos=IDPosition
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteStaff_Position
+--ON	  Staff_Position
+--FOR	  DELETE
+--AS
+--	DECLARE 	@IDPos 	nvarchar(10)
+--	SELECT @IDPos=IDPosition
+--	FROM DELETED
 	
-	DELETE FROM Staff WHERE Position=@IDPos
+--	DELETE FROM Staff WHERE Position=@IDPos
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteProduct
-ON	  Product
-FOR	  DELETE
-AS
-	DECLARE 	@ProID 	nvarchar(10)
-	SELECT @ProID=ProductID
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteProduct
+--ON	  Product
+--FOR	  DELETE
+--AS
+--	DECLARE 	@ProID 	nvarchar(10)
+--	SELECT @ProID=ProductID
+--	FROM DELETED
 	
-	DELETE FROM OrderDetails WHERE ProductID=@ProID
+--	DELETE FROM OrderDetails WHERE ProductID=@ProID
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteProduct_Type
-ON	  Product_Type
-FOR	  DELETE
-AS
-	DECLARE 	@IDTypePro 	nvarchar(10)
-	SELECT @IDTypePro=IDType
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteProduct_Type
+--ON	  Product_Type
+--FOR	  DELETE
+--AS
+--	DECLARE 	@IDTypePro 	nvarchar(10)
+--	SELECT @IDTypePro=IDType
+--	FROM DELETED
 	
-	DELETE FROM Product WHERE Product_Type=@IDTypePro
+--	DELETE FROM Product WHERE Product_Type=@IDTypePro
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteServices
-ON	  Services
-FOR	  DELETE
-AS
-	DECLARE 	@IDSer 	nvarchar(10)
-	SELECT @IDSer=IDServices
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteServices
+--ON	  Services
+--FOR	  DELETE
+--AS
+--	DECLARE 	@IDSer 	nvarchar(10)
+--	SELECT @IDSer=IDServices
+--	FROM DELETED
 	
-	DELETE FROM TypeServices WHERE IDType= @IDSer
+--	DELETE FROM TypeServices WHERE IDType= @IDSer
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteTypeServices
-ON	  TypeServices
-FOR	  DELETE
-AS
-	DECLARE 	@IDTypeSer 	nvarchar(10)
-	SELECT @IDTypeSer=IDType
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteTypeServices
+--ON	  TypeServices
+--FOR	  DELETE
+--AS
+--	DECLARE 	@IDTypeSer 	nvarchar(10)
+--	SELECT @IDTypeSer=IDType
+--	FROM DELETED
 	
-	DELETE FROM TablesCustomer WHERE RoomType= @IDTypeSer
-	DELETE FROM Customer_TypeServices WHERE IDTypeServices= @IDTypeSer
-	DELETE FROM Booking WHERE ServiceBooking= @IDTypeSer
+--	DELETE FROM TablesCustomer WHERE RoomType= @IDTypeSer
+--	DELETE FROM Customer_TypeServices WHERE IDTypeServices= @IDTypeSer
+--	DELETE FROM Booking WHERE ServiceBooking= @IDTypeSer
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteTablesCustomer
-ON	  TablesCustomer
-FOR	  DELETE
-AS
-	DECLARE 	@TabID 	nvarchar(10)
-	SELECT @TabID=TablesID
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteTablesCustomer
+--ON	  TablesCustomer
+--FOR	  DELETE
+--AS
+--	DECLARE 	@TabID 	nvarchar(10)
+--	SELECT @TabID=TablesID
+--	FROM DELETED
 	
-	DELETE FROM Booking WHERE TableBooking= @TabID
+--	DELETE FROM Booking WHERE TableBooking= @TabID
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteInvoice
-ON	  Invoice
-FOR	  DELETE
-AS
-	DECLARE 	@InvID 	nvarchar(10)
-	SELECT @InvID=InvoiceID
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteInvoice
+--ON	  Invoice
+--FOR	  DELETE
+--AS
+--	DECLARE 	@InvID 	nvarchar(10)
+--	SELECT @InvID=InvoiceID
+--	FROM DELETED
 	
-	DELETE FROM Booking WHERE BookingInvoice= @InvID
-	DELETE FROM Orders WHERE Invoice= @InvID
+--	DELETE FROM Booking WHERE BookingInvoice= @InvID
+--	DELETE FROM Orders WHERE Invoice= @InvID
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteStatusInvoice
-ON	  StatusInvoice
-FOR	  DELETE
-AS
-	DECLARE 	@StatusInvID 	nvarchar(10)
-	SELECT @StatusInvID=StatusInvoiceID
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteStatusInvoice
+--ON	  StatusInvoice
+--FOR	  DELETE
+--AS
+--	DECLARE 	@StatusInvID 	nvarchar(10)
+--	SELECT @StatusInvID=StatusInvoiceID
+--	FROM DELETED
 	
-	DELETE FROM StatusInvoice_Details WHERE StatusInvoice= @StatusInvID
+--	DELETE FROM StatusInvoice_Details WHERE StatusInvoice= @StatusInvID
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteStatusInvoice_Details
-ON	  StatusInvoice_Details
-FOR	  DELETE
-AS
-	DECLARE 	@InvDetailsID 	nvarchar(10)
-	SELECT @InvDetailsID=InvoiceDetailsID
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteStatusInvoice_Details
+--ON	  StatusInvoice_Details
+--FOR	  DELETE
+--AS
+--	DECLARE 	@InvDetailsID 	nvarchar(10)
+--	SELECT @InvDetailsID=InvoiceDetailsID
+--	FROM DELETED
 	
-	DELETE FROM Invoice WHERE InvoiceDetails= @InvDetailsID
+--	DELETE FROM Invoice WHERE InvoiceDetails= @InvDetailsID
 
-GO
-CREATE OR ALTER TRIGGER tg_DeleteOrderDetails
-ON	  OrderDetails
-FOR	  DELETE
-AS
-	DECLARE 	@OrderID 	nvarchar(10)
-	SELECT @OrderID=OrderID
-	FROM DELETED
+--GO
+--CREATE OR ALTER TRIGGER tg_DeleteOrderDetails
+--ON	  OrderDetails
+--FOR	  DELETE
+--AS
+--	DECLARE 	@OrderID 	nvarchar(10)
+--	SELECT @OrderID=OrderID
+--	FROM DELETED
 	
-	DELETE FROM Orders WHERE OrderID= @OrderID
--------------------------------------------------------------------------------------------------------------------------------------------------------
-GO
+--	DELETE FROM Orders WHERE OrderID= @OrderID
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+--GO
 
-CREATE OR ALTER TRIGGER tg_Combo
-ON	  OrderDetails
-FOR	  INSERT, UPDATE
-AS
-	DECLARE 	@OrderID 	nvarchar(10), @TypSerID 	nvarchar(10), @ProID 	nvarchar(10)
-	SELECT @OrderID = i.OrderID, @TypSerID= sp.IDServices, @ProID = i.ProductID
-	FROM INSERTED i INNER JOIN Service_Product sp ON i.ProductID = sp.IDProduct
+--CREATE OR ALTER TRIGGER tg_Combo
+--ON	  OrderDetails
+--FOR	  INSERT, UPDATE
+--AS
+--	DECLARE 	@OrderID 	nvarchar(10), @TypSerID 	nvarchar(10), @ProID 	nvarchar(10)
+--	SELECT @OrderID = i.OrderID, @TypSerID= sp.IDServices, @ProID = i.ProductID
+--	FROM INSERTED i INNER JOIN Service_Product sp ON i.ProductID = sp.IDProduct
 
-	IF @ProID NOT IN (SELECT IDProduct FROM Service_Product)
-		return;
-	DECLARE 	@CusOrder 	nvarchar(10)
-	SELECT @CusOrder = CustomerOrder
-	FROM Orders 
-	WHERE OrderID = @OrderID
+--	IF @ProID NOT IN (SELECT IDProduct FROM Service_Product)
+--		return;
+--	DECLARE 	@CusOrder 	nvarchar(10)
+--	SELECT @CusOrder = CustomerOrder
+--	FROM Orders 
+--	WHERE OrderID = @OrderID
 
-	INSERT INTO Customer_TypeServices(CustomerID,IDTypeServices,Quantity,TotalMoney)
-	VALUES (@CusOrder,@TypSerID,1,0)
--------------------------------------------------------------------------------------------------------------------------------------------------------
-GO
-CREATE OR ALTER TRIGGER tg_CustomersInsertInvalidvalue
-ON	  Customers
-FOR	  INSERT, UPDATE
-AS
-BEGIN
-	DECLARE 	@CusID 	nvarchar(10), @NumPhone 	nvarchar(10)
-	SELECT @CusID = i.CustomerID, @NumPhone= i.NumberPhone
-	FROM INSERTED i
+--	INSERT INTO Customer_TypeServices(CustomerID,IDTypeServices,Quantity,TotalMoney)
+--	VALUES (@CusOrder,@TypSerID,1,0)
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+--GO
+--CREATE OR ALTER TRIGGER tg_CustomersInsertInvalidvalue
+--ON	  Customers
+--FOR	  INSERT, UPDATE
+--AS
+--BEGIN
+--	DECLARE 	@CusID 	nvarchar(10), @NumPhone 	nvarchar(10)
+--	SELECT @CusID = i.CustomerID, @NumPhone= i.NumberPhone
+--	FROM INSERTED i
 
-	IF @CusID IS NULL
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'CustomerID NOT NULL'
-	END
-	ELSE IF @CusID NOT LIKE 'CUS%'
-	BEGIN
-		UPDATE Customers SET CustomerID = CONCAT('CUS',@CusID) WHERE CustomerID = @CusID
-	END
-	ELSE IF (SELECT COUNT(CustomerID) FROM  Customers WHERE CustomerID = @CusID) > 1
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'CustomerID already exist'
-	END
-	IF @NumPhone IS NULL
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'NumberPhone NOT NULL'
-	END
-END
+--	IF @CusID IS NULL
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'CustomerID NOT NULL'
+--	END
+--	ELSE IF @CusID NOT LIKE 'CUS%'
+--	BEGIN
+--		UPDATE Customers SET CustomerID = CONCAT('CUS',@CusID) WHERE CustomerID = @CusID
+--	END
+--	ELSE IF (SELECT COUNT(CustomerID) FROM  Customers WHERE CustomerID = @CusID) > 1
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'CustomerID already exist'
+--	END
+--	IF @NumPhone IS NULL
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'NumberPhone NOT NULL'
+--	END
+--END
 
-GO
-CREATE OR ALTER TRIGGER tg_ServicesInsertInvalidvalue
-ON	  Services
-FOR	  INSERT, UPDATE
-AS
-BEGIN
-	DECLARE 	@IDSer 	nvarchar(10), @NameSer 	nvarchar(100)
-	SELECT @IDSer = i.IDServices, @NameSer= i.NameServices
-	FROM INSERTED i
+--GO
+--CREATE OR ALTER TRIGGER tg_ServicesInsertInvalidvalue
+--ON	  Services
+--FOR	  INSERT, UPDATE
+--AS
+--BEGIN
+--	DECLARE 	@IDSer 	nvarchar(10), @NameSer 	nvarchar(100)
+--	SELECT @IDSer = i.IDServices, @NameSer= i.NameServices
+--	FROM INSERTED i
 
-	IF @IDSer IS NULL
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'IDServices NOT NULL'
-	END
-	ELSE IF @IDSer NOT LIKE 'SER%'
-	BEGIN
-		UPDATE Services SET IDServices = CONCAT('SER',@IDSer) WHERE IDServices = @IDSer
-	END
-	ELSE IF (SELECT COUNT(IDServices) FROM  Services WHERE IDServices = @IDSer) > 1
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'IDServices already exist'
-	END
-	IF @NameSer IS NULL
-	BEGIN
-		ROLLBACK TRAN
-		PRINT '@NameSer NOT NULL'
-	END
-	ELSE IF @NameSer IN (SELECT NameServices FROM  Services)
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'NameServices already exist'
-	END
-END
+--	IF @IDSer IS NULL
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'IDServices NOT NULL'
+--	END
+--	ELSE IF @IDSer NOT LIKE 'SER%'
+--	BEGIN
+--		UPDATE Services SET IDServices = CONCAT('SER',@IDSer) WHERE IDServices = @IDSer
+--	END
+--	ELSE IF (SELECT COUNT(IDServices) FROM  Services WHERE IDServices = @IDSer) > 1
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'IDServices already exist'
+--	END
+--	IF @NameSer IS NULL
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT '@NameSer NOT NULL'
+--	END
+--	ELSE IF @NameSer IN (SELECT NameServices FROM  Services)
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'NameServices already exist'
+--	END
+--END
 
-GO
-CREATE OR ALTER TRIGGER tg_TypeServicesInsertInvalidvalue
-ON	  TypeServices
-FOR	  INSERT, UPDATE
-AS
-BEGIN 
-	DECLARE 	@IDType 	nvarchar(10), @NameType 	nvarchar(100)
-	, @IDSer 	nvarchar(10), @Price BIGINT
-	SELECT @IDType = i.IDType , @NameType= i.NameType, @IDSer= i.IDServices, @Price =i.Price
-	FROM INSERTED i
+--GO
+--CREATE OR ALTER TRIGGER tg_TypeServicesInsertInvalidvalue
+--ON	  TypeServices
+--FOR	  INSERT, UPDATE
+--AS
+--BEGIN 
+--	DECLARE 	@IDType 	nvarchar(10), @NameType 	nvarchar(100)
+--	, @IDSer 	nvarchar(10), @Price BIGINT
+--	SELECT @IDType = i.IDType , @NameType= i.NameType, @IDSer= i.IDServices, @Price =i.Price
+--	FROM INSERTED i
 
-	IF @IDType IS NULL
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'IDType NOT NULL'
-	END
-	ELSE IF @IDType NOT LIKE 'SER%'
-	BEGIN
-		UPDATE TypeServices SET IDType = CONCAT('TYP3',@IDType) WHERE IDType = @IDType
-	END
-	ELSE IF (SELECT COUNT(IDType) FROM  TypeServices WHERE IDType = @IDType) > 1
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'IDType already exist'
-	END
+--	IF @IDType IS NULL
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'IDType NOT NULL'
+--	END
+--	ELSE IF @IDType NOT LIKE 'SER%'
+--	BEGIN
+--		UPDATE TypeServices SET IDType = CONCAT('TYP3',@IDType) WHERE IDType = @IDType
+--	END
+--	ELSE IF (SELECT COUNT(IDType) FROM  TypeServices WHERE IDType = @IDType) > 1
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'IDType already exist'
+--	END
 
-	IF @NameType IS NULL
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'NameType NOT NULL'
-	END
-	ELSE IF (SELECT COUNT(NameType) FROM  TypeServices WHERE IDType = @NameType) > 1
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'NameServices already exist'
-	END
+--	IF @NameType IS NULL
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'NameType NOT NULL'
+--	END
+--	ELSE IF (SELECT COUNT(NameType) FROM  TypeServices WHERE IDType = @NameType) > 1
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'NameServices already exist'
+--	END
 
-	IF @IDSer IS NULL
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'IDServices NOT NULL'
-	END
-	ELSE IF @IDSer LIKE 'TYP3%'
-	BEGIN
-		UPDATE TypeServices SET Price = 0 WHERE IDType = @IDType
-	END
-	ELSE IF @IDSer NOT LIKE 'TYP1%' and @IDType NOT LIKE 'TYP2%' and @IDType NOT LIKE 'TYP3%'
-	BEGIN
-		UPDATE TypeServices SET IDServices = CONCAT('SER',@IDSer) WHERE IDType = @IDType
-	END
-	ELSE IF @IDSer NOT IN (SELECT IDServices FROM  Services)
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'IDServices not in Services'
-	END
+--	IF @IDSer IS NULL
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'IDServices NOT NULL'
+--	END
+--	ELSE IF @IDSer LIKE 'TYP3%'
+--	BEGIN
+--		UPDATE TypeServices SET Price = 0 WHERE IDType = @IDType
+--	END
+--	ELSE IF @IDSer NOT LIKE 'TYP1%' and @IDType NOT LIKE 'TYP2%' and @IDType NOT LIKE 'TYP3%'
+--	BEGIN
+--		UPDATE TypeServices SET IDServices = CONCAT('SER',@IDSer) WHERE IDType = @IDType
+--	END
+--	ELSE IF @IDSer NOT IN (SELECT IDServices FROM  Services)
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'IDServices not in Services'
+--	END
 
-	IF @Price<0
-		UPDATE TypeServices SET Price = 0 WHERE IDType = @IDType
-END
+--	IF @Price<0
+--		UPDATE TypeServices SET Price = 0 WHERE IDType = @IDType
+--END
 
-GO
-CREATE OR ALTER TRIGGER tg_Customer_TypeServicesInsertInvalidvalue
-ON	  Customer_TypeServices
-FOR	  INSERT, UPDATE
-AS
-BEGIN 
-	DECLARE 	@Quantity 	int, @TotalMoney 	BIGINT, @CusID nvarchar(10),@IDTypeSer nvarchar(10)
+--GO
+--CREATE OR ALTER TRIGGER tg_Customer_TypeServicesInsertInvalidvalue
+--ON	  Customer_TypeServices
+--FOR	  INSERT, UPDATE
+--AS
+--BEGIN 
+--	DECLARE 	@Quantity 	int, @TotalMoney 	BIGINT, @CusID nvarchar(10),@IDTypeSer nvarchar(10)
 
-	SELECT @Quantity = i.Quantity , @TotalMoney= i.TotalMoney, @CusID = CustomerID, @IDTypeSer =IDTypeServices
-	FROM INSERTED i
+--	SELECT @Quantity = i.Quantity , @TotalMoney= i.TotalMoney, @CusID = CustomerID, @IDTypeSer =IDTypeServices
+--	FROM INSERTED i
 
-	IF @Quantity <= 0
-		UPDATE Customer_TypeServices SET Quantity =1 WHERE CustomerID = @CusID and IDTypeServices = @IDTypeSer
-	IF @TotalMoney < 0
-		UPDATE Customer_TypeServices SET TotalMoney =0 WHERE CustomerID = @CusID and IDTypeServices = @IDTypeSer
+--	IF @Quantity <= 0
+--		UPDATE Customer_TypeServices SET Quantity =1 WHERE CustomerID = @CusID and IDTypeServices = @IDTypeSer
+--	IF @TotalMoney < 0
+--		UPDATE Customer_TypeServices SET TotalMoney =0 WHERE CustomerID = @CusID and IDTypeServices = @IDTypeSer
 
-END
+--END
 
-GO
-CREATE OR ALTER TRIGGER tg_TablesCustomerInsertInvalidvalue
-ON	  TablesCustomer
-FOR	  INSERT, UPDATE
-AS
-BEGIN 
-	DECLARE 	@MaxSeats 	int, @TabID nvarchar(10)
+--GO
+--CREATE OR ALTER TRIGGER tg_TablesCustomerInsertInvalidvalue
+--ON	  TablesCustomer
+--FOR	  INSERT, UPDATE
+--AS
+--BEGIN 
+--	DECLARE 	@MaxSeats 	int, @TabID nvarchar(10)
 
-	SELECT @MaxSeats = i.MaxSeats , @TabID= i.TablesID
-	FROM INSERTED i
-	IF @TabID NOT LIKE 'TAB%'
-		UPDATE TablesCustomer SET TablesID = CONCAT('TAB',@TabID) WHERE TablesID = @TabID
-	IF @MaxSeats <=0 
-		UPDATE TablesCustomer SET MaxSeats = 1 WHERE TablesID = @TabID
-	IF @MaxSeats >10
-		UPDATE TablesCustomer SET MaxSeats = 10 WHERE TablesID = @TabID
-	UPDATE TablesCustomer SET Status = 0 WHERE TablesID = @TabID
-END
+--	SELECT @MaxSeats = i.MaxSeats , @TabID= i.TablesID
+--	FROM INSERTED i
+--	IF @TabID NOT LIKE 'TAB%'
+--		UPDATE TablesCustomer SET TablesID = CONCAT('TAB',@TabID) WHERE TablesID = @TabID
+--	IF @MaxSeats <=0 
+--		UPDATE TablesCustomer SET MaxSeats = 1 WHERE TablesID = @TabID
+--	IF @MaxSeats >10
+--		UPDATE TablesCustomer SET MaxSeats = 10 WHERE TablesID = @TabID
+--	UPDATE TablesCustomer SET Status = 0 WHERE TablesID = @TabID
+--END
 
-GO
-CREATE OR ALTER TRIGGER tg_InsertInvoice
-ON	  Invoice 
-FOR	  INSERT
-AS
-BEGIN 
-	DECLARE  @IDDet nvarchar(10), @IDInv nvarchar(10)
+--GO
+--CREATE OR ALTER TRIGGER tg_InsertInvoice
+--ON	  Invoice 
+--FOR	  INSERT
+--AS
+--BEGIN 
+--	DECLARE  @IDDet nvarchar(10), @IDInv nvarchar(10)
 
-	SELECT @IDInv = i.InvoiceID
-	FROM INSERTED i
+--	SELECT @IDInv = i.InvoiceID
+--	FROM INSERTED i
 
-	SELECT @IDDet = COUNT(*) + 1
-	FROM StatusInvoice_Details
+--	SELECT @IDDet = COUNT(*) + 1
+--	FROM StatusInvoice_Details
 
-	INSERT INTO StatusInvoice_Details(InvoiceDetailsID,CheckIn_Time,CheckOut_Time,StatusInvoice) 
-	VALUES (@IDDet,GETDATE(),null,'STA001'); --'STA001' là chưa thanh toán 
+--	INSERT INTO StatusInvoice_Details(InvoiceDetailsID,CheckIn_Time,CheckOut_Time,StatusInvoice) 
+--	VALUES (@IDDet,GETDATE(),null,'STA001'); --'STA001' là chưa thanh toán 
 
-	UPDATE Invoice SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv
-END
+--	UPDATE Invoice SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv
+--END
 ----InsertOrderDetails
 GO
 CREATE OR ALTER TRIGGER tg_InsertOrderDetails
@@ -871,16 +871,16 @@ BEGIN
     SET OrderDetailsID = CONCAT('ODETAIL', (SELECT COUNT(*) FROM OrderDetails))
     WHERE OrderDetailsID IS NULL OR OrderDetailsID NOT LIKE 'ODETAIL%';
 END
-/*
-INSERT INTO OrderDetails (ProductID, Quantity, OrderID) VALUES
-('PRO007', '4', 'ORD001')
-*/
+
+--INSERT INTO OrderDetails (ProductID, Quantity, OrderID) VALUES
+--('PRO007', '4', 'ORD001')
+
 -----VIEW-------------------------------
 
 Go
 CREATE VIEW FoodsView
 AS
-SELECT	p.NameProduct, p.Price, p.Description, p.ProductState
+SELECT	p.ProductID ,p.NameProduct, p.Price, p.Description, p.ProductState, p.Product_Type
 FROM	Product p, Product_Type pt
 WHERE	pt.IDType = p.Product_Type	
 		AND	(pt.ProductType = 'Barbecue' 
@@ -891,7 +891,7 @@ WHERE	pt.IDType = p.Product_Type
 Go
 CREATE VIEW DrinksView
 AS
-SELECT	p.NameProduct, p.Price, p.Description, p.ProductState
+SELECT	p.ProductID ,p.NameProduct, p.Price, p.Description, p.ProductState, p.Product_Type
 FROM	Product p, Product_Type pt
 WHERE	pt.IDType = p.Product_Type	
 		AND (pt.ProductType = 'Soft drink' 
@@ -1028,6 +1028,37 @@ END
 /*
 	Exec proc_GetAllTablesIsEmptyByRoomType 'TYP111'
 */
+
+------- Add orderproduct 
+go
+CREATE OR ALTER PROC proc_AddOrderProduct(@orderID nvarchar(10),@productID nvarchar(10), @quantity int)
+AS
+BEGIN
+	Declare @orderDetailsID nvarchar(10)
+	SELECT @orderDetailsID = OrderDetailsID
+	FROM OrderDetails 
+	WHERE OrderID = @orderID And ProductID = @productID
+	IF @orderDetailsID is null
+	BEGIN
+		DECLARE @count int;
+		SELECT @count = COUNT(OrderDetailsID) FROM OrderDetails 		
+		SET @count = @count +1;
+		--print @count
+		SET @orderDetailsID = 'ODETAIL' + Cast(@count as nvarchar)
+		INSERT INTO OrderDetails(OrderDetailsID,ProductID,Quantity,OrderID) 
+		VALUES (@orderDetailsID,@productID,@quantity,@orderID)
+	END
+	ELSE
+	BEGIN
+		UPDATE OrderDetails 
+		SET Quantity = Quantity + @quantity 
+		WHERE OrderID = @orderID AND ProductID = @productID
+	END
+END
+
+	Exec proc_AddOrderProduct 'ORD019','PRO001',5
+	SELECT * FROM OrderDetails
+
 ------ Lấy danh sách sản phẩm order
 go
 CREATE OR ALTER FUNCTION func_GetOrders(@orderID nvarchar(10)) RETURNS @ProductOrders Table (OrderID nvarchar(10),ProductID nvarchar(10),ProductName nvarchar(100),Quantity int,Price bigint,TotalPrice bigint)

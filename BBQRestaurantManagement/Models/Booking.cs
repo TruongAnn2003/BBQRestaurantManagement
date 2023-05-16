@@ -1,4 +1,5 @@
 ﻿using BBQRestaurantManagement.Database;
+using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Utilities;
 using System;
 using System.Collections.Generic;
@@ -22,16 +23,16 @@ namespace BBQRestaurantManagement.Models
         private string tablesID;
         private string invoiceID;
 
-        public string ID { get; set; }
-        public DateTime Date { get; set; }
-        public string Status { get; set; }
-        public int Duration { get; set; }
-        public string Note { get; set; }
-        public int NumberCustomer { get; set; }
-        public string CustomerID { get; set; }
-        public string TypeServiceID { get; set; }
-        public string TablesID { get; set; }
-        public string InvoiceID { get; set; }
+        public string ID { get => id; set => id = value; }
+        public DateTime Date { get => date; set => date = value; }
+        public string Status { get => status; set => status = value; }
+        public int Duration { get => duration; set => duration = value; }
+        public string Note { get => note; set => note = value; }
+        public int NumberCustomer { get => numberCustomer; set => numberCustomer = value; }
+        public string CustomerID { get => customerID; set => customerID = value; }
+        public string TypeServiceID { get => typeServiceID; set => typeServiceID = value; }
+        public string TablesID { get => tablesID; set => tablesID = value; }
+        public string InvoiceID { get => invoiceID; set => invoiceID = value; }
 
 
         public Booking() { }

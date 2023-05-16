@@ -1,4 +1,8 @@
-﻿using BBQRestaurantManagement.ViewModels.Base;
+﻿using BBQRestaurantManagement.Database;
+using BBQRestaurantManagement.Models;
+using BBQRestaurantManagement.Services;
+using BBQRestaurantManagement.Utilities;
+using BBQRestaurantManagement.ViewModels.Base;
 using BBQRestaurantManagement.Views.UserControls;
 using System;
 using System.Collections.Generic;
@@ -12,7 +16,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 {
     public class OrderViewModel : BaseViewModel
     {
-        private MenuUC MenuView = new MenuUC();
+        private MenuUC menuView = new MenuUC();
         private InvoiceUC InvoiceView = new InvoiceUC();
         private TableEmptyUC TableEmptyView = new TableEmptyUC();
         private CheckInOutUC CheckInOutView = new CheckInOutUC();
@@ -29,6 +33,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         private bool statusCheckInOutView = false;
         public bool StatusCheckInOutView { get => statusCheckInOutView; set { statusCheckInOutView = value; OnPropertyChanged(); } }
 
+        private List<OrderDetails> listOrderItem;
+        public List<OrderDetails> ListOrderItem { get => listOrderItem; set { listOrderItem = value; OnPropertyChanged(); } }
 
         private ContentControl currentChildView = new ContentControl();
         public ContentControl CurrentChildView { get { return currentChildView; } set { currentChildView = value; OnPropertyChanged(); } }
@@ -37,10 +43,24 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         public ICommand ShowInvoiceView { get; set; }
         public ICommand ShowTableEmptyView { get; set; }
         public ICommand ShowCheckInOutView { get; set; }
+        public ICommand PlusCommand { get; private set; }
+        public ICommand MinusCommand { get; private set; }
+        public ICommand CancelOrderCommand { get; private set; }
+
+        private OrdersDao orderDao = new OrdersDao();
+        private TransactionsDao transactionsDao = new TransactionsDao();
+        private StoredProceduresDao proceduresDao = new StoredProceduresDao();
+
+
         public OrderViewModel()
         {
-            SetCommand();
-            ExecuteShowMenuView(null);
+            SetCommand();            
+        }
+
+        private void LoadOrderItem(string id)
+        {
+            ListOrderItem = orderDao.SearchByOrderID(id);
+            Log.Instance.Information(nameof(OrderViewModel), "cout item = " + ListOrderItem.Count.ToString());
         }
 
         private void SetCommand()
@@ -49,6 +69,36 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
             ShowInvoiceView = new RelayCommand<object>(ExecuteShowInvoiceView);
             ShowTableEmptyView = new RelayCommand<object>(ExecuteShowTableEmptyView);
             ShowCheckInOutView = new RelayCommand<object>(ExecuteShowCheckInOutView);
+            PlusCommand = new RelayCommand<OrderDetails>(ExecutePlusCommand);
+            MinusCommand = new RelayCommand<OrderDetails>(ExecuteMinusCommand);
+            CancelOrderCommand = new RelayCommand<object>(ExecuteCancelOrderCommand);
+        }
+
+        private void ExecuteCancelOrderCommand(object obj)
+        {
+            if (((MenuViewModel)menuView.DataContext).OrderIns != null)
+            {
+                //Delete ??
+                //ReturnView
+                menuView.DataContext = new MenuViewModel();
+                ((MenuViewModel)(menuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
+                CurrentChildView = menuView;
+                ((MenuViewModel)menuView.DataContext).OrderIns = null;
+                ListOrderItem = new List<OrderDetails>();
+            }    
+        }
+
+        private void ExecuteMinusCommand(OrderDetails orderDetails)
+        {
+            if (orderDetails.Quantity == 0) return;
+            proceduresDao.AddOrderProduct(orderDetails.OrderID, orderDetails.ProductID, -1);
+            LoadOrderItem(orderDetails.OrderID);
+        }
+
+        private void ExecutePlusCommand(OrderDetails orderDetails)
+        {
+            proceduresDao.AddOrderProduct(orderDetails.OrderID, orderDetails.ProductID, 1);
+            LoadOrderItem(orderDetails.OrderID);
         }
         private void ExecuteShowCheckInOutView(object obj)
         {
@@ -70,8 +120,22 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void ExecuteShowMenuView(object obj)
         {
-            CurrentChildView = MenuView;
+            menuView.DataContext = new MenuViewModel();
+            AlertDialogService dialog = new AlertDialogService(
+               "Order",
+               "Create new order?",
+               () => 
+               {             
+                   var newOrder = Order.CreateOrderIns();
+                   orderDao.Add(newOrder);
+                   ((MenuViewModel)menuView.DataContext).OrderIns = newOrder;
+               }, null);
+            ((MenuViewModel)(menuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
+            CurrentChildView = menuView;
+            dialog.Show();
             StatusMenuView = true;
         }
+
+    
     }
 }

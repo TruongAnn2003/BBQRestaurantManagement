@@ -24,6 +24,12 @@ namespace BBQRestaurantManagement.Databases
                             $"{ACCOUNT_PASSWORD}='{account.Password}' WHERE {ACCOUNT_ID}='{account.ID}'";
             dbConnection.ExecuteNonQuery(sqlStr);
         }
+
+        public Staff SearchByAccountID(string accID)
+        {
+            string sqlStr = $"SELECT * FROM {STAFF_TABLE} WHERE {STAFF_ID}='{accID}'";
+            return (Staff)dbConnection.GetSingleObject(sqlStr, reader => new Staff(reader));
+        }
         public AccountDao()
         {
 

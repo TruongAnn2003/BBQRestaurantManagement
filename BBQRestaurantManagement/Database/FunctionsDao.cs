@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace BBQRestaurantManagement.Database
 {
-    public class FunctionDao : BaseDao
+    public class FunctionsDao : BaseDao
     {
         public int CheckLogin(string accountID, string password)
         {
