@@ -45,6 +45,18 @@ namespace BBQRestaurantManagement.Database.Base
         public const string ORDER_ORDER_STAFF = "OrderStaff";
         public const string ORDER_INVOICE = "Invoice";
 
+        protected const string ORDER_DETAILS_TABLE = "OrderDetails";
+        public const string ORDER_DETAILS_ID = "OrderDetailsID";
+        public const string ORDER_DETAILS_PRODUCT_ID = "ProductID";
+        public const string ORDER_DETAILS_QUANTITY = "Quantity";
+        public const string ORDER_DETAILS_ORDER_ID = "OrderID";
+
+        protected const string STAFF_TABLE = "Staff";
+        public const string STAFF_ID = "StaffID";
+        public const string STAFF_NAME = "NameStaff";
+        public const string STAFF_NUMBER_PHONE = "NumberPhone";
+        public const string STAFF_POSITION = "Position";
+
         protected DBConnection dbConnection = new DBConnection();
     }
 }

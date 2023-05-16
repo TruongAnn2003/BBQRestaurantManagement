@@ -198,8 +198,52 @@
                                FontWeight="Bold"
                                VerticalAlignment="Center"></TextBlock>
                 </materialDesign:ColorZone>
-                <ListView  Grid.Row="1" Margin="5">
-
+                <ListView  Grid.Row="1" Margin="5" ItemsSource="{Binding ListOrderItem, UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ProductID}"  
+                                                             HorizontalAlignment="Center" 
+                                                             Margin="3"
+                                                             FontSize="10"
+                                                             materialDesign:TextFieldAssist.PrefixText="Name:" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="3">
+                                                <Button  Style="{StaticResource MaterialDesignIconButton}" 
+                                                                 Command="{Binding ElementName=orderUC,Path=DataContext.MinusCommand}"
+                                                                 CommandParameter="{Binding}"
+                                                                 Margin="5 0"
+                                                                 Height="10" 
+                                                                 Width="10">
+                                                    <materialDesign:PackIcon Kind="Minus" Height="10" Width="10" />
+                                                </Button>
+                                                <TextBox HorizontalAlignment="Center"
+                                                         FontSize="10"
+                                                        Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
+                                                    materialDesign:TextFieldAssist.PrefixText="Quantity:"/>
+                                                <Button  Style="{StaticResource MaterialDesignIconButton}" 
+                                                                 Command="{Binding ElementName=orderUC,Path=DataContext.PlusCommand}"
+                                                                 CommandParameter="{Binding}"
+                                                                 Height="10" 
+                                                                 Margin="5 0"
+                                                                 Width="10">
+                                                    <materialDesign:PackIcon Kind="Plus" Height="10" Width="10" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
                 <Border Grid.Row="2"  BorderBrush="#880e4f"  BorderThickness="0.5">
                     <Grid>

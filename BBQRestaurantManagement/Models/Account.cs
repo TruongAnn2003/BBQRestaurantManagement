@@ -14,8 +14,8 @@ namespace BBQRestaurantManagement.Models
     {
         private string id;
         private string password;
-        public string ID { get; set; }
-        public string Password { get; set; }
+        public string ID { get => id; set => id = value; }
+        public string Password { get => password; set => id = password; }
         public Account() { }
         public Account(string id,string password) 
         {

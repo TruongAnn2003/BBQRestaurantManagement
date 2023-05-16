@@ -880,7 +880,7 @@ INSERT INTO OrderDetails (ProductID, Quantity, OrderID) VALUES
 Go
 CREATE VIEW FoodsView
 AS
-SELECT	p.NameProduct, p.Price, p.Description, p.ProductState
+SELECT	p.ProductID ,p.NameProduct, p.Price, p.Description, p.ProductState, p.Product_Type
 FROM	Product p, Product_Type pt
 WHERE	pt.IDType = p.Product_Type	
 		AND	(pt.ProductType = 'Barbecue' 
@@ -891,7 +891,7 @@ WHERE	pt.IDType = p.Product_Type
 Go
 CREATE VIEW DrinksView
 AS
-SELECT	p.NameProduct, p.Price, p.Description, p.ProductState
+SELECT	p.ProductID ,p.NameProduct, p.Price, p.Description, p.ProductState, p.Product_Type
 FROM	Product p, Product_Type pt
 WHERE	pt.IDType = p.Product_Type	
 		AND (pt.ProductType = 'Soft drink' 
@@ -1027,6 +1027,37 @@ END
 
 /*
 	Exec proc_GetAllTablesIsEmptyByRoomType 'TYP111'
+*/
+
+------- Add orderproduct 
+go
+CREATE OR ALTER PROC proc_AddOrderProduct(@orderID nvarchar(10),@productID nvarchar(10), @quantity int)
+AS
+BEGIN
+	Declare @orderDetailsID nvarchar(10)
+	SELECT @orderDetailsID = OrderDetailsID
+	FROM OrderDetails 
+	WHERE OrderID = @orderID And ProductID = @productID
+	IF @orderDetailsID is null
+	BEGIN
+		DECLARE @count int;
+		SELECT @count = COUNT(OrderDetailsID) FROM OrderDetails 		
+		SET @count = @count +1;
+		--print @count
+		SET @orderDetailsID = 'ODETAIL' + Cast(@count as nvarchar)
+		INSERT INTO OrderDetails(OrderDetailsID,ProductID,Quantity,OrderID) 
+		VALUES (@orderDetailsID,@productID,@quantity,@orderID)
+	END
+	ELSE
+	BEGIN
+		UPDATE OrderDetails 
+		SET Quantity = Quantity + @quantity 
+		WHERE OrderID = @orderID AND ProductID = @productID
+	END
+END
+/*
+	Exec proc_AddOrderProduct 'ORD019','PRO001',5
+	SELECT * FROM OrderDetails
 */
 ------ Lấy danh sách sản phẩm order
 go

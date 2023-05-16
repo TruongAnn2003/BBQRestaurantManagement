@@ -30,7 +30,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         public Action<object> LoginOrderView { get => loginOrderView; set { loginOrderView = value; OnPropertyChanged(); } }
 
-        private FunctionDao functionDao = new FunctionDao();
+        private FunctionsDao functionDao = new FunctionsDao();
+        private AccountDao accountDao = new AccountDao();
 
         public LoginViewModel()
         {
@@ -41,6 +42,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         {
             if (functionDao.CheckLogin(ID,Password)==1)
             {
+                CurrentUser.Ins.Staff = accountDao.SearchByAccountID(ID);
+                Log.Instance.Information(nameof(LoginViewModel), "CurrentUser:" + CurrentUser.Ins.Staff.Name);
                 LoginOrderView(null);
                 return;
             }

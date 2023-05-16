@@ -17,6 +17,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -78,17 +79,27 @@
     </ApplicationDefinition>
     <Compile Include="Database\Base\BaseDao.cs" />
     <Compile Include="Database\AccountDao.cs" />
-    <Compile Include="Database\DBConnection.cs" />
-    <Compile Include="Database\FunctionDao.cs" />
-    <Compile Include="Database\ViewDao.cs" />
+    <Compile Include="Database\Base\DBConnection.cs" />
+    <Compile Include="Database\FunctionsDao.cs" />
+    <Compile Include="Database\OrdersDao.cs" />
+    <Compile Include="Database\StoredProceduresDao.cs" />
+    <Compile Include="Database\TransactionsDao.cs" />
+    <Compile Include="Database\ViewsDao.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderDetails.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Staff.cs" />
     <Compile Include="Services\AlertDialogService.cs" />
     <Compile Include="Utilities\Log.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
     <Compile Include="ViewModels\UserControls\HomeViewMenuViewModel.cs" />
     <Compile Include="ViewModels\UserControls\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\MenuViewModel.cs" />
     <Compile Include="ViewModels\UserControls\OrderViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ReservationViewModel.cs" />
     <Compile Include="ViewModels\Windows\HomeViewModel.cs" />
@@ -256,6 +267,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Pictures\menuu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Drinks.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Foods.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets')" />
