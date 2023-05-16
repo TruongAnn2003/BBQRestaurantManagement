@@ -178,9 +178,7 @@ CREATE TABLE OrderDetails
 	ProductID nvarchar(10),
 	Quantity int NOT NULL,
 	OrderID nvarchar(10),
-	CONSTRAINT RightOrderDetailsID CHECK(OrderDetailsID LIKE 'OD%'),
 	CONSTRAINT FK_Product FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
-	CONSTRAINT OrderDetailskey PRIMARY KEY(OrderDetailsID,ProductID),
 	CONSTRAINT FK_OrderID FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
 
@@ -852,7 +850,31 @@ BEGIN
 
 	UPDATE Invoice SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv
 END
+----InsertOrderDetails
+GO
+CREATE OR ALTER TRIGGER tg_InsertOrderDetails
+ON	  OrderDetails 
+FOR	  INSERT
+AS
+BEGIN 
+    SET NOCOUNT ON;
+	DECLARE @OrderDetailsID nvarchar(10), @ProductID nvarchar(10)
+	SELECT @OrderDetailsID = i.OrderDetailsID, @ProductID =i.ProductID FROM INSERTED i
+	IF (SELECT count(*) FROM  OrderDetails WHERE OrderDetailsID =@OrderDetailsID AND ProductID= @ProductID AND OrderDetailsID IS NOT NULL) >1
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'OrderDetailsID already exist'
+		RETURN
+	END 
 
+	UPDATE OrderDetails
+    SET OrderDetailsID = CONCAT('ODETAIL', (SELECT COUNT(*) FROM OrderDetails))
+    WHERE OrderDetailsID IS NULL OR OrderDetailsID NOT LIKE 'ODETAIL%';
+END
+/*
+INSERT INTO OrderDetails (ProductID, Quantity, OrderID) VALUES
+('PRO007', '4', 'ORD001')
+*/
 -----VIEW-------------------------------
 
 Go
