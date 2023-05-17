@@ -161,16 +161,10 @@ CREATE TABLE Orders
 	StateOrder bit NOT NULL,
 	CustomerOrder nvarchar(10),
 	OrderStaff nvarchar(10),
+	Invoice nvarchar(10),
 	CONSTRAINT RightOrderID CHECK(OrderID LIKE 'ORD%'),
 	CONSTRAINT RightTotal_Unit_Price CHECK(Total_Unit_Price >= 0),
-	CONSTRAINT FK_CustomerOrder FOREIGN KEY (CustomerOrder) REFERENCES Customers(CustomerID),
-	CONSTRAINT FK_OrderStaff FOREIGN KEY (OrderStaff) REFERENCES Staff(StaffID)
 );
-ALTER TABLE Orders
-ADD Invoice nvarchar(10);
-
-ALTER TABLE Orders
-ADD CONSTRAINT FK_Invoice FOREIGN KEY (Invoice) REFERENCES Invoice(InvoiceID);
 
 CREATE TABLE OrderDetails
 (
@@ -984,6 +978,43 @@ END
 --INSERT INTO OrderDetails (ProductID, Quantity, OrderID) VALUES
 --('PRO007', '4', 'ORD001')
 
+----Check FK Order can null
+GO
+CREATE OR ALTER TRIGGER Check_FKN_Order
+ON Orders
+FOR INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @CustomerOrder nvarchar(10),@OrderStaff nvarchar(10), @Invoice nvarchar(10)
+	SELECT @CustomerOrder = CustomerOrder,@OrderStaff = OrderStaff , @Invoice = Invoice 
+	FROM INSERTED
+    
+    IF (@CustomerOrder IS NOT NULL) AND (NOT EXISTS(SELECT CustomerID FROM Customers WHERE CustomerID = @CustomerOrder))
+    BEGIN
+		ROLLBACK TRAN
+		PRINT 'Invalid CustomerOrder'
+		RETURN;
+    END;
+
+    IF (@OrderStaff IS NOT NULL) AND (NOT EXISTS(SELECT StaffID FROM Staff WHERE StaffID = @OrderStaff))
+    BEGIN
+        ROLLBACK TRAN
+		PRINT'Invalid OrderStaff';
+        RETURN;
+    END;
+
+    IF (@Invoice IS NOT NULL) AND (NOT EXISTS(SELECT InvoiceID FROM Invoice WHERE InvoiceID = @Invoice))
+    BEGIN
+        ROLLBACK TRAN
+		PRINT'Invalid Invoice';
+        RETURN;
+    END;
+END
+
+--INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder) VALUES 
+--('ORD0027', '2023/02/12', 1200000, 1)
+--INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder,CustomerOrder) VALUES 
+--('ORD0028', '2023/02/12', 1200000, 1,'CUS027')
 -----VIEW-------------------------------
 
 Go
