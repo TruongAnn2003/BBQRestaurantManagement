@@ -276,7 +276,6 @@ INSERT INTO StatusInvoice_Details(InvoiceDetailsID, CheckIn_Time, CheckOut_Time,
 ('DEID024', '18:54:21', '20:00:03', 'STATUS005'),
 ('DEID025', '15:33:11', '16:32:32', 'STATUS005'),
 ('DEID026', '18:32:43', '19:32:32', 'STATUS005'),
-
 ('DEID027', '07:23:01', '08:13:03', 'STATUS002'),
 ('DEID028', '13:00:00', null, 'STATUS004'),
 ('DEID029', null, null, 'STATUS003'),
@@ -316,7 +315,6 @@ INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
 ('IN024', '2021/12/12 10:18:07', 186000, 'DEID024'),
 ('IN025', '2022/03/04 18:12:01', 200000, 'DEID025'),
 ('IN026', '2023/01/05 20:32:43', 400000, 'DEID026'),
-
 ('IN027', '2023/02/04 08:12:02', 150000, 'DEID027'),
 ('IN028', '2023/02/04 14:13:02', 1020000, 'DEID028'),
 ('IN029', '2023/03/01 18:30:32', 200000, 'DEID029'),
@@ -382,7 +380,17 @@ INSERT INTO TablesCustomer(TablesID,MaxSeats,RoomType,Status) VALUES
 ('TAB009', 6,'TYP113',1),
 ('TAB010', 5,'TYP114',1),
 ('TAB011', 5,'TYP114',1),
-('TAB012', 5,'TYP114',1);
+('TAB012', 5,'TYP114',1),
+('TAB013', 8,'TYP111',0),
+('TAB014', 6,'TYP112',0),
+('TAB015', 4,'TYP114',0),
+('TAB016', 2,'TYP113',0),
+('TAB017', 2,'TYP114',0),
+('TAB018', 2,'TYP111',0),
+('TAB019', 2,'TYP112',0),
+('TAB020', 2,'TYP113',0),
+('TAB021', 4,'TYP114',0),
+('TAB022', 4,'TYP111',0);
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Customer_TypeServices(CustomerID, IDTypeServices, Quantity, TotalMoney) VALUES
 ('CUS001', 'TYP111',1,400000),
@@ -511,7 +519,6 @@ INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, Custom
 ('ORD024', '2021/12/12', 156000, 1, 'CUS024', 'STA004', 'IN024'),
 ('ORD025', '2022/03/04', 200000, 1, 'CUS025', 'STA005', 'IN025'),
 ('ORD026', '2023/01/05', 400000, 1, 'CUS026', 'STA001', 'IN026'),
-
 ('ORD027', '2023/02/12', 20000, 1, 'CUS001', 'STA001', 'IN001'),
 ('ORD028', '2023/03/12', 60000, 1, 'CUS002', 'STA005', 'IN002'),
 ('ORD029', '2022/07/11', 320000, 1, 'CUS003', 'STA005', 'IN003'),
@@ -536,7 +543,6 @@ INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, Custom
 ('ORD048', '2022/04/12', 680000, 1, 'CUS022', 'STA008', 'IN022'),
 ('ORD049', '2022/11/06', 75000, 1, 'CUS023', 'STA003', 'IN023'),
 ('ORD050', '2021/12/12', 30000, 1, 'CUS024', 'STA004', 'IN024'),
-
 ('ORD051', '2023/02/04', 150000, 1, 'CUS001', 'STA002', 'IN027'),
 ('ORD052', '2023/02/04', 1020000, 1, 'CUS002', 'STA003', 'IN028'),
 ('ORD053', '2023/03/01', 200000, 1, 'CUS003', 'STA004', 'IN029'),
@@ -576,7 +582,6 @@ INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
 ('ODETAIL024', 'PRO018', '3', 'ORD024'),
 ('ODETAIL025', 'PRO003', '1', 'ORD025'),
 ('ODETAIL026', 'PRO004', '4', 'ORD026'),
-
 ('ODETAIL027', 'PRO012', '2', 'ORD027'),
 ('ODETAIL028', 'PRO016', '5', 'ORD028'),
 ('ODETAIL029', 'PRO006', '1', 'ORD029'),
@@ -601,7 +606,6 @@ INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
 ('ODETAIL048', 'PRO009', '2', 'ORD048'),
 ('ODETAIL049', 'PRO021', '3', 'ORD049'),
 ('ODETAIL050', 'PRO020', '1', 'ORD050'),
-
 ('ODETAIL051', 'PRO002', '1', 'ORD051'),
 ('ODETAIL052', 'PRO009', '3', 'ORD052'),
 ('ODETAIL053', 'PRO017', '4', 'ORD053'),
