@@ -173,10 +173,8 @@ CREATE TABLE OrderDetails
 	Quantity int NOT NULL,
 	OrderID nvarchar(10),
 	CONSTRAINT FK_Product FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
-	CONSTRAINT FK_OrderID FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+---	CONSTRAINT FK_OrderID FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
-
-
 
 -------INSERT DATA--------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1015,6 +1013,25 @@ END
 --('ORD0027', '2023/02/12', 1200000, 1)
 --INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder,CustomerOrder) VALUES 
 --('ORD0028', '2023/02/12', 1200000, 1,'CUS027')
+
+--Xóa Orders thì không ảnh hưởng các bảng khác nên không cần trigger
+--DeleteOrderDetails
+GO
+CREATE OR ALTER TRIGGER tg_DeleteOrderDetails
+ON	  OrderDetails
+FOR	  DELETE
+AS
+	DECLARE 	@OrderID 	nvarchar(10)
+	SELECT @OrderID=OrderID
+	FROM DELETED
+	IF @OrderID NOT IN (SELECT OrderID FROM OrderDetails)
+	BEGIN
+		DELETE FROM Orders WHERE OrderID= @OrderID
+	END
+
+--DELETE FROM OrderDetails WHERE OrderID ='ORD001'
+
+
 -----VIEW-------------------------------
 
 Go
