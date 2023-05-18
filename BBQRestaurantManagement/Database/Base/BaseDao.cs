@@ -115,6 +115,10 @@ namespace BBQRestaurantManagement.Database.Base
         public const string INVOICE_PRICE = "Price";
         public const string INVOICE_DETAILS = "InvoiceDetails";
 
+        protected const string STAFF_POSITION_TABLE = "Staff_Position";
+        public const string STAFF_POSITION_ID = "IDPosition";
+        public const string STAFF_POSITION_POSITION = "Position";
+
         protected DBConnection dbConnection = new DBConnection();
        // SqlTransaction transaction = dbConnection..BeginTransaction();
     }
