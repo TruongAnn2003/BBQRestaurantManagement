@@ -1100,6 +1100,20 @@ WHERE	i.InvoiceID = o.Invoice
 		AND s.InvoiceDetailsID = i.InvoiceDetails
 --SELECT * FROM InvoiceOrderView
 
+Go
+CREATE VIEW InvoiceBookingView
+AS
+SELECT	i.InvoiceID, b.BookingID, s.IDServices, 
+		b.CustomerBooking, b.TableBooking, b.BookingDate, 
+		b.BookingStatus, b.Duration, s.NameServices, 
+		ts.Price, i.Price as TotalPrice, si.StatusInvoice
+FROM	Invoice i, Booking b, Services s, TypeServices ts, StatusInvoice_Details si
+WHERE	i.InvoiceID = b.BookingInvoice
+		AND b.ServiceBooking = ts.IDType
+		AND ts.IDServices = s.IDServices
+		AND i.InvoiceDetails = si.InvoiceDetailsID
+--SELECT * FROM InvoiceBookingView
+
 
 -----STORED-PROCEDURE/FUNCTION----------
 
@@ -1287,6 +1301,287 @@ BEGIN
 	IF @pass = @password RETURN 1
 	RETURN 0
 END
+
+
+------------
+--show các sản phẩm được order của hoá đơn trong invoiceOderView
+go
+CREATE OR ALTER PROC proc_ShowInvoiceViewDetails(@invoiceID nvarchar(10)) 
+AS
+BEGIN
+	SELECT * FROM InvoiceOrderView
+	WHERE InvoiceID = @invoiceID
+END
+--exec proc_ShowInvoiceViewDetails 'IN001'
+
+Go
+CREATE OR ALTER FUNCTION func_GetInvoiceBookingDetails(@bookingID nvarchar(10))
+RETURNS @InvoiceBookingDetailsTable
+TABLE (InvoiceID nvarchar(10), BookingID nvarchar(10), IDServices nvarchar(10), CustomerBooking nvarchar(10), TableBooking nvarchar(10), BookingDate date, BookingStatus nvarchar(50), Duration int, NameServices nvarchar(100), Price bigint, TotalPrice bigint, StatusInvoice nvarchar(10))
+AS 
+BEGIN
+	INSERT INTO @InvoiceBookingDetailsTable(InvoiceID, BookingID, IDServices, CustomerBooking, TableBooking, BookingDate,BookingStatus, Duration, NameServices, Price, TotalPrice, StatusInvoice)
+	SELECT * FROM InvoiceBookingView
+	WHERE BookingID = @bookingID
+	RETURN
+END
+--select * from dbo.func_GetInvoiceBookingDetails('BI002')
+
+---------------Add, delete, update, search (Services)---------------
+Go
+CREATE OR ALTER PROC proc_AddServices(@idServices nvarchar(10), @nameServices nvarchar(100))
+AS 
+BEGIN
+	DECLARE @count INT;
+	SELECT @count = COUNT(*)
+	FROM dbo.func_SearchServices(@idServices)
+	IF @count = 0
+	BEGIN
+		INSERT INTO Services(IDServices, NameServices)
+		VALUES(@idServices, @nameServices)
+	END
+	ELSE
+	BEGIN
+		SELECT 'Da ton tai IDService nay' AS Message
+	END
+END
+--exec proc_AddServices 'SER444', 'test'
+--select * from Services
+
+Go
+CREATE OR ALTER PROC proc_UpdateServices(@idServices nvarchar(10), @new_NameServices nvarchar(50))
+AS 
+BEGIN
+	DECLARE @count INT;
+	SELECT @count = COUNT(*)
+	FROM dbo.func_SearchServices(@idServices)
+	IF @count != 0
+	BEGIN
+		UPDATE Services
+		SET NameServices = @new_NameServices
+		WHERE IDServices = @idServices
+	END
+	ELSE
+	BEGIN
+		SELECT 'Khong ton tai IDService nay' AS Message
+	END
+END
+--exec proc_UpdateServices 'SER444', 'TEST'
+
+Go
+CREATE OR ALTER PROC proc_DeleteServices(@idServices nvarchar(10))
+AS
+BEGIN
+	DECLARE @count INT;
+	SELECT @count = COUNT(*)
+	FROM dbo.func_SearchServices(@idServices)
+	IF @count != 0
+	BEGIN
+		DELETE FROM Services
+		WHERE IDServices = @idServices
+	END
+	ELSE
+	BEGIN
+		SELECT 'Khong ton tai IDService nay' AS Message
+	END
+END
+--exec proc_DeleteServices 'SER444'
+
+Go
+CREATE OR ALTER FUNCTION func_SearchServices(@idServices nvarchar(10))
+RETURNS	@ServicesTable
+TABLE	(IdServices nvarchar(10), NameServices nvarchar(50))
+AS 
+BEGIN
+	INSERT INTO @ServicesTable(IdServices, NameServices)
+	SELECT * FROM Services
+	WHERE IDServices = @idServices
+	RETURN
+END
+--go
+--DECLARE @ResultCount INT;
+--SELECT @ResultCount = COUNT(*)
+--FROM dbo.func_SearchServices('SER555');
+--IF @ResultCount = 0
+--BEGIN
+--    SELECT 'Khong tim thay' AS Message;
+--END
+--ELSE
+--BEGIN
+--    Select * from dbo.func_SearchServices('SER555')
+--END
+go
+
+--------------Add, delete, update, search (Staffs)----------------
+Go
+CREATE OR ALTER PROC proc_AddStaff(@staffID nvarchar(10), @nameStaff nvarchar(100), @numberPhone nvarchar(20), @position nvarchar(10))
+AS 
+BEGIN
+	DECLARE @count INT;
+	SELECT @count = COUNT(*)
+	FROM dbo.func_SearchStaff(@staffID)
+	IF @count = 0
+	BEGIN
+		INSERT INTO Staff(StaffID, NameStaff, NumberPhone, Position)
+		VALUES(@staffID, @nameStaff, @numberPhone, @position)
+	END
+	ELSE
+	BEGIN
+		SELECT 'Da ton tai StaffID nay' AS Message
+	END
+END
+--select * from Staff_Position
+--exec proc_AddStaff 'STA010', 'test', 'test', 'POS001'
+--select * from Staff
+
+Go
+CREATE OR ALTER PROC proc_UpdateStaff(@staffID nvarchar(10), @new_NameStaff nvarchar(100), @new_NumberPhone nvarchar(20), @new_Position nvarchar(10))
+AS 
+BEGIN
+	DECLARE @count INT;
+	SELECT @count = COUNT(*)
+	FROM dbo.func_SearchStaff(@staffID)
+	IF @count != 0
+	BEGIN
+		UPDATE Staff
+		SET NameStaff = @new_NameStaff, NumberPhone = @new_NumberPhone, Position = @new_Position
+		WHERE StaffID = @staffID
+	END
+	ELSE
+	BEGIN
+		SELECT 'Khong ton tai StaffID nay' AS Message
+	END
+END
+--exec proc_UpdateStaff 'STA010', 'TEST', 'TEST', 'POS002'
+
+Go
+CREATE OR ALTER PROC proc_DeleteStaff(@staffID nvarchar(10))
+AS
+BEGIN
+	DECLARE @count INT;
+	SELECT @count = COUNT(*)
+	FROM dbo.func_SearchStaff(@staffID)
+	IF @count != 0
+	BEGIN
+		DELETE FROM Staff
+		WHERE StaffID = @staffID
+	END
+	ELSE
+	BEGIN
+		SELECT 'Khong ton tai StaffID nay' AS Message
+	END
+END
+--exec proc_DeleteStaff 'STA010'
+
+Go
+CREATE OR ALTER FUNCTION func_SearchStaff(@staffID nvarchar(10))
+RETURNS	@StaffTable
+TABLE	(StaffID nvarchar(10), NameStaff nvarchar(100), NumberPhone nvarchar(20), Position nvarchar(10))
+AS 
+BEGIN
+	INSERT INTO @StaffTable(StaffID, NameStaff, NumberPhone, Position)
+	SELECT * FROM Staff
+	WHERE StaffID = @staffID
+	RETURN
+END
+--go
+--DECLARE @ResultCount INT;
+--SELECT @ResultCount = COUNT(*)
+--FROM dbo.func_SearchStaff('STA001');
+--IF @ResultCount = 0
+--BEGIN
+--    SELECT 'Khong tim thay' AS Message;
+--END
+--ELSE
+--BEGIN
+--    Select * from dbo.func_SearchStaff('STA001')
+--END
+Go
+
+----------------Add, delete, update, search (Orders)-------------------
+Go
+CREATE OR ALTER PROC proc_AddOrders(@orderID nvarchar(10), @datetimeOrder datetime, @total_Unit_Price bigint, @stateOrder bit, @customerOrder nvarchar(10), @orderStaff nvarchar(10), @invoice nvarchar(10))
+AS 
+BEGIN
+	DECLARE @count INT;
+	SELECT @count = COUNT(*)
+	FROM dbo.func_SearchOrders(@orderID)
+	IF @count = 0
+	BEGIN
+		INSERT INTO Orders(OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, CustomerOrder, OrderStaff, Invoice)
+		VALUES(@orderID, @datetimeOrder, @total_Unit_Price, @stateOrder, @customerOrder, @orderStaff, @invoice)
+	END
+	ELSE
+	BEGIN
+		SELECT 'Da ton tai OrderID nay' AS Message
+	END
+END
+--exec proc_AddOrders 'ORD061', '2023/02/12', 1200000, 1, 'CUS001', 'STA001', 'IN001'
+--select * from Orders
+
+Go
+CREATE OR ALTER PROC proc_UpdateOrders(@orderID nvarchar(10), @new_DatetimeOrder datetime, @new_Total_Unit_Price bigint, @new_StateOrder bit, @new_CustomerOrder nvarchar(10), @new_OrderStaff nvarchar(10), @new_Invoice nvarchar(10))
+AS 
+BEGIN
+	DECLARE @count INT;
+	SELECT @count = COUNT(*)
+	FROM dbo.func_SearchOrders(@orderID)
+	IF @count != 0
+	BEGIN
+		UPDATE Orders
+		SET DatetimeOrder = @new_DatetimeOrder, Total_Unit_Price = @new_Total_Unit_Price, StateOrder = @new_StateOrder, CustomerOrder = @new_CustomerOrder, OrderStaff = @new_OrderStaff, Invoice = @new_Invoice
+		WHERE OrderID = @orderID
+	END
+	ELSE
+	BEGIN
+		SELECT 'Khong ton tai OrderID nay' AS Message
+	END
+END
+--exec proc_UpdateOrders 'ORD061', '2023/02/12', 1200000, 0, 'CUS001', 'STA001', 'IN001'
+
+Go
+CREATE OR ALTER PROC proc_DeleteOrders(@orderID nvarchar(10))
+AS
+BEGIN
+	DECLARE @count INT;
+	SELECT @count = COUNT(*)
+	FROM dbo.func_SearchOrders(@orderID)
+	IF @count != 0
+	BEGIN
+		DELETE FROM Orders
+		WHERE OrderID = @orderID
+	END
+	ELSE
+	BEGIN
+		SELECT 'Khong ton tai OderID nay' AS Message
+	END
+END
+--exec proc_DeleteOrders 'ORD061'
+
+Go
+CREATE OR ALTER FUNCTION func_SearchOrders(@orderID nvarchar(10))
+RETURNS	@OrdersTable
+TABLE	(OrderID nvarchar(10), DatetimeOrder datetime, Total_Unit_Price bigint, StateOrder bit, CustomerOrder nvarchar(10), OrderStaff nvarchar(10), Invoice nvarchar(10))
+AS 
+BEGIN
+	INSERT INTO @OrdersTable(OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, CustomerOrder, OrderStaff, Invoice)
+	SELECT * FROM Orders
+	WHERE OrderID = @orderID
+	RETURN
+END
+--go
+--DECLARE @ResultCount INT;
+--SELECT @ResultCount = COUNT(*)
+--FROM dbo.func_SearchOrders('ORD001');
+--IF @ResultCount = 0
+--BEGIN
+--    SELECT 'Khong tim thay' AS Message;
+--END
+--ELSE
+--BEGIN
+--    Select * from dbo.func_SearchOrders('ORD001')
+--END
+
 /*
 print dbo.func_CheckLogin('STA001','@123456')
 */
