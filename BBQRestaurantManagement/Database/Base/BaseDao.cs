@@ -87,6 +87,11 @@ namespace BBQRestaurantManagement.Database.Base
         public const string CUSTOMER_TYPE_SERVICES_QUANTITY = "Quantity";
         public const string CUSTOMER_TYPE_SERVICES_TOTAL_MONEY = "TotalMoney";
 
+        protected const string TABLES_CUSTOMER_TABLE = "TablesCustomer";
+        public const string TABLES_CUSTOMER_ID = "TablesID";
+        public const string TABLES_CUSTOMER_MAX_SEATS = "MaxSeats";
+        public const string TABLES_CUSTOMER_ROOM_TYPE = "RoomType";
+
         protected DBConnection dbConnection = new DBConnection();
        // SqlTransaction transaction = dbConnection..BeginTransaction();
     }
