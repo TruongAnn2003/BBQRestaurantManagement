@@ -1262,6 +1262,7 @@ BEGIN
 	RETURN 0
 END
 
+
 /*
 print dbo.func_CheckLogin('STA001','@123456')
 */
