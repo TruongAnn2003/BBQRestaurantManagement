@@ -16,7 +16,7 @@ namespace BBQRestaurantManagement.Models
         private string customerID;
         private string idTypeServices;
         private int quantity;
-        private long totalMoney;
+        private decimal totalMoney;
 
         public string CustomerID
         {
@@ -36,7 +36,7 @@ namespace BBQRestaurantManagement.Models
             set { quantity = value; }
         }
 
-        public long TotalMoney
+        public decimal TotalMoney
         {
             get { return totalMoney; }
             set { totalMoney = value; }
@@ -44,7 +44,7 @@ namespace BBQRestaurantManagement.Models
 
         public Customer_TypeServices() { }
 
-        public Customer_TypeServices(string cusID, string idType, int quantity, long money)
+        public Customer_TypeServices(string cusID, string idType, int quantity, decimal money)
         {
             this.customerID = cusID;
             this.idTypeServices = idType;
@@ -59,7 +59,7 @@ namespace BBQRestaurantManagement.Models
                 this.customerID = (string)reader[BaseDao.CUSTOMER_TYPE_SERVICES_CUSTOMER_ID];
                 this.idTypeServices = (string)reader[BaseDao.CUSTOMER_TYPE_SERVICES_ID_TYPE_SERVICES];
                 this.quantity = (int)reader[BaseDao.CUSTOMER_TYPE_SERVICES_QUANTITY];
-                this.totalMoney = (long)reader[BaseDao.CUSTOMER_TYPE_SERVICES_TOTAL_MONEY];
+                this.totalMoney = Convert.ToDecimal(reader[BaseDao.CUSTOMER_TYPE_SERVICES_TOTAL_MONEY]);
             }
             catch (Exception e)
             {

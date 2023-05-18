@@ -15,7 +15,7 @@ namespace BBQRestaurantManagement.Models
         private string idType;
         private string nameType;
         private string idServices;
-        private long price;
+        private decimal price;
 
         public string IDType
         {
@@ -35,7 +35,7 @@ namespace BBQRestaurantManagement.Models
             set { idServices = value; }
         }
 
-        public long Price
+        public decimal Price
         {
             get { return price; }
             set { price = value; }
@@ -43,7 +43,7 @@ namespace BBQRestaurantManagement.Models
 
         public TypeServices() { }
 
-        public TypeServices(string id, string name, string idServices, long price)
+        public TypeServices(string id, string name, string idServices, decimal price)
         {
             this.idType = id;
             this.nameType = name;
@@ -58,7 +58,7 @@ namespace BBQRestaurantManagement.Models
                 idType = (string)reader[BaseDao.TYPE_SERVICES_ID];
                 nameType = (string)reader[BaseDao.TYPE_SERVICES_NAME];
                 idServices = (string)reader[BaseDao.TYPE_SERVICES_ID_SERVICES];
-                price = (long)reader[BaseDao.TYPE_SERVICES_PRICE];
+                price = Convert.ToDecimal(reader[BaseDao.TYPE_SERVICES_PRICE]);
             }
             catch(Exception e)
             {

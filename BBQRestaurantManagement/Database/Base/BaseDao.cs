@@ -93,6 +93,15 @@ namespace BBQRestaurantManagement.Database.Base
         public const string TABLES_CUSTOMER_ROOM_TYPE = "RoomType";
         public const string TABLES_CUSTOMER_STATUS = "Status";
 
+        protected const string CUSTOMERS_TABLE = "Customers";
+        public const string CUSTOMERS_ID = "CustomerID";
+        public const string CUSTOMERS_NAME = "NameCustomer";
+        public const string CUSTOMERS_PHONE = "NumberPhone";
+
+        protected const string STATUS_INVOICE_TABLE = "StatusInvoice";
+        public const string STATUS_INVOICE_ID = "StatusInvoiceID";
+        public const string STATUS_INVOICE_NAME = "NameStatusInvoice";
+
         protected DBConnection dbConnection = new DBConnection();
        // SqlTransaction transaction = dbConnection..BeginTransaction();
     }
