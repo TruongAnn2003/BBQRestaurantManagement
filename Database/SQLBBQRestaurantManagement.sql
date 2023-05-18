@@ -1076,6 +1076,18 @@ WHERE	i.InvoiceDetails = sd.InvoiceDetailsID
 		AND i.InvoiceID = b.BookingInvoice	
 --SELECT * FROM CustomerBookingView
 
+Go
+CREATE VIEW InvoiceOrderView
+AS
+SELECT	i.InvoiceID , o.OrderID, p.ProductID, i.CreationTime, p.NameProduct, p.Price, o.Total_Unit_Price, s.StatusInvoice, s.CheckIn_Time, s.CheckOut_Time
+FROM	OrderDetails od, Orders o, Invoice i, Product p, StatusInvoice_Details s
+WHERE	i.InvoiceID = o.Invoice
+		AND o.OrderID = od.OrderID
+		AND p.ProductID = od.ProductID
+		AND s.InvoiceDetailsID = i.InvoiceDetails
+--SELECT * FROM InvoiceOrderView
+
+
 -----STORED-PROCEDURE/FUNCTION----------
 
 ------- Lấy sản phẩm theo loại
@@ -1261,6 +1273,20 @@ BEGIN
 	IF @pass = @password RETURN 1
 	RETURN 0
 END
+
+
+------------
+--show các sản phẩm được order của hoá đơn trong invoiceOderView
+go
+CREATE OR ALTER PROC proc_ShowInvoiceViewDetails(@invoiceID nvarchar(10)) 
+AS
+BEGIN
+	SELECT * FROM InvoiceOrderView
+	WHERE InvoiceID = @invoiceID
+END
+
+exec proc_ShowInvoiceViewDetails 'IN001'
+
 
 /*
 print dbo.func_CheckLogin('STA001','@123456')
