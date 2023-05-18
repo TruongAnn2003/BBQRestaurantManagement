@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Expression.Interactivity.Media;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -101,6 +102,18 @@ namespace BBQRestaurantManagement.Database.Base
         protected const string STATUS_INVOICE_TABLE = "StatusInvoice";
         public const string STATUS_INVOICE_ID = "StatusInvoiceID";
         public const string STATUS_INVOICE_NAME = "NameStatusInvoice";
+
+        protected const string STATUS_INVOICE_DETAILS_TABLE = "StatusInvoice_Details";
+        public const string STATUS_INVOICE_DETAILS_ID = "InvoiceDetailsID";
+        public const string STATUS_INVOICE_DETAILS_CHECK_IN = "CheckIn_Time";
+        public const string STATUS_INVOICE_DETAILS_CHECK_OUT = "CheckOut_Time";
+        public const string STATUS_INVOICE_DETAILS_STATUS_INVOICE_ID = "StatusInvoice";
+
+        protected const string INVOICE_TABLE = "Invoice";
+        public const string INVOICE_ID = "InvoiceID";
+        public const string INVOICE_CREATION_TIME = "CreationTime";
+        public const string INVOICE_PRICE = "Price";
+        public const string INVOICE_DETAILS = "InvoiceDetails";
 
         protected DBConnection dbConnection = new DBConnection();
        // SqlTransaction transaction = dbConnection..BeginTransaction();
