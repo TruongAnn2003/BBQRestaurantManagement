@@ -119,6 +119,14 @@ namespace BBQRestaurantManagement.Database.Base
         public const string STAFF_POSITION_ID = "IDPosition";
         public const string STAFF_POSITION_POSITION = "Position";
 
+        protected const string PRODUCT_TYPE_TABLE = "Product_Type";
+        public const string PRODUCT_TYPE_ID = "IDType";
+        public const string PRODUCT_TYPE_PRODUCT_TYPE = "ProductType";
+
+        protected const string SERVICE_PRODUCT_TABLE = "Service_Product";
+        public const string SERVICE_PRODUCT_ID_PRODUCT = "IDProduct";
+        public const string SERVICE_PRODUCT_ID_SERVICES = "IDServices";
+
         protected DBConnection dbConnection = new DBConnection();
        // SqlTransaction transaction = dbConnection..BeginTransaction();
     }
