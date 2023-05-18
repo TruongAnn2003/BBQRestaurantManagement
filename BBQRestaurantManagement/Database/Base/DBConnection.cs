@@ -9,7 +9,7 @@ namespace BBQRestaurantManagement.Database.Base
     public class DBConnection
     {
         private SqlConnection conn;
-
+       
         public DBConnection()
         {
             string strConnection = "Data Source=LAPTOP-BOP0FMBM;Initial Catalog=BBQRestaurantManagement;Persist Security Info=True;User ID=sa;Password=123456";

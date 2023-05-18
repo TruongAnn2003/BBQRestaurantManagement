@@ -1224,10 +1224,10 @@ BEGIN
 		WHERE OrderID = @orderID AND ProductID = @productID
 	END
 END
-
+/*
 	Exec proc_AddOrderProduct 'ORD019','PRO001',5
 	SELECT * FROM OrderDetails
-
+*/
 ------ Lấy danh sách sản phẩm order
 go
 CREATE OR ALTER FUNCTION func_GetOrders(@orderID nvarchar(10)) RETURNS @ProductOrders Table (OrderID nvarchar(10),ProductID nvarchar(10),ProductName nvarchar(100),Quantity int,Price bigint,TotalPrice bigint)
@@ -1293,7 +1293,6 @@ print dbo.func_CheckLogin('STA001','@123456')
 */
 
 -----TRANSACTION------------------------
-
 
 
 --Drop Table

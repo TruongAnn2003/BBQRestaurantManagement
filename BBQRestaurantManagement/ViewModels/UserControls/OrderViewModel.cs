@@ -78,13 +78,21 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         {
             if (((MenuViewModel)menuView.DataContext).OrderIns != null)
             {
-                //Delete ??
-                //ReturnView
-                menuView.DataContext = new MenuViewModel();
-                ((MenuViewModel)(menuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
-                CurrentChildView = menuView;
-                ((MenuViewModel)menuView.DataContext).OrderIns = null;
-                ListOrderItem = new List<OrderDetails>();
+                AlertDialogService dialog = new AlertDialogService(
+                 "Order",
+                 "Cancel order?",
+                 () =>
+                 {
+                     //Delete ??
+                     transactionsDao.RollBackTransaction();
+                     //ReturnView
+                     menuView.DataContext = new MenuViewModel();
+                     ((MenuViewModel)(menuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
+                     CurrentChildView = menuView;
+                     ((MenuViewModel)menuView.DataContext).OrderIns = null;
+                     ListOrderItem = new List<OrderDetails>();
+                 }, null);
+                dialog.Show();
             }    
         }
 
@@ -100,6 +108,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
             proceduresDao.AddOrderProduct(orderDetails.OrderID, orderDetails.ProductID, 1);
             LoadOrderItem(orderDetails.OrderID);
         }
+
         private void ExecuteShowCheckInOutView(object obj)
         {
             CurrentChildView = CheckInOutView;
@@ -116,6 +125,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         {
             CurrentChildView = InvoiceView;
             StatusInvoiceView = true;
+            transactionsDao.CommitTransaction();
         }
 
         private void ExecuteShowMenuView(object obj)
@@ -125,7 +135,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                "Order",
                "Create new order?",
                () => 
-               {             
+               {   
+                   transactionsDao.BeginTransaction();
                    var newOrder = Order.CreateOrderIns();
                    orderDao.Add(newOrder);
                    ((MenuViewModel)menuView.DataContext).OrderIns = newOrder;

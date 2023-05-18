@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,5 +59,6 @@ namespace BBQRestaurantManagement.Database.Base
         public const string STAFF_POSITION = "Position";
 
         protected DBConnection dbConnection = new DBConnection();
+       // SqlTransaction transaction = dbConnection..BeginTransaction();
     }
 }
