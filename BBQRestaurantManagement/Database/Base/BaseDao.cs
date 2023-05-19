@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,6 +70,14 @@ namespace BBQRestaurantManagement.Database.Base
         public const string STAFF_NAME = "NameStaff";
         public const string STAFF_NUMBER_PHONE = "NumberPhone";
         public const string STAFF_POSITION = "Position";
+
+        protected const string SERVICES_TABLE = "Services";
+        public const string SERVICES_ID = "IDServices";
+        public const string SERVICES_NAME_SERVICES = "NameServices";
+
+        protected const string TYPE_SERVICES_TABLE = "TypeServices";
+        public const string TYPE_SERVICES_ID = "IDType";
+        public const 
 
         protected DBConnection dbConnection = new DBConnection();
        // SqlTransaction transaction = dbConnection..BeginTransaction();

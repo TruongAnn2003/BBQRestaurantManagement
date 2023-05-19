@@ -585,17 +585,17 @@ INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
 ('ODETAIL058', 'PRO021', '4', 'ORD058'),
 ('ODETAIL059', 'PRO014', '2', 'ORD059'),
 ('ODETAIL060', 'PRO010', '2', 'ORD060'),
-('ODETAIL060', 'PRO010', '1', 'ORD001'),
-('ODETAIL060', 'PRO011', '1', 'ORD001'),
-('ODETAIL060', 'PRO008', '3', 'ORD001'),
-('ODETAIL060', 'PRO002', '4', 'ORD002'),
-('ODETAIL060', 'PRO010', '2', 'ORD002'),
-('ODETAIL060', 'PRO012', '5', 'ORD002'),
-('ODETAIL060', 'PRO019', '1', 'ORD003'),
-('ODETAIL060', 'PRO015', '2', 'ORD004'),
-('ODETAIL060', 'PRO011', '1', 'ORD004'),
-('ODETAIL060', 'PRO002', '1', 'ORD001'),
-('ODETAIL060', 'PRO004', '2', 'ORD001');
+('ODETAIL061', 'PRO010', '1', 'ORD001'),
+('ODETAIL062', 'PRO011', '1', 'ORD001'),
+('ODETAIL063', 'PRO008', '3', 'ORD001'),
+('ODETAIL064', 'PRO002', '4', 'ORD002'),
+('ODETAIL065', 'PRO010', '2', 'ORD002'),
+('ODETAIL066', 'PRO012', '5', 'ORD002'),
+('ODETAIL067', 'PRO019', '1', 'ORD003'),
+('ODETAIL068', 'PRO015', '2', 'ORD004'),
+('ODETAIL069', 'PRO011', '1', 'ORD004'),
+('ODETAIL070', 'PRO002', '1', 'ORD001'),
+('ODETAIL071', 'PRO004', '2', 'ORD001');
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO Service_Product (IDProduct, IDServices) VALUES
@@ -620,6 +620,7 @@ INSERT INTO Service_Product (IDProduct, IDServices) VALUES
 ('PRO019', 'TYP114'),
 ('PRO020', 'TYP212'),
 ('PRO021', 'TYP311');
+
 -----TRIGGER----------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 --GO
