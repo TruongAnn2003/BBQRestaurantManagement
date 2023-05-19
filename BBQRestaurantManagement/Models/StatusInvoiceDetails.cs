@@ -1,16 +1,11 @@
-﻿using BBQRestaurantManagement.Database;
-using BBQRestaurantManagement.Database.Base;
+﻿using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Models
 {
-    public class StatusInvoice_Details
+    public class StatusInvoiceDetails
     {
         private string id;
         private DateTime checkIn;
@@ -41,9 +36,9 @@ namespace BBQRestaurantManagement.Models
             set { statusInvoiceID = value; }
         }
 
-        public StatusInvoice_Details() { }
+        public StatusInvoiceDetails() { }
 
-        public StatusInvoice_Details(string id, DateTime checkin, DateTime checkout, string statusID)
+        public StatusInvoiceDetails(string id, DateTime checkin, DateTime checkout, string statusID)
         {
             this.id = id;
             this.checkIn = checkin;
@@ -51,7 +46,7 @@ namespace BBQRestaurantManagement.Models
             this.statusInvoiceID = statusID;
         }
 
-        public StatusInvoice_Details(SqlDataReader rdr)
+        public StatusInvoiceDetails(SqlDataReader rdr)
         {
             try
             {
@@ -62,7 +57,7 @@ namespace BBQRestaurantManagement.Models
             }
             catch(Exception e)
             {
-                Log.Instance.Error(nameof(StatusInvoice_Details), "CAST ERROR: " + e.Message);
+                Log.Instance.Error(nameof(StatusInvoiceDetails), "CAST ERROR: " + e.Message);
             }
         }
     }

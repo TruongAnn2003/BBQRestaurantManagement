@@ -1,12 +1,7 @@
-﻿using BBQRestaurantManagement.Database;
-using BBQRestaurantManagement.Database.Base;
+﻿using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Models
 {

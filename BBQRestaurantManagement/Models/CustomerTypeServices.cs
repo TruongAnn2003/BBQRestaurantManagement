@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Models
 {
-    public class Customer_TypeServices
+    public class CustomerTypeServices
     {
         private string customerID;
         private string idTypeServices;
@@ -42,9 +42,9 @@ namespace BBQRestaurantManagement.Models
             set { totalMoney = value; }
         }
 
-        public Customer_TypeServices() { }
+        public CustomerTypeServices() { }
 
-        public Customer_TypeServices(string cusID, string idType, int quantity, decimal money)
+        public CustomerTypeServices(string cusID, string idType, int quantity, decimal money)
         {
             this.customerID = cusID;
             this.idTypeServices = idType;
@@ -52,7 +52,7 @@ namespace BBQRestaurantManagement.Models
             this.totalMoney = money;
         }
 
-        public Customer_TypeServices(SqlDataReader reader)
+        public CustomerTypeServices(SqlDataReader reader)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace BBQRestaurantManagement.Models
             }
             catch (Exception e)
             {
-                Log.Instance.Error(nameof(Customer_TypeServices), "CAST ERROR: " + e.Message);
+                Log.Instance.Error(nameof(CustomerTypeServices), "CAST ERROR: " + e.Message);
             }
         }
     }

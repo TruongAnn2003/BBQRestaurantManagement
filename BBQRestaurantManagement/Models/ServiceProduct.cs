@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Models
 {
-    public class Service_Product
+    public class ServiceProduct
     {
         private string idProduct;
         private string idServices;
@@ -27,15 +27,15 @@ namespace BBQRestaurantManagement.Models
             set { idServices = value; }
         }
 
-        public Service_Product() { }
+        public ServiceProduct() { }
 
-        public Service_Product(string idProduct, string idServices)
+        public ServiceProduct(string idProduct, string idServices)
         {
             this.idProduct = idProduct;
             this.idServices = idServices;
         }
 
-        public Service_Product(SqlDataReader rdr)
+        public ServiceProduct(SqlDataReader rdr)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace BBQRestaurantManagement.Models
             }
             catch(Exception ex)
             {
-                Log.Instance.Error(nameof(Service_Product), "CAST OF: " + ex.Message);
+                Log.Instance.Error(nameof(ServiceProduct), "CAST OF: " + ex.Message);
             }
         }
     }

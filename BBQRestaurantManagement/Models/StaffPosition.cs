@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Models
 {
-    public class Staff_Position
+    public class StaffPosition
     {
         private string id;
         private string position;
@@ -27,15 +27,15 @@ namespace BBQRestaurantManagement.Models
             set { position = value; }
         }
 
-        public Staff_Position() { }
+        public StaffPosition() { }
 
-        public Staff_Position(string id, string pos)
+        public StaffPosition(string id, string pos)
         {
             this.id = id;
             this.position = pos;
         }
 
-        public Staff_Position(SqlDataReader rdr)
+        public StaffPosition(SqlDataReader rdr)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace BBQRestaurantManagement.Models
             }
             catch(Exception ex)
             {
-                Log.Instance.Error(nameof(Staff_Position), "CAST ERROR: " + ex.Message);
+                Log.Instance.Error(nameof(StaffPosition), "CAST ERROR: " + ex.Message);
             }
         }
     }

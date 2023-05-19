@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.Utilities;
 
 namespace BBQRestaurantManagement.Database.Base
@@ -29,7 +30,11 @@ namespace BBQRestaurantManagement.Database.Base
             }
             catch (Exception ex)
             {
-                Log.Instance.Error(nameof(DBConnection), ex.Message);
+                AlertDialogService dialog = new AlertDialogService(
+                  $"Error from {nameof(DBConnection)}",
+                  ex.Message,
+                 () => { }, null);
+                dialog.Show();
             }
             finally
             {
@@ -44,7 +49,7 @@ namespace BBQRestaurantManagement.Database.Base
                 return list[0];
             else
             {
-                Log.Instance.Information(nameof(DBConnection), "Not found account from database");
+                Log.Instance.Information(nameof(DBConnection), "not founded object");
                 return null;
             }    
            
@@ -65,7 +70,11 @@ namespace BBQRestaurantManagement.Database.Base
             }
             catch (Exception ex)
             {
-                Log.Instance.Error(nameof(DBConnection), ex.Message);
+                AlertDialogService dialog = new AlertDialogService(
+                 $"Error from {nameof(DBConnection)}",
+                 ex.Message,
+                () => { }, null);
+                dialog.Show();
             }
             finally
             {
@@ -92,7 +101,11 @@ namespace BBQRestaurantManagement.Database.Base
             }
             catch (Exception ex)
             {
-                Log.Instance.Error(nameof(DBConnection), ex.Message);
+                AlertDialogService dialog = new AlertDialogService(
+                 $"Error from {nameof(DBConnection)}",
+                 ex.Message,
+                () => { }, null);
+                dialog.Show();
             }
             finally
             {

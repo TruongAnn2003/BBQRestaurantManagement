@@ -983,6 +983,7 @@ END
 --('PRO003', '4', 'ORD001')
 
 ----Check FK Order can null
+
 GO
 CREATE OR ALTER TRIGGER Check_FKN_Order
 ON Orders
@@ -1015,11 +1016,12 @@ BEGIN
     END;
 END
 
---INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder) VALUES 
---('ORD0027', '2023/02/12', 1200000, 1)
---INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder,CustomerOrder) VALUES 
---('ORD0028', '2023/02/12', 1200000, 1,'CUS027')
-
+/*
+INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder) VALUES 
+('ORD0111', '2023/02/12', 1200000, 1)
+INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder,CustomerOrder) VALUES 
+('ORD0111', '2023/02/12', 1200000, 1,'CUS027')
+*/
 --Xóa Orders thì không ảnh hưởng các bảng khác nên không cần trigger
 --DeleteOrderDetails
 GO
@@ -1794,8 +1796,6 @@ print dbo.func_TotalTheInvoice('IN001',50)
 --Drop Table
 /*
 Drop table Service_Product
-Drop table Product
-Drop table Product_Type
 Drop table Account
 Drop table Booking
 Drop table TypeServices
@@ -1811,6 +1811,8 @@ Drop table Customer_TypeServices
 Drop table Customers
 Drop table TypeServices
 Drop table Services 
+Drop table Product
+Drop table Product_Type
 */
 
 

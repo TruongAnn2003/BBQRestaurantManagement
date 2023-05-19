@@ -18,6 +18,8 @@ namespace BBQRestaurantManagement.Models
         private decimal price;
         private string details;
 
+        public static InvoicesDao invoicesDao = new InvoicesDao();
+
         public string ID
         {
             get { return id; }
@@ -65,6 +67,23 @@ namespace BBQRestaurantManagement.Models
             {
                 Log.Instance.Error(nameof(Invoice), "CAST ERROR: " + ex.Message);
             }
+        }
+
+        public static Invoice CreateInvoiceIns()
+        {
+            return new Invoice(AutoGenerateInvoiceID(),DateTime.Now,0,"");
+        }
+
+        public static string AutoGenerateInvoiceID()
+        {
+            string invoiceID;
+            Random random = new Random();
+            do
+            {
+                int number = random.Next(10000);
+                invoiceID = $"IN0{number:0000}";
+            } while (invoicesDao.SearchByID(invoiceID) != null);
+            return invoiceID;
         }
     }
 }

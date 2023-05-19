@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Models
 {
-    public class Product_Type
+    public class ProductType
     {
         private string id;
-        private string productType;
+        private string name;
 
         public string ID
         {
@@ -21,30 +21,30 @@ namespace BBQRestaurantManagement.Models
             set { id = value; }
         }
 
-        public string ProductType
+        public string Name
         {
-            get { return productType; }
-            set { productType = value; }
+            get { return name; }
+            set { name = value; }
         }
 
-        public Product_Type() { }
+        public ProductType() { }
 
-        public Product_Type(string id, string proType)
+        public ProductType(string id, string proType)
         {
             this.id = id;
-            this.productType = proType;
+            this.name = proType;
         }
 
-        public Product_Type(SqlDataReader rdr)
+        public ProductType(SqlDataReader rdr)
         {
             try
             {
                 this.id = rdr[BaseDao.PRODUCT_TYPE_ID].ToString();
-                this.productType = rdr[BaseDao.PRODUCT_TYPE_PRODUCT_TYPE].ToString();
+                this.name = rdr[BaseDao.PRODUCT_TYPE_PRODUCT_TYPE].ToString();
             }
             catch(Exception ex)
             {
-                Log.Instance.Error(nameof(Product_Type), "CAST OF: " + ex.Message);
+                Log.Instance.Error(nameof(Models.ProductType), "CAST OF: " + ex.Message);
             }
         }
     }

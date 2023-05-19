@@ -1,12 +1,7 @@
 ﻿using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Models;
 using BBQRestaurantManagement.Utilities;
-using System;
 using System.Collections.Generic;
-using System.IO.Packaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Database
 {
@@ -20,12 +15,20 @@ namespace BBQRestaurantManagement.Database
             Log.Instance.Information(nameof(OrdersDao),sqlStr);
             dbConnection.ExecuteNonQuery(sqlStr);
         }
-  
-        public void Update(Order order)
+
+        public void AddNonCustomerAndInvoice(Order order)
         {
+            string sqlStr = $"INSERT INTO {ORDER_TABLE} ({ORDER_ID}, {ORDER_DATETIME_ORDER},{ORDER_TOTAL_UNIT_PRICE},{ORDER_STATE},{ORDER_ORDER_STAFF})" +
+                            $"VALUES ('{order.ID}','{Utils.ToSQLFormat(order.DatetimeOrder)}',{order.TotalUnitPrice},{order.State},'{order.StaffID}')";
+            Log.Instance.Information(nameof(OrdersDao), sqlStr);
+            dbConnection.ExecuteNonQuery(sqlStr);
         }
 
-        public void Delete(string orderID) { }
+        public void Delete(string orderID) 
+        {
+            dbConnection.ExecuteNonQuery($"exec proc_DeleteOrder '{orderID}'");
+        }
+
         #endregion
         #region Search
         public Order SearchByID(string orderID)

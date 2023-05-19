@@ -16,7 +16,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 {
     public class OrderViewModel : BaseViewModel
     {
-        private MenuUC menuView = new MenuUC();
+        private MenuUC MenuView = new MenuUC();
         private InvoiceUC InvoiceView = new InvoiceUC();
         private TableEmptyUC TableEmptyView = new TableEmptyUC();
         private CheckInOutUC CheckInOutView = new CheckInOutUC();
@@ -58,8 +58,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void LoadOrderItem(string id)
         {
-            ListOrderItem = ordersDao.SearchByOrderID(id);
-            Log.Instance.Information(nameof(OrderViewModel), "cout item = " + ListOrderItem.Count.ToString());
+            ListOrderItem = ordersDao.SearchByOrderID(id);           
         }
 
         private void SetCommand()
@@ -75,20 +74,21 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void ExecuteCancelOrderCommand(object obj)
         {
-            if (((MenuViewModel)menuView.DataContext).OrderIns != null)
+            var orderIns = ((MenuViewModel)MenuView.DataContext).OrderIns;
+            if (orderIns != null)
             {
                 AlertDialogService dialog = new AlertDialogService(
                  "Order",
                  "Cancel order?",
                  () =>
                  {
-                     //Delete ??
-                     transactionsDao.RollBackTransaction();
+                     //Delete
+                     ordersDao.Delete(orderIns.ID);
                      //ReturnView
-                     menuView.DataContext = new MenuViewModel();
-                     ((MenuViewModel)(menuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
-                     CurrentChildView = menuView;
-                     ((MenuViewModel)menuView.DataContext).OrderIns = null;
+                     MenuView.DataContext = new MenuViewModel();
+                     ((MenuViewModel)(MenuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
+                     CurrentChildView = MenuView;
+                     ((MenuViewModel)MenuView.DataContext).OrderIns = null;
                      ListOrderItem = new List<OrderDetails>();
                  }, null);
                 dialog.Show();
@@ -122,30 +122,39 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void ExecuteShowInvoiceView(object obj)
         {
+            InvoiceView.DataContext = new InvoiceViewModel();
+            AlertDialogService dialog = new AlertDialogService(
+              "Order",
+              "Create Invoice?",
+              () =>
+              {
+                  var newInvoie = Invoice.CreateInvoiceIns();
+                  //add TODO
+                  ((InvoiceViewModel)InvoiceView.DataContext).InvoiceIns = newInvoie;
+              }, null);
+            dialog.Show();
+            ((InvoiceViewModel)InvoiceView.DataContext).LoadListInvoiceOrderDetails();
             CurrentChildView = InvoiceView;
             StatusInvoiceView = true;
-            transactionsDao.CommitTransaction();
         }
 
         private void ExecuteShowMenuView(object obj)
         {
-            menuView.DataContext = new MenuViewModel();
+            MenuView.DataContext = new MenuViewModel();
             AlertDialogService dialog = new AlertDialogService(
                "Order",
                "Create new order?",
                () => 
                {   
-                   transactionsDao.BeginTransaction();
                    var newOrder = Order.CreateOrderIns();
-                   ordersDao.Add(newOrder);
-                   ((MenuViewModel)menuView.DataContext).OrderIns = newOrder;
+                   ordersDao.AddNonCustomerAndInvoice(newOrder);
+                   ((MenuViewModel)MenuView.DataContext).OrderIns = newOrder;
                }, null);
-            ((MenuViewModel)(menuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
-            CurrentChildView = menuView;
             dialog.Show();
+            ((MenuViewModel)(MenuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
+            CurrentChildView = MenuView;
             StatusMenuView = true;
         }
 
-    
     }
 }
