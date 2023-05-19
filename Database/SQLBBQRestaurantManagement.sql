@@ -1599,6 +1599,104 @@ END
 print dbo.func_CheckLogin('STA001','@123456')
 */
 
+--------------------------------------------------------------------------------------------------
+--ADD, UPDATE, DELETE, SEARCH BY ID PROCEDURE OF Accounts, Customers, Products TABLE-----------
+--------ADD PROC OF Account, Customers, Product TABLE-------------
+GO
+CREATE OR ALTER PROC SP_Account_Add
+(@id nvarchar(10), @password nvarchar(20))
+AS
+	INSERT INTO dbo.Account(AccountID, Passwords)
+	VALUES (@id, @password)
+
+GO
+CREATE OR ALTER PROC SP_Customers_Add
+(@id nvarchar(10), @name nvarchar(100), @phone nvarchar(20))
+AS
+	INSERT INTO dbo.Customers(CustomerID, NameCustomer, NumberPhone)
+	VALUES (@id, @name, @phone)
+
+GO
+CREATE OR ALTER PROC SP_Product_Add
+(@id nvarchar(10), @name nvarchar(100), @price bigint, @description nvarchar(500), @state bit, @type nvarchar(10))
+AS
+	INSERT INTO dbo.Product(ProductID, NameProduct, Price, Description, ProductState, Product_Type)
+	VALUES(@id, @name, @price, @description, @state, @type)
+
+--------UPDATE PROC OF Account, Customers, Product TABLE-------------
+GO
+CREATE OR ALTER PROC SP_Account_Update
+(@id nvarchar(10), @password nvarchar(20))
+AS
+	UPDATE dbo.Account
+	SET Passwords = @password
+	WHERE AccountID = @id
+
+GO
+CREATE OR ALTER PROC SP_Customers_Update
+(@id nvarchar(10), @name nvarchar(100), @phone nvarchar(20))
+AS
+	UPDATE dbo.Customers
+	SET NameCustomer = @name,
+		NumberPhone = @phone
+	WHERE CustomerID = @id
+
+GO
+CREATE OR ALTER PROC SP_Product_Update
+(@id nvarchar(10), @name nvarchar(100), @price bigint, @description nvarchar(500), @state bit, @typeID nvarchar(10))
+AS
+	UPDATE dbo.Product
+	SET NameProduct = @name,
+		Price = @price,
+		Description = @description,
+		ProductState = @state,
+		Product_Type = @typeID
+	WHERE ProductID = @id
+
+--------DELETE PROC OF Account, Customers, Product TABLE-------------
+GO
+CREATE OR ALTER PROC SP_Account_Delete
+(@id nvarchar(10))
+AS
+	DELETE FROM dbo.Account
+	WHERE AccountID = @id
+
+GO
+CREATE OR ALTER PROC SP_Customers_Delete
+(@id nvarchar(10))
+AS
+	DELETE FROM dbo.Customers
+	WHERE CustomerID = @id
+
+	GO
+CREATE OR ALTER PROC SP_Product_Delete
+(@id nvarchar(10))
+AS
+	DELETE FROM dbo.Product
+	WHERE ProductID = @id
+
+--------SEARCH PROC OF Account, Customers, Product TABLE BY ID-------------
+GO
+CREATE OR ALTER PROC SP_Account_Search
+(@id nvarchar(10))
+AS
+	SELECT * FROM dbo.Account
+	WHERE AccountID = @id
+
+GO
+CREATE OR ALTER PROC SP_Customers_Search
+(@id nvarchar(10))
+AS
+	SELECT * FROM dbo.Customers
+	WHERE CustomerID = @id
+
+GO
+CREATE OR ALTER PROC SP_Product_Search
+(@id nvarchar(10))
+AS
+	SELECT * FROM dbo.Product
+	WHERE ProductID = @id
+--------------------------------------------------------------------------------------------------
 
 ------------
 
