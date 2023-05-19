@@ -1581,6 +1581,19 @@ END
 --BEGIN
 --    Select * from dbo.func_SearchOrders('ORD001')
 --END
+-----------
+--xóa order
+go
+CREATE OR ALTER PROC proc_DeleteOrder(@OrderID nvarchar(10)) 
+AS
+BEGIN
+	DELETE FROM OrderDetails WHERE OrderID = @OrderID;
+	--Không có xóa trong Order vì có trigger tg_DeleteOrderDetails xóa giúp
+END
+
+--exec proc_DeleteOrder 'ORD025'
+--select * from Orders
+--select * from OrderDetails
 
 /*
 print dbo.func_CheckLogin('STA001','@123456')
