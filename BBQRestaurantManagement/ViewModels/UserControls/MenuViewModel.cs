@@ -26,9 +26,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         private Action<string> loadOrderItemView;
         public Action<string> LoadOrderItemView { get => loadOrderItemView; set { loadOrderItemView = value; OnPropertyChanged(); } }
 
-        private ViewsDao viewDao = new ViewsDao();     
+        private ProductsDao productsDao = new ProductsDao();
         private OrdersDao ordersDao = new OrdersDao();
-        private StoredProceduresDao proceduresDao = new StoredProceduresDao();
 
         public ICommand AddCommand { get; private set; }
 
@@ -58,14 +57,14 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                   }, null);
                 dialog.Show();
             }
-            proceduresDao.AddOrderProduct(OrderIns.ID, product.ID, 1);
+            ordersDao.AddOrderProduct(OrderIns.ID, product.ID, 1);
             LoadOrderItemView(OrderIns.ID);
         }
 
         private void LoadViewMenu()
         {
-            Foods = new ObservableCollection<Product>(viewDao.GetFoodsView());
-            Drinks = new ObservableCollection<Product>(viewDao.GetDrinksView());
+            Foods = new ObservableCollection<Product>(productsDao.GetFoodsView());
+            Drinks = new ObservableCollection<Product>(productsDao.GetDrinksView());
         }
 
     

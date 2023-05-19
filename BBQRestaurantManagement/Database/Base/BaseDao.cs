@@ -17,6 +17,18 @@ namespace BBQRestaurantManagement.Database.Base
         public const string DRINKS_VIEW = "DrinksView";
         public const string SERVICES_VIEW = "ServicesView";
 
+        public const string INVOICE_ORDER_DETAILS_VIEW = "InvoiceOrderView";
+        public const string INVOICE_ORDER_DETAILS_INVOICE_ID = "InvoiceID";
+        public const string INVOICE_ORDER_DETAILS_PRODUCT_ID = "ProductID";
+        public const string INVOICE_ORDER_DETAILS_PRODUCT_NAME = "ProductName";
+        public const string INVOICE_ORDER_DETAILS_QUANTITY = "Quantity";
+        public const string INVOICE_ORDER_DETAILS_CREATED_TIME = "CreationTime";
+        public const string INVOICE_ORDER_DETAILS_PRICE = "Price";
+        public const string INVOICE_ORDER_DETAILS_TOTAL_PRICE = "TotalPrice";
+        public const string INVOICE_ORDER_DETAILS_STATUS_INVOICE = "StatusInvoice";
+        public const string INVOICE_ORDER_DETAILS_CHECKIN_TIME = "CheckInTime";
+        public const string INVOICE_ORDER_DETAILS_CHECKOUT_TIME = "CheckOutTime";
+
         protected const string BOOKING_TABLE = "Booking";
         public const string BOOKING_ID = "BookingID";
         public const string BOOKING_DATE = "BookingDate";

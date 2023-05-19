@@ -47,9 +47,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         public ICommand MinusCommand { get; private set; }
         public ICommand CancelOrderCommand { get; private set; }
 
-        private OrdersDao orderDao = new OrdersDao();
+        private OrdersDao ordersDao = new OrdersDao();
         private TransactionsDao transactionsDao = new TransactionsDao();
-        private StoredProceduresDao proceduresDao = new StoredProceduresDao();
 
 
         public OrderViewModel()
@@ -59,7 +58,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void LoadOrderItem(string id)
         {
-            ListOrderItem = orderDao.SearchByOrderID(id);
+            ListOrderItem = ordersDao.SearchByOrderID(id);
             Log.Instance.Information(nameof(OrderViewModel), "cout item = " + ListOrderItem.Count.ToString());
         }
 
@@ -99,13 +98,13 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         private void ExecuteMinusCommand(OrderDetails orderDetails)
         {
             if (orderDetails.Quantity == 0) return;
-            proceduresDao.AddOrderProduct(orderDetails.OrderID, orderDetails.ProductID, -1);
+            ordersDao.AddOrderProduct(orderDetails.OrderID, orderDetails.ProductID, -1);
             LoadOrderItem(orderDetails.OrderID);
         }
 
         private void ExecutePlusCommand(OrderDetails orderDetails)
         {
-            proceduresDao.AddOrderProduct(orderDetails.OrderID, orderDetails.ProductID, 1);
+            ordersDao.AddOrderProduct(orderDetails.OrderID, orderDetails.ProductID, 1);
             LoadOrderItem(orderDetails.OrderID);
         }
 
@@ -138,7 +137,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                {   
                    transactionsDao.BeginTransaction();
                    var newOrder = Order.CreateOrderIns();
-                   orderDao.Add(newOrder);
+                   ordersDao.Add(newOrder);
                    ((MenuViewModel)menuView.DataContext).OrderIns = newOrder;
                }, null);
             ((MenuViewModel)(menuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);

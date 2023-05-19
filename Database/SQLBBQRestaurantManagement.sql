@@ -335,30 +335,7 @@ INSERT INTO TypeServices(IDType,NameType,IDServices,Price) VALUES
 ('TYP312', 'Piano music','SER333',0),  --combo gia đình
 ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
 
--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO Service_Product (IDProduct, IDServices) VALUES
-('PRO001', 'TYP111'),
-('PRO002', 'TYP112'),
-('PRO003', 'TYP113'),
-('PRO004', 'TYP114'),
-('PRO005', 'TYP211'),
-('PRO006', 'TYP212'),
-('PRO007', 'TYP311'),
-('PRO008', 'TYP312'),
-('PRO009', 'TYP313'),
-('PRO010', 'TYP313'),
-('PRO011', 'TYP312'),
-('PRO012', 'TYP111'),
-('PRO013', 'TYP111'),
-('PRO014', 'TYP112'),
-('PRO015', 'TYP112'),
-('PRO016', 'TYP113'),
-('PRO017', 'TYP113'),
-('PRO018', 'TYP114'),
-('PRO019', 'TYP114'),
-('PRO020', 'TYP212'),
-('PRO021', 'TYP311');
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO TablesCustomer(TablesID,MaxSeats,RoomType,Status) VALUES
 ('TAB001', 4,'TYP111',1),
@@ -511,30 +488,30 @@ INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, Custom
 ('ORD024', '2021/12/12', 156000, 1, 'CUS024', 'STA004', 'IN024'),
 ('ORD025', '2022/03/04', 200000, 1, 'CUS025', 'STA005', 'IN025'),
 ('ORD026', '2023/01/05', 400000, 1, 'CUS026', 'STA001', 'IN026'),
-('ORD027', '2023/02/12', 20000, 1, 'CUS001', 'STA001', 'IN001'),
-('ORD028', '2023/03/12', 60000, 1, 'CUS002', 'STA005', 'IN002'),
-('ORD029', '2022/07/11', 320000, 1, 'CUS003', 'STA005', 'IN003'),
-('ORD030', '2021/04/16', 200000, 1, 'CUS004', 'STA004', 'IN004'),
-('ORD031', '2022/02/21', 900000, 1, 'CUS005', 'STA005', 'IN005'),
-('ORD032', '2023/01/03', 100000, 1, 'CUS006', 'STA006', 'IN006'),
-('ORD033', '2022/08/31', 320000, 1, 'CUS007', 'STA002', 'IN007'),
-('ORD034', '2023/01/31', 180000, 1, 'CUS008', 'STA001', 'IN008'),
-('ORD035', '2021/06/23', 320000, 1, 'CUS009', 'STA009', 'IN009'),
-('ORD036', '2022/03/22', 100000, 1, 'CUS010', 'STA006', 'IN010'),
-('ORD037', '2022/02/14', 680000, 1, 'CUS011', 'STA003', 'IN011'),
-('ORD038', '2022/09/01', 1500000, 1, 'CUS012', 'STA004', 'IN012'),
-('ORD039', '2021/01/12', 1500000, 1, 'CUS013', 'STA008', 'IN013'),
-('ORD040', '2022/06/27', 52000, 1, 'CUS014', 'STA003', 'IN014'),
-('ORD041', '2022/03/27', 150000, 1, 'CUS015', 'STA006', 'IN015'),
-('ORD042', '2023/03/20', 90000, 1, 'CUS016', 'STA007', 'IN016'),
-('ORD043', '2023/05/02', 160000, 1, 'CUS017', 'STA007', 'IN017'),
-('ORD044', '2023/02/26', 200000, 1, 'CUS018', 'STA002', 'IN018'),
-('ORD045', '2023/02/12', 50000, 1, 'CUS019', 'STA009', 'IN019'),
-('ORD046', '2021/05/17', 60000, 1, 'CUS020', 'STA008', 'IN020'),
-('ORD047', '2021/09/30', 150000, 1, 'CUS021', 'STA002', 'IN021'),
-('ORD048', '2022/04/12', 680000, 1, 'CUS022', 'STA008', 'IN022'),
-('ORD049', '2022/11/06', 75000, 1, 'CUS023', 'STA003', 'IN023'),
-('ORD050', '2021/12/12', 30000, 1, 'CUS024', 'STA004', 'IN024'),
+('ORD027', '2023/02/12', 20000, 1, null, 'STA001', null),
+('ORD028', '2023/03/12', 60000, 1, null, 'STA005', null),
+('ORD029', '2022/07/11', 320000, 1, null, 'STA005', null),
+('ORD030', '2021/04/16', 200000, 1, null, 'STA004', null),
+('ORD031', '2022/02/21', 900000, 1, null, 'STA005', null),
+('ORD032', '2023/01/03', 100000, 1,null, 'STA006', null),
+('ORD033', '2022/08/31', 320000, 1,null, 'STA002',null),
+('ORD034', '2023/01/31', 180000, 1, null, 'STA001', null),
+('ORD035', '2021/06/23', 320000, 1,null, 'STA009',null),
+('ORD036', '2022/03/22', 100000, 1, null, 'STA006',null),
+('ORD037', '2022/02/14', 680000, 1,null, 'STA003', null),
+('ORD038', '2022/09/01', 1500000, 1, null, 'STA004', null),
+('ORD039', '2021/01/12', 1500000, 1, null, 'STA008', null),
+('ORD040', '2022/06/27', 52000, 1, null, 'STA003', null),
+('ORD041', '2022/03/27', 150000, 1,null, 'STA006',null),
+('ORD042', '2023/03/20', 90000, 1, null, 'STA007', null),
+('ORD043', '2023/05/02', 160000, 1,null, 'STA007',null),
+('ORD044', '2023/02/26', 200000, 1, null, 'STA002', null),
+('ORD045', '2023/02/12', 50000, 1, null, 'STA009', null),
+('ORD046', '2021/05/17', 60000, 1, null, 'STA008',null),
+('ORD047', '2021/09/30', 150000, 1, null, 'STA002', null),
+('ORD048', '2022/04/12', 680000, 1,null, 'STA008',null),
+('ORD049', '2022/11/06', 75000, 1, null, 'STA003', null),
+('ORD050', '2021/12/12', 30000, 1, null, 'STA004', null),
 ('ORD051', '2023/02/04', 150000, 1, 'CUS001', 'STA002', 'IN027'),
 ('ORD052', '2023/02/04', 1020000, 1, 'CUS002', 'STA003', 'IN028'),
 ('ORD053', '2023/03/01', 200000, 1, 'CUS003', 'STA004', 'IN029'),
@@ -608,6 +585,41 @@ INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
 ('ODETAIL058', 'PRO021', '4', 'ORD058'),
 ('ODETAIL059', 'PRO014', '2', 'ORD059'),
 ('ODETAIL060', 'PRO010', '2', 'ORD060'),
+('ODETAIL060', 'PRO010', '1', 'ORD001'),
+('ODETAIL060', 'PRO011', '1', 'ORD001'),
+('ODETAIL060', 'PRO008', '3', 'ORD001'),
+('ODETAIL060', 'PRO002', '4', 'ORD002'),
+('ODETAIL060', 'PRO010', '2', 'ORD002'),
+('ODETAIL060', 'PRO012', '5', 'ORD002'),
+('ODETAIL060', 'PRO019', '1', 'ORD003'),
+('ODETAIL060', 'PRO015', '2', 'ORD004'),
+('ODETAIL060', 'PRO011', '1', 'ORD004'),
+('ODETAIL060', 'PRO002', '1', 'ORD001'),
+('ODETAIL060', 'PRO004', '2', 'ORD001');
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO Service_Product (IDProduct, IDServices) VALUES
+('PRO001', 'TYP111'),
+('PRO002', 'TYP112'),
+('PRO003', 'TYP113'),
+('PRO004', 'TYP114'),
+('PRO005', 'TYP211'),
+('PRO006', 'TYP212'),
+('PRO007', 'TYP311'),
+('PRO008', 'TYP312'),
+('PRO009', 'TYP313'),
+('PRO010', 'TYP313'),
+('PRO011', 'TYP312'),
+('PRO012', 'TYP111'),
+('PRO013', 'TYP111'),
+('PRO014', 'TYP112'),
+('PRO015', 'TYP112'),
+('PRO016', 'TYP113'),
+('PRO017', 'TYP113'),
+('PRO018', 'TYP114'),
+('PRO019', 'TYP114'),
+('PRO020', 'TYP212'),
+('PRO021', 'TYP311');
 -----TRIGGER----------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 --GO
@@ -1035,7 +1047,7 @@ AS
 -----VIEW-------------------------------
 
 Go
-CREATE VIEW FoodsView
+CREATE OR ALTER VIEW FoodsView
 AS
 SELECT	p.ProductID ,p.NameProduct, p.Price, p.Description, p.ProductState, p.Product_Type
 FROM	Product p, Product_Type pt
@@ -1046,7 +1058,7 @@ WHERE	pt.IDType = p.Product_Type
 --SELECT * FROM FoodsView
 
 Go
-CREATE VIEW DrinksView
+CREATE OR ALTER VIEW DrinksView
 AS
 SELECT	p.ProductID ,p.NameProduct, p.Price, p.Description, p.ProductState, p.Product_Type
 FROM	Product p, Product_Type pt
@@ -1058,7 +1070,7 @@ WHERE	pt.IDType = p.Product_Type
 --SELECT * FROM DrinksView
 
 Go
-CREATE VIEW ServicesView
+CREATE OR ALTER VIEW ServicesView
 AS
 SELECT	s.NameServices, ts.NameType, ts.Price
 FROM	Services s, TypeServices ts
@@ -1066,7 +1078,7 @@ WHERE	s.IDServices = ts.IDServices
 --SELECT * FROM ServicesView
 
 Go
-CREATE VIEW CustomerBookingView
+CREATE OR ALTER VIEW CustomerBookingView
 AS
 SELECT	c.NameCustomer, c.NumberPhone, i.InvoiceID, b.BookingDate, i.Price, s.NameStatusInvoice
 FROM	Customers c, Invoice i, Booking b, StatusInvoice_Details sd, StatusInvoice s
@@ -1077,9 +1089,9 @@ WHERE	i.InvoiceDetails = sd.InvoiceDetailsID
 --SELECT * FROM CustomerBookingView
 
 Go
-CREATE VIEW InvoiceOrderView
+CREATE OR ALTER VIEW InvoiceOrderView
 AS
-SELECT	i.InvoiceID , o.OrderID, p.ProductID, i.CreationTime, p.NameProduct, p.Price, o.Total_Unit_Price, s.StatusInvoice, s.CheckIn_Time, s.CheckOut_Time
+SELECT	i.InvoiceID, p.ProductID, p.NameProduct, i.CreationTime,od.Quantity, p.Price, p.Price * od.Quantity as TotalPrice, s.StatusInvoice, s.CheckIn_Time, s.CheckOut_Time
 FROM	OrderDetails od, Orders o, Invoice i, Product p, StatusInvoice_Details s
 WHERE	i.InvoiceID = o.Invoice
 		AND o.OrderID = od.OrderID
@@ -1224,6 +1236,7 @@ BEGIN
 		WHERE OrderID = @orderID AND ProductID = @productID
 	END
 END
+
 /*
 	Exec proc_AddOrderProduct 'ORD019','PRO001',5
 	SELECT * FROM OrderDetails
@@ -1273,25 +1286,44 @@ BEGIN
 	IF @pass = @password RETURN 1
 	RETURN 0
 END
-
-
-------------
---show các sản phẩm được order của hoá đơn trong invoiceOderView
-go
-CREATE OR ALTER PROC proc_ShowInvoiceViewDetails(@invoiceID nvarchar(10)) 
-AS
-BEGIN
-	SELECT * FROM InvoiceOrderView
-	WHERE InvoiceID = @invoiceID
-END
-
-exec proc_ShowInvoiceViewDetails 'IN001'
-
-
 /*
 print dbo.func_CheckLogin('STA001','@123456')
 */
 
+
+------------
+
+---- Lấy Hóa đơn từ InvoiceView
+go
+CREATE OR ALTER FUNCTION func_GetInvoiceOrderDetails(@invoiceID nvarchar(10)) 
+RETURNS @InvoiceOrderDetailsTable 
+Table  (InvoiceID nvarchar(10),ProductID nvarchar(10),ProductName nvarchar(100),CreationTime datetime,Quantity int,Price bigint,TotalPrice bigint,StatusInvoice nvarchar(10),CheckInTime datetime,CheckOutTime datetime)
+AS
+BEGIN
+	INSERT INTO @InvoiceOrderDetailsTable(InvoiceID,ProductID,ProductName,CreationTime,Quantity,Price,TotalPrice,StatusInvoice,CheckInTime,CheckOutTime)
+	SELECT * FROM InvoiceOrderView
+	WHERE InvoiceID = @invoiceID
+	RETURN 
+END
+
+/*
+Select * from func_GetInvoiceOrderDetails('IN001')
+*/
+----Tính tổng tiền hóa đơn
+go
+CREATE OR ALTER FUNCTION func_TotalTheInvoice(@invoiceID nvarchar(10),@discount int) RETURNS bigint
+AS
+BEGIN
+	Declare @TotalPriceInvoice bigint;
+	SET @TotalPriceInvoice =0;
+	SELECT @TotalPriceInvoice = SUM(TotalPrice) 
+	FROM func_GetInvoiceOrderDetails(@invoiceID)
+	RETURN (@TotalPriceInvoice * (100-@discount))/100
+END
+
+/*
+print dbo.func_TotalTheInvoice('IN001',50)
+*/
 -----TRANSACTION------------------------
 
 

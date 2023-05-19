@@ -15,7 +15,7 @@ namespace BBQRestaurantManagement.Database.Base
             string strConnection = "Data Source=LAPTOP-BOP0FMBM;Initial Catalog=BBQRestaurantManagement;Persist Security Info=True;User ID=sa;Password=123456";
             conn = new SqlConnection(strConnection);
         }
-
+        
         public void ExecuteNonQuery(string command)
         {
             try

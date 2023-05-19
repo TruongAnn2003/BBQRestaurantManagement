@@ -1,10 +1,13 @@
 ﻿using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Models;
+using System;
 
 namespace BBQRestaurantManagement.Databases
 {
     public class AccountDao : BaseDao
     {
+        #region Add, Update, Delete
+
         public void Add(Account account)
         {
             string sqlStr = $"INSERT INTO {ACCOUNT_TABLE} ({ACCOUNT_ID}, {ACCOUNT_PASSWORD})" +
@@ -25,14 +28,29 @@ namespace BBQRestaurantManagement.Databases
             dbConnection.ExecuteNonQuery(sqlStr);
         }
 
+        #endregion
+        #region Search
+
         public Staff SearchByAccountID(string accID)
         {
             string sqlStr = $"SELECT * FROM {STAFF_TABLE} WHERE {STAFF_ID}='{accID}'";
             return (Staff)dbConnection.GetSingleObject(sqlStr, reader => new Staff(reader));
         }
-        public AccountDao()
-        {
 
+        #endregion
+        #region Stored Procedures
+        //code Stored Procedures trong đây
+        #endregion
+        #region Functions
+        public int CheckLogin(string accountID, string password)
+        {
+            var result = dbConnection.GetSingleValueFromFunction($"Select dbo.func_CheckLogin('{accountID}','{password}')", null);
+            return Convert.ToInt32(result);
         }
+
+        #endregion
+        #region Views
+        //code Functions trong đây
+        #endregion
     }
 }

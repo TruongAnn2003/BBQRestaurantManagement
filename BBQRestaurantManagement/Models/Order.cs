@@ -44,7 +44,7 @@ namespace BBQRestaurantManagement.Models
             try
             {
                 id = (string)reader[BaseDao.ORDER_ID];
-                datetimeOrder = (DateTime)reader[BaseDao.ORDER_DATETIME_ORDER];
+                datetimeOrder = Convert.ToDateTime(reader[BaseDao.ORDER_DATETIME_ORDER]);
                 totalUnitPrice =Convert.ToDecimal(reader[BaseDao.ORDER_TOTAL_UNIT_PRICE]);
                 state = Convert.ToInt32(reader[BaseDao.ORDER_STATE]);
                 customerID = (string)reader[BaseDao.ORDER_CUSTOMER_ORDER];
