@@ -17,15 +17,14 @@ namespace BBQRestaurantManagement.Database
         //code Search trong đây
         #endregion
         #region Stored Procedures
-        //code Stored Procedures trong đây
-        #endregion
-        #region Functions
-
-        public List<InvoiceOrderDetail> GetInvoiceOrderDetailsView(string invoiceID)
+        public List<InvoiceOrderDetail> GetInvoiceDetailsView(string invoiceID)
         {
-            string sqlStr = $"SELECT * From func_GetInvoiceOrderDetails('{invoiceID}')";
+            string sqlStr = $"exec proc_ShowInvoiceDetailsView '{invoiceID}'";
             return dbConnection.GetList(sqlStr, reader => new InvoiceOrderDetail(reader));
         }
+
+        #endregion
+        #region Functions
 
         #endregion
         #region Views

@@ -21,6 +21,11 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         private TableEmptyUC TableEmptyView = new TableEmptyUC();
         private CheckInOutUC CheckInOutView = new CheckInOutUC();
 
+        private Order orderIns;
+
+        public Order OrderIns { get => orderIns; set => orderIns = value; }
+
+
         private bool statusMenuView = false;
         public bool StatusMenuView { get => statusMenuView; set { statusMenuView = value; OnPropertyChanged(); } }
 
@@ -48,7 +53,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         public ICommand CancelOrderCommand { get; private set; }
 
         private OrdersDao ordersDao = new OrdersDao();
-        private TransactionsDao transactionsDao = new TransactionsDao();
+        private InvoicesDao invoicesDao = new InvoicesDao();
 
 
         public OrderViewModel()
@@ -74,7 +79,6 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void ExecuteCancelOrderCommand(object obj)
         {
-            var orderIns = ((MenuViewModel)MenuView.DataContext).OrderIns;
             if (orderIns != null)
             {
                 AlertDialogService dialog = new AlertDialogService(
@@ -83,13 +87,14 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                  () =>
                  {
                      //Delete
-                     ordersDao.Delete(orderIns.ID);
+                     ordersDao.Delete(OrderIns.ID);
                      //ReturnView
                      MenuView.DataContext = new MenuViewModel();
                      ((MenuViewModel)(MenuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
                      CurrentChildView = MenuView;
                      ((MenuViewModel)MenuView.DataContext).OrderIns = null;
                      ListOrderItem = new List<OrderDetails>();
+                     OrderIns = new Order();
                  }, null);
                 dialog.Show();
             }    
@@ -121,21 +126,21 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         }
 
         private void ExecuteShowInvoiceView(object obj)
-        {
-            InvoiceView.DataContext = new InvoiceViewModel();
+        {        
             AlertDialogService dialog = new AlertDialogService(
               "Order",
               "Create Invoice?",
               () =>
               {
+                  InvoiceView.DataContext = new InvoiceViewModel();
                   var newInvoie = Invoice.CreateInvoiceIns();
-                  //add TODO
+                  invoicesDao.CreateNewInvoice(OrderIns.ID, newInvoie.ID);
                   ((InvoiceViewModel)InvoiceView.DataContext).InvoiceIns = newInvoie;
+                  ((InvoiceViewModel)InvoiceView.DataContext).LoadListInvoiceOrderDetails();
+                  CurrentChildView = InvoiceView;
+                  StatusInvoiceView = true;
               }, null);
-            dialog.Show();
-            ((InvoiceViewModel)InvoiceView.DataContext).LoadListInvoiceOrderDetails();
-            CurrentChildView = InvoiceView;
-            StatusInvoiceView = true;
+            dialog.Show();          
         }
 
         private void ExecuteShowMenuView(object obj)
@@ -145,10 +150,10 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                "Order",
                "Create new order?",
                () => 
-               {   
-                   var newOrder = Order.CreateOrderIns();
-                   ordersDao.AddNonCustomerAndInvoice(newOrder);
-                   ((MenuViewModel)MenuView.DataContext).OrderIns = newOrder;
+               {
+                   OrderIns = Order.CreateOrderIns();
+                   ordersDao.AddNonCustomerAndInvoice(OrderIns);
+                   ((MenuViewModel)MenuView.DataContext).OrderIns = OrderIns;
                }, null);
             dialog.Show();
             ((MenuViewModel)(MenuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.Utilities;
@@ -19,6 +20,7 @@ namespace BBQRestaurantManagement.Database.Base
         
         public void ExecuteNonQuery(string command)
         {
+            Log.Instance.Information(nameof(DbConnection), "ExecuteNonQuery Command: " + command);
             try
             {
                 conn.Open();
@@ -30,6 +32,7 @@ namespace BBQRestaurantManagement.Database.Base
             }
             catch (Exception ex)
             {
+                Log.Instance.Error(nameof(DBConnection), ex.Message);
                 AlertDialogService dialog = new AlertDialogService(
                   $"Error from {nameof(DBConnection)}",
                   ex.Message,
@@ -44,6 +47,7 @@ namespace BBQRestaurantManagement.Database.Base
 
         public object GetSingleObject<T>(string sqlStr, Func<SqlDataReader, T> converter)
         {
+            Log.Instance.Information(nameof(DbConnection), "GetSingleObject Command: " + sqlStr);
             List<T> list = GetList(sqlStr, converter);
             if(list.Count!=0)
                 return list[0];
@@ -57,6 +61,7 @@ namespace BBQRestaurantManagement.Database.Base
 
         public List<T> GetList<T>(string sqlStr, Func<SqlDataReader, T> converter)
         {
+            Log.Instance.Information(nameof(DbConnection), "GetList Command: " + sqlStr);
             List<T> list = new List<T>();
             try
             {
@@ -70,6 +75,7 @@ namespace BBQRestaurantManagement.Database.Base
             }
             catch (Exception ex)
             {
+                Log.Instance.Error(nameof(DBConnection), ex.Message);
                 AlertDialogService dialog = new AlertDialogService(
                  $"Error from {nameof(DBConnection)}",
                  ex.Message,
@@ -86,6 +92,7 @@ namespace BBQRestaurantManagement.Database.Base
 
         public object GetSingleValueFromFunction(string sqlStr, params SqlParameter[] param)
         {
+            Log.Instance.Information(nameof(DbConnection), "GetSingleValueFromFunction Command: " + sqlStr);
             try
             {
                 conn.Open();
@@ -101,6 +108,7 @@ namespace BBQRestaurantManagement.Database.Base
             }
             catch (Exception ex)
             {
+                Log.Instance.Error(nameof(DBConnection),ex.Message);
                 AlertDialogService dialog = new AlertDialogService(
                  $"Error from {nameof(DBConnection)}",
                  ex.Message,
