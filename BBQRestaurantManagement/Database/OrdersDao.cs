@@ -8,14 +8,7 @@ namespace BBQRestaurantManagement.Database
     public class OrdersDao : BaseDao
     {
         #region Add, Update, Delete
-        public void Add(Order order)
-        {
-            string sqlStr = $"INSERT INTO {ORDER_TABLE} ({ORDER_ID}, {ORDER_DATETIME_ORDER},{ORDER_TOTAL_UNIT_PRICE},{ORDER_STATE},{ORDER_CUSTOMER_ORDER},{ORDER_ORDER_STAFF},{ORDER_INVOICE})" +
-                            $"VALUES ('{order.ID}','{Utils.ToSQLFormat(order.DatetimeOrder)}',{order.TotalUnitPrice},{order.State},'{order.CustomerID}','{order.StaffID}','{order.InvoiceID}')";
-            Log.Instance.Information(nameof(OrdersDao),sqlStr);
-            dbConnection.ExecuteNonQuery(sqlStr);
-        }
-
+ 
         public void AddNonCustomerAndInvoice(Order order)
         {
             string sqlStr = $"INSERT INTO {ORDER_TABLE} ({ORDER_ID}, {ORDER_DATETIME_ORDER},{ORDER_TOTAL_UNIT_PRICE},{ORDER_STATE},{ORDER_ORDER_STAFF})" +

@@ -181,6 +181,7 @@
             </Grid>
         </materialDesign:DrawerHost>
         <Border Grid.Column="1" 
+                Visibility="{Binding VisibilityOrderDetailsView}"
                 BorderBrush="#880e4f"
                 BorderThickness="1"
                 Width="300">

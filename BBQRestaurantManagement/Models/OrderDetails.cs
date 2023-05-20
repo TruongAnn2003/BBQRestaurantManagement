@@ -43,7 +43,7 @@ namespace BBQRestaurantManagement.Models
             }
             catch (Exception ex)
             {
-                Log.Instance.Error(nameof(Account), "CAST ERROR: " + ex.Message);
+                Log.Instance.Error(nameof(OrderDetails), "CAST ERROR: " + ex.Message);
             }
         }
     }

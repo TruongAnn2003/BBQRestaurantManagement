@@ -72,9 +72,10 @@ CREATE TABLE StatusInvoice_Details
 
 CREATE TABLE Invoice
 (
-	InvoiceID nvarchar(10),
+	InvoiceID nvarchar(10) CONSTRAINT InvoiceIDKey PRIMARY KEY,
 	CreationTime datetime NOT NULL,
 	Price BIGINT NOT NULL,
+	Discount int,
 	InvoiceDetails nvarchar(10),
 	--CONSTRAINT FK_InvoiceDetails FOREIGN KEY (InvoiceDetails) REFERENCES StatusInvoice_Details(InvoiceDetailsID),
 	CONSTRAINT RightPriceInvoice CHECK(Price >= 0)
@@ -95,17 +96,14 @@ CREATE TABLE Booking
 	CONSTRAINT FK_CustomerBooking FOREIGN KEY (CustomerBooking) REFERENCES Customers(CustomerID),
 	CONSTRAINT FK_ServiceBooking FOREIGN KEY (ServiceBooking) REFERENCES TypeServices(IDType),
 	CONSTRAINT FK_TableBooking FOREIGN KEY (TableBooking) REFERENCES TablesCustomer(TablesID),
-	--CONSTRAINT FK_BookingInvoice FOREIGN KEY (BookingInvoice) REFERENCES Invoice(InvoiceID),
+	CONSTRAINT FK_BookingInvoice FOREIGN KEY (BookingInvoice) REFERENCES Invoice(InvoiceID),
 	CONSTRAINT BookingStatus CHECK(BookingStatus LIKE 'Success' or BookingStatus LIKE 'Received' or BookingStatus LIKE 'Cancel'),
 	--Trạng thái đặt bàn sẽ bao gồm xác nhận đặt bàn thành công, đã nhận bàn và huỷ đặt bàn
 	CONSTRAINT RightNumberCustomer CHECK(NumberCustomer >= 1)
 );
 
-ALTER TABLE Booking
-DROP CONSTRAINT FK_BookingInvoice
--- Hiện tại Booking không có khóa ngoại FK_BookingInvoice, nên chú ý khi insert
 
-
+go
 CREATE TABLE Staff_Position
 (
 	IDPosition nvarchar(10) CONSTRAINT Staff_PositionIDkey PRIMARY KEY,
@@ -290,43 +288,43 @@ INSERT INTO StatusInvoice_Details(InvoiceDetailsID, CheckIn_Time, CheckOut_Time,
 ('DEID036', null, null, 'STATUS001')
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
-('IN001', '2023/02/12 18:32:43', 1220000, 'DEID001'),
-('IN002', '2023/03/12 14:11:43', 84000, 'DEID002'),
-('IN003', '2022/07/11 06:32:43', 428000, 'DEID003'),
-('IN004', '2021/04/16 13:11:21', 290000, 'DEID004'),
-('IN005', '2023/01/01 23:11:43', 1900000, 'DEID005'),
-('IN006', '2019/12/05 14:11:43', 160000, 'DEID006'),
-('IN007', '2022/08/31 16:10:32', 420000, 'DEID007'),
-('IN008', '2023/01/31 18:40:43', 270000, 'DEID008'),
-('IN009', '2021/06/23 19:11:43', 1920000, 'DEID009'),
-('IN010', '2022/03/22 23:32:43', 300000, 'DEID010'),
-('IN011', '2022/02/14 12:32:43', 2180000, 'DEID011'),
-('IN012', '2022/09/01 10:11:23', 3600000, 'DEID012'),
-('IN013', '2021/01/12 09:00:12', 2500000, 'DEID013'),
-('IN014', '2022/06/27 07:40:43', 202000, 'DEID014'),
-('IN015', '2022/03/27 11:32:43', 190000, 'DEID015'),
-('IN016', '2023/03/20 18:00:01', 340000, 'DEID016'),
-('IN017', '2023/05/02 18:55:43', 360000, 'DEID017'),
-('IN018', '2023/02/26 20:17:12', 210000, 'DEID018'),
-('IN019', '2023/02/12 20:32:12', 2450000, 'DEID019'),
-('IN020', '2021/05/17 19:10:17', 1560000, 'DEID020'),
-('IN021', '2021/09/30 13:19:41', 390000, 'DEID021'),
-('IN022', '2022/04/12 14:12:03', 720000, 'DEID022'),
-('IN023', '2022/11/06 15:16:06', 345000, 'DEID023'),
-('IN024', '2021/12/12 10:18:07', 186000, 'DEID024'),
-('IN025', '2022/03/04 18:12:01', 200000, 'DEID025'),
-('IN026', '2023/01/05 20:32:43', 400000, 'DEID026'),
-('IN027', '2023/02/04 08:12:02', 150000, 'DEID027'),
-('IN028', '2023/02/04 14:13:02', 1020000, 'DEID028'),
-('IN029', '2023/03/01 18:30:32', 200000, 'DEID029'),
-('IN030', '2023/01/19 17:30:32', 800000, 'DEID030'),
-('IN031', '2023/03/22 21:00:01', 640000, 'DEID031'),
-('IN032', '2023/04/11 22:01:49', 250000, 'DEID032'),
-('IN033', '2023/04/04 19:02:00', 72000, 'DEID033'),
-('IN034', '2023/02/28 10:32:11', 100000, 'DEID034'),
-('IN035', '2023/01/28 12:48:21', 20000, 'DEID035'),
-('IN036', '2023/05/01 13:50:21', 60000, 'DEID036')
+INSERT INTO Invoice(InvoiceID, CreationTime, Price,Discount, InvoiceDetails) VALUES
+('IN001', '2023/02/12 18:32:43', 1220000,0, 'DEID001'),
+('IN002', '2023/03/12 14:11:43', 84000,0, 'DEID002'),
+('IN003', '2022/07/11 06:32:43', 428000,0, 'DEID003'),
+('IN004', '2021/04/16 13:11:21', 290000,0, 'DEID004'),
+('IN005', '2023/01/01 23:11:43', 1900000,0, 'DEID005'),
+('IN006', '2019/12/05 14:11:43', 160000,0, 'DEID006'),
+('IN007', '2022/08/31 16:10:32', 420000,0, 'DEID007'),
+('IN008', '2023/01/31 18:40:43', 270000,0, 'DEID008'),
+('IN009', '2021/06/23 19:11:43', 1920000,0, 'DEID009'),
+('IN010', '2022/03/22 23:32:43', 300000,0, 'DEID010'),
+('IN011', '2022/02/14 12:32:43', 2180000,0, 'DEID011'),
+('IN012', '2022/09/01 10:11:23', 3600000,0, 'DEID012'),
+('IN013', '2021/01/12 09:00:12', 2500000,0, 'DEID013'),
+('IN014', '2022/06/27 07:40:43', 202000,0, 'DEID014'),
+('IN015', '2022/03/27 11:32:43', 190000,0, 'DEID015'),
+('IN016', '2023/03/20 18:00:01', 340000,0, 'DEID016'),
+('IN017', '2023/05/02 18:55:43', 360000,0, 'DEID017'),
+('IN018', '2023/02/26 20:17:12', 210000,0, 'DEID018'),
+('IN019', '2023/02/12 20:32:12', 2450000,0, 'DEID019'),
+('IN020', '2021/05/17 19:10:17', 1560000,0, 'DEID020'),
+('IN021', '2021/09/30 13:19:41', 390000,0, 'DEID021'),
+('IN022', '2022/04/12 14:12:03', 720000,0, 'DEID022'),
+('IN023', '2022/11/06 15:16:06', 345000,0, 'DEID023'),
+('IN024', '2021/12/12 10:18:07', 186000,0, 'DEID024'),
+('IN025', '2022/03/04 18:12:01', 200000,0, 'DEID025'),
+('IN026', '2023/01/05 20:32:43', 400000,0, 'DEID026'),
+('IN027', '2023/02/04 08:12:02', 150000,0, 'DEID027'),
+('IN028', '2023/02/04 14:13:02', 1020000,0, 'DEID028'),
+('IN029', '2023/03/01 18:30:32', 200000,0, 'DEID029'),
+('IN030', '2023/01/19 17:30:32', 800000,0, 'DEID030'),
+('IN031', '2023/03/22 21:00:01', 640000,0, 'DEID031'),
+('IN032', '2023/04/11 22:01:49', 250000,0, 'DEID032'),
+('IN033', '2023/04/04 19:02:00', 72000,0, 'DEID033'),
+('IN034', '2023/02/28 10:32:11', 100000,0, 'DEID034'),
+('IN035', '2023/01/28 12:48:21', 20000,0, 'DEID035'),
+('IN036', '2023/05/01 13:50:21', 60000,0, 'DEID036')
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Services(IDServices ,NameServices) VALUES 
@@ -426,7 +424,6 @@ INSERT INTO Booking (BookingID,BookingDate,BookingStatus,Duration,Note,NumberCus
 ('BI024','2022/02/04','Success',2,'None note',5,'CUS024','TYP114','TAB012','IN024'),
 ('BI025','2022/03/01','Success',3,'None note',6,'CUS025','TYP111','TAB011','IN025'),
 ('BI026','2022/03/02','Success',4,'None note',6,'CUS026','TYP112','TAB001','IN026'),
-
 ('BI027','2023/01/02','Success',4,'None note',6,'CUS001','TYP112','TAB001','IN027'),
 ('BI028','2023/01/21','Received',4,'None note',6,'CUS002','TYP113','TAB009','IN028'),
 ('BI029','2022/12/31','Cancel',4,'None note',6,'CUS003','TYP112','TAB010','IN029'),
@@ -1025,7 +1022,6 @@ BEGIN
         RETURN;
     END;
 END
-
 /*
 INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder) VALUES 
 ('ORD0111', '2023/02/12', 1200000, 1)
@@ -1074,9 +1070,9 @@ ON	  Invoice
 FOR	  INSERT
 AS
 BEGIN 
-	DECLARE  @IDDet nvarchar(10), @IDInv nvarchar(10), @IDInvED nvarchar(10)
+	DECLARE  @IDDet nvarchar(10), @IDInv nvarchar(10)
 
-	SELECT @IDInv = i.InvoiceID, @IDInvED = i.InvoiceID
+	SELECT @IDInv = i.InvoiceID
 	FROM INSERTED i
 
 	IF (SELECT count(*) FROM  Invoice WHERE InvoiceID =@IDInv AND InvoiceID IS NOT NULL) >1
@@ -1085,12 +1081,6 @@ BEGIN
 		PRINT 'InvoiceID already exist'
 		RETURN
 	END 
-
-	SET @IDInv = CONCAT('IN',CAST(RAND() * 10000 AS INT));
-	WHILE @IDInv IN (SELECT OrderDetailsID FROM OrderDetails)
-	BEGIN
-		SET @IDInv = CONCAT('IN',CAST(RAND() * 10000 AS INT));
-	END
 
 	SET @IDDet = CONCAT('DEID',CAST(RAND() * 10000 AS INT));
 	WHILE @IDDet IN (SELECT InvoiceDetailsID FROM StatusInvoice_Details)
@@ -1101,12 +1091,12 @@ BEGIN
 	INSERT INTO StatusInvoice_Details(InvoiceDetailsID,CheckIn_Time,CheckOut_Time,StatusInvoice) 
 	VALUES (@IDDet,null,null,'STATUS001'); --'STA001' là chưa thanh toán 
 
-	UPDATE Invoice SET InvoiceDetails = @IDDet, InvoiceID = @IDInv WHERE InvoiceID = @IDInvED OR InvoiceID IS NULL
+	UPDATE Invoice SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv 
 END
-
---INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
---(NULL, GETDATE(), 1220000, NULL)
-
+/*
+INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
+('IN11111', GETDATE(), 1220000, NULL)
+*/
 ---------------------------------------------------------------------------------------------------------------------------------------------
 /*																																			*/
 /*																			VIEW															*/
@@ -1158,16 +1148,18 @@ WHERE	i.InvoiceDetails = sd.InvoiceDetailsID
 Go
 CREATE OR ALTER VIEW InvoiceOrderView
 AS
-SELECT	i.InvoiceID, p.ProductID, p.NameProduct, i.CreationTime,od.Quantity, p.Price, p.Price * od.Quantity as TotalPrice, s.StatusInvoice, s.CheckIn_Time, s.CheckOut_Time
-FROM	OrderDetails od, Orders o, Invoice i, Product p, StatusInvoice_Details s
+SELECT	i.InvoiceID,p.NameProduct, i.CreationTime,od.Quantity, p.Price, (p.Price * od.Quantity) as TotalPrice,i.Discount, (p.Price * od.Quantity * (1-i.Discount * 0.01)) as TotalPriceAfterDiscount, si.NameStatusInvoice, s.CheckIn_Time, s.CheckOut_Time
+FROM	OrderDetails od, Orders o, Invoice i, Product p, StatusInvoice_Details s, StatusInvoice si
 WHERE	i.InvoiceID = o.Invoice
 		AND o.OrderID = od.OrderID
 		AND p.ProductID = od.ProductID
 		AND s.InvoiceDetailsID = i.InvoiceDetails
+		AND s.StatusInvoice = si.StatusInvoiceID
+--
 --SELECT * FROM InvoiceOrderView
 
 Go
-CREATE VIEW InvoiceBookingView
+CREATE OR ALTER VIEW  InvoiceBookingView
 AS
 SELECT	i.InvoiceID, b.BookingID, s.IDServices, 
 		b.CustomerBooking, b.TableBooking, b.BookingDate, 
@@ -1179,801 +1171,6 @@ WHERE	i.InvoiceID = b.BookingInvoice
 		AND ts.IDServices = s.IDServices
 		AND i.InvoiceDetails = si.InvoiceDetailsID
 --SELECT * FROM InvoiceBookingView
-
----------------------------------------------------------------------------------------------------------------------------------------------
-/*																																			*/
-/*														STORED-PROCEDURE/FUNCTION															*/
-/*																																			*/
----------------------------------------------------------------------------------------------------------------------------------------------
-
-------- Lấy sản phẩm theo loại
-go
-CREATE OR ALTER PROC proc_GetAllProductsByTypeID(@typeProductID nvarchar(10))
-AS
-BEGIN
-	SELECT *
-	FROM Product
-	WHERE Product_Type = @typeProductID
-END
-/*
-	Exec proc_GetAllProductsByTypeID 'PROTYPE001'
-*/
-------- Check In 
-go
-CREATE OR ALTER PROC proc_CheckIn(@invoiceID nvarchar(10))
-AS
-BEGIN
-	UPDATE StatusInvoice_Details 
-	SET CheckIn_Time = GETDATE(), StatusInvoice = N'STA004'
-	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
-								FROM Invoice
-								WHERE InvoiceID = @invoiceID)
-END
-/*
-	Exec CheckIn 'IN001'
-*/
------- Check out
-go
-CREATE OR ALTER PROC proc_CheckOut(@invoiceID nvarchar(10))
-AS
-BEGIN
-	UPDATE StatusInvoice_Details 
-	SET CheckOut_Time = GETDATE(), StatusInvoice = N'STA005'
-	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
-								FROM Invoice
-								WHERE InvoiceID = @invoiceID)
-END
-/*
-	Exec CheckOut 'IN001'
-*/
-------  Hủy
-go
-CREATE OR ALTER PROC proc_Cancel(@invoiceID nvarchar(10))
-AS
-BEGIN
-	UPDATE StatusInvoice_Details 
-	SET  StatusInvoice = N'STA003'
-	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
-								FROM Invoice
-								WHERE InvoiceID = @invoiceID)
-END
-/*
-	Exec Cancel 'IN001'
-*/
-------  Lọc Sản phẩm theo loại
-go
-CREATE OR ALTER PROC proc_GetAllProductsByTypeName(@typeProductTypeName nvarchar(50))
-AS
-BEGIN
-	SELECT * 
-	FROM Product P, Product_Type T
-	WHERE P.Product_Type = T.IDType 
-	AND T.ProductType = @typeProductTypeName
-END
-/*
-	Exec proc_GetAllProductsByTypeName 'Milk tea'
-*/
------- Lọc hóa đơn theo Tháng Năm
-go
-CREATE OR ALTER PROC proc_GetAllInvoicesByYearMonth(@date DateTime)
-AS
-BEGIN
-	SELECT *
-	FROM Invoice 
-	WHERE Year(CreationTime) = Year(@date) And Month(CreationTime) = Month(@date)
-END
-
-/*
-	Exec proc_GetAllInvoicesByYearMonth '2021-04-01'
-*/
-
------- Lọc hóa đơn theo Ngày
-go
-CREATE OR ALTER PROC proc_GetAllInvoicesByDate(@date DateTime)
-AS
-BEGIN
-	SELECT *
-	FROM Invoice 
-	WHERE Year(CreationTime) = Year(@date) And Month(CreationTime) = Month(@date) And Day(CreationTime) = Day(@date)
-END
-
-/*
-	Exec proc_GetAllInvoicesByDate '2021-01-12'
-*/
------- Lọc bàn trống
-go
-CREATE OR ALTER PROC proc_GetAllTablesIsEmptyByRoomType(@roomtype nvarchar(10))
-AS
-BEGIN
-	SELECT *
-	FROM TablesCustomer 
-	WHERE RoomType = @roomtype And Status = 0
-END
-
-/*
-	Exec proc_GetAllTablesIsEmptyByRoomType 'TYP111'
-*/
-
--------------------------------- ADD ORDER PRODUCT --------------------------------------------------
-----thêm 1 sản phẩm được order theo OrderID
-go
-CREATE OR ALTER PROC proc_AddOrderProduct(@orderID nvarchar(10),@productID nvarchar(10), @quantity int)
-AS
-BEGIN
-	BEGIN TRANSACTION
-	--Kiểm tra order có tồn tại không
-	 IF EXISTS
-	 (	
-		SELECT 1
-		FROM Orders
-		WHERE OrderID = @orderID 
-	 )
-	BEGIN
-		--Kiểm tra OrderDetail có tồn tại không
-		IF EXISTS
-		 (	
-			SELECT 1
-			FROM OrderDetails
-			WHERE OrderID = @orderID 
-			And ProductID = @productID
-		 )
-		BEGIN --có:
-			--Kiểm tra số lượng sản phẩm có hợp lệ không
-			DECLARE @totalQuantity int;
-			SELECT @totalQuantity = Quantity + @quantity
-			FROM OrderDetails
-			WHERE OrderID = @orderID AND ProductID = @productID
-			IF (@totalQuantity > 0)
-			BEGIN 
-				--Cập nhật tiếp OrderDetail nếu đã có OrderDetail trước đó và số lượng cập nhật hợp lệ
-				UPDATE OrderDetails 
-				SET Quantity = @totalQuantity 
-				WHERE OrderID = @orderID AND ProductID = @productID
-				COMMIT TRANSACTION;
-			END
-			ELSE
-				ROLLBACK TRANSACTION;
-		END
-		ELSE
-		BEGIN 
-			-- không tồn tại OrderDetail thì Insert cái mới
-			INSERT INTO OrderDetails(ProductID,Quantity,OrderID) 
-			VALUES (@productID,@quantity,@orderID)
-			COMMIT TRANSACTION;
-		END
-	END
-	ELSE
-	  BEGIN
-		-- Nếu không tồn tại thì hủy giao dịch và in ra thông báo lỗi
-		ROLLBACK TRANSACTION;
-		RAISERROR ('Order bạn yêu cầu không tồn tại! Vui lòng kiểm tra lại', 16, 1)
-	  END
-END
------------Check -----------------------
-/*
-	Exec proc_AddOrderProduct 'ORD019','PRO001',5
-	SELECT * FROM OrderDetails
-	Exec proc_AddOrderProduct 'ORD019','PRO001',2
-	SELECT * FROM OrderDetails
-	Exec proc_AddOrderProduct 'ORD019','PRO001',-15
-	SELECT * FROM OrderDetails
-*/
-------------------------------------------------GET ORDERS BY ORDER ID ----------------------------------------------------------
-go
-CREATE OR ALTER FUNCTION func_GetOrders(@orderID nvarchar(10)) RETURNS @ProductOrders Table (OrderID nvarchar(10),ProductID nvarchar(10),ProductName nvarchar(100),Quantity int,Price bigint,TotalPrice bigint)
-AS
-BEGIN
-	INSERT INTO @ProductOrders(OrderID,ProductID,ProductName,Quantity,Price,TotalPrice)
-	SELECT O.OrderID,P.ProductID,P.NameProduct,O.Quantity,P.Price, O.Quantity * P.Price
-	FROM OrderDetails O, Product P
-	WHERE O.OrderID = @orderID AND O.ProductID = P.ProductID
-	RETURN 
-END
-
------------Check -----------------------
-/*
-	Select * from  func_GetOrders('ORD001')
-*/ 
-------------------------------------------------- BILL BY ORDER ID------------------------------------------------------------------------------
-go
-CREATE OR ALTER FUNCTION func_Bill(@OrderID nvarchar(10)) RETURNS bigint
-AS
-BEGIN
-	Declare @TotalPriceInvoice bigint;
-	SET @TotalPriceInvoice =0;
-	SELECT @TotalPriceInvoice = SUM(TotalPrice) 
-	FROM func_GetOrders(@OrderID)
-	RETURN @TotalPriceInvoice
-END
------------Check -----------------------
-/*
-print dbo.func_Bill('ORD001')
-*/
------------------------------------------------------------ CHECK  LOGIN -----------------------------------------------------------------------------------
-go
-CREATE OR ALTER FUNCTION func_CheckLogin(@accID nvarchar(10),@password nvarchar(20)) RETURNS Bit
-AS
-BEGIN
-	IF @accID is null RETURN 0
-	IF @password is null RETURN 0
-	DECLARE @pass nvarchar(20);
-	SELECT @pass = Passwords
-	FROM Account 
-	WHERE AccountID = @accID
-	IF @pass = @password RETURN 1
-	RETURN 0
-END
-
-
-
-
-<<<<<<< HEAD
-<<<<<<< HEAD
----------------Add, delete, update, search (Services)---------------
-=======
-
-----------------------------------------------------ADD, DELETE, UPDATE, SEARCH (SERVICES) ---------------------------------
->>>>>>> d07c24f (#51 show invoice view)
-Go
-CREATE OR ALTER PROC proc_AddServices(@idServices nvarchar(10), @nameServices nvarchar(100))
-AS 
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchServices(@idServices)
-	IF @count = 0
-	BEGIN
-		INSERT INTO Services(IDServices, NameServices)
-		VALUES(@idServices, @nameServices)
-	END
-	ELSE
-	BEGIN
-		SELECT 'Da ton tai IDService nay' AS Message
-	END
-END
-/*
-	exec proc_AddServices 'SER444', 'test'
-	select * from Services
-*/
-Go
-CREATE OR ALTER PROC proc_UpdateServices(@idServices nvarchar(10), @new_NameServices nvarchar(50))
-AS 
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchServices(@idServices)
-	IF @count != 0
-	BEGIN
-		UPDATE Services
-		SET NameServices = @new_NameServices
-		WHERE IDServices = @idServices
-	END
-	ELSE
-	BEGIN
-		SELECT 'Khong ton tai IDService nay' AS Message
-	END
-END
-/*
-	exec proc_UpdateServices 'SER444', 'TEST'
-*/
-Go
-CREATE OR ALTER PROC proc_DeleteServices(@idServices nvarchar(10))
-AS
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchServices(@idServices)
-	IF @count != 0
-	BEGIN
-		DELETE FROM Services
-		WHERE IDServices = @idServices
-	END
-	ELSE
-	BEGIN
-		SELECT 'Khong ton tai IDService nay' AS Message
-	END
-END
-/*
-exec proc_DeleteServices 'SER444'
-*/
-Go
-CREATE OR ALTER FUNCTION func_SearchServices(@idServices nvarchar(10))
-RETURNS	@ServicesTable
-TABLE	(IdServices nvarchar(10), NameServices nvarchar(50))
-AS 
-BEGIN
-	INSERT INTO @ServicesTable(IdServices, NameServices)
-	SELECT * FROM Services
-	WHERE IDServices = @idServices
-	RETURN
-END
---go
---DECLARE @ResultCount INT;
---SELECT @ResultCount = COUNT(*)
---FROM dbo.func_SearchServices('SER555');
---IF @ResultCount = 0
---BEGIN
---    SELECT 'Khong tim thay' AS Message;
---END
---ELSE
---BEGIN
---    Select * from dbo.func_SearchServices('SER555')
---END
-go
-
-----------------------------------------------------ADD, DELETE, UPDATE, SEARCH (STAFFS) ---------------------------------
-Go
-CREATE OR ALTER PROC proc_AddStaff(@staffID nvarchar(10), @nameStaff nvarchar(100), @numberPhone nvarchar(20), @position nvarchar(10))
-AS 
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchStaff(@staffID)
-	IF @count = 0
-	BEGIN
-		INSERT INTO Staff(StaffID, NameStaff, NumberPhone, Position)
-		VALUES(@staffID, @nameStaff, @numberPhone, @position)
-	END
-	ELSE
-	BEGIN
-		SELECT 'Da ton tai StaffID nay' AS Message
-	END
-END
-/*
-	select * from Staff_Position
-	exec proc_AddStaff 'STA010', 'test', 'test', 'POS001'
-	select * from Staff
-*/
-Go
-CREATE OR ALTER PROC proc_UpdateStaff(@staffID nvarchar(10), @new_NameStaff nvarchar(100), @new_NumberPhone nvarchar(20), @new_Position nvarchar(10))
-AS 
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchStaff(@staffID)
-	IF @count != 0
-	BEGIN
-		UPDATE Staff
-		SET NameStaff = @new_NameStaff, NumberPhone = @new_NumberPhone, Position = @new_Position
-		WHERE StaffID = @staffID
-	END
-	ELSE
-	BEGIN
-		SELECT 'Khong ton tai StaffID nay' AS Message
-	END
-END
-/*
-	exec proc_UpdateStaff 'STA010', 'TEST', 'TEST', 'POS002'
-*/
-Go
-CREATE OR ALTER PROC proc_DeleteStaff(@staffID nvarchar(10))
-AS
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchStaff(@staffID)
-	IF @count != 0
-	BEGIN
-		DELETE FROM Staff
-		WHERE StaffID = @staffID
-	END
-	ELSE
-	BEGIN
-		SELECT 'Khong ton tai StaffID nay' AS Message
-	END
-END
-/*
-	exec proc_DeleteStaff 'STA010'
-*/
-Go
-CREATE OR ALTER FUNCTION func_SearchStaff(@staffID nvarchar(10))
-RETURNS	@StaffTable
-TABLE	(StaffID nvarchar(10), NameStaff nvarchar(100), NumberPhone nvarchar(20), Position nvarchar(10))
-AS 
-BEGIN
-	INSERT INTO @StaffTable(StaffID, NameStaff, NumberPhone, Position)
-	SELECT * FROM Staff
-	WHERE StaffID = @staffID
-	RETURN
-END
---go
---DECLARE @ResultCount INT;
---SELECT @ResultCount = COUNT(*)
---FROM dbo.func_SearchStaff('STA001');
---IF @ResultCount = 0
---BEGIN
---    SELECT 'Khong tim thay' AS Message;
---END
---ELSE
---BEGIN
---    Select * from dbo.func_SearchStaff('STA001')
---END
-Go
-
-----------------------------------------------------ADD, DELETE, UPDATE, SEARCH (ORDER) ---------------------------------
-Go
-CREATE OR ALTER PROC proc_AddOrders(@orderID nvarchar(10), @datetimeOrder datetime, @total_Unit_Price bigint, @stateOrder bit, @customerOrder nvarchar(10), @orderStaff nvarchar(10), @invoice nvarchar(10))
-AS 
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchOrders(@orderID)
-	IF @count = 0
-	BEGIN
-		INSERT INTO Orders(OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, CustomerOrder, OrderStaff, Invoice)
-		VALUES(@orderID, @datetimeOrder, @total_Unit_Price, @stateOrder, @customerOrder, @orderStaff, @invoice)
-	END
-	ELSE
-	BEGIN
-		SELECT 'Da ton tai OrderID nay' AS Message
-	END
-END
---exec proc_AddOrders 'ORD061', '2023/02/12', 1200000, 1, 'CUS001', 'STA001', 'IN001'
---select * from Orders
-
-Go
-CREATE OR ALTER PROC proc_UpdateOrders(@orderID nvarchar(10), @new_DatetimeOrder datetime, @new_Total_Unit_Price bigint, @new_StateOrder bit, @new_CustomerOrder nvarchar(10), @new_OrderStaff nvarchar(10), @new_Invoice nvarchar(10))
-AS 
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchOrders(@orderID)
-	IF @count != 0
-	BEGIN
-		UPDATE Orders
-		SET DatetimeOrder = @new_DatetimeOrder, Total_Unit_Price = @new_Total_Unit_Price, StateOrder = @new_StateOrder, CustomerOrder = @new_CustomerOrder, OrderStaff = @new_OrderStaff, Invoice = @new_Invoice
-		WHERE OrderID = @orderID
-	END
-	ELSE
-	BEGIN
-		SELECT 'Khong ton tai OrderID nay' AS Message
-	END
-END
---exec proc_UpdateOrders 'ORD061', '2023/02/12', 1200000, 0, 'CUS001', 'STA001', 'IN001'
-
-Go
-CREATE OR ALTER PROC proc_DeleteOrders(@orderID nvarchar(10))
-AS
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchOrders(@orderID)
-	IF @count != 0
-	BEGIN
-		DELETE FROM Orders
-		WHERE OrderID = @orderID
-	END
-	ELSE
-	BEGIN
-		SELECT 'Khong ton tai OderID nay' AS Message
-	END
-END
---exec proc_DeleteOrders 'ORD061'
-
-
---go
---DECLARE @ResultCount INT;
---SELECT @ResultCount = COUNT(*)
---FROM dbo.func_SearchOrders('ORD001');
---IF @ResultCount = 0
---BEGIN
---    SELECT 'Khong tim thay' AS Message;
---END
---ELSE
---BEGIN
---    Select * from dbo.func_SearchOrders('ORD001')
---END
-=======
->>>>>>> ae8e02f (#31 proc_DeleteOrder)
------------
---xóa order
-go
-CREATE OR ALTER PROC proc_DeleteOrder(@OrderID nvarchar(10)) 
-AS
-BEGIN
-	DELETE FROM OrderDetails WHERE OrderID = @OrderID;
-	--Không có xóa trong Order vì có trigger tg_DeleteOrderDetails xóa giúp
-END
-
---exec proc_DeleteOrder 'ORD025'
---select * from Orders
---select * from OrderDetails
-<<<<<<< HEAD
-=======
-
->>>>>>> ae8e02f (#31 proc_DeleteOrder)
-
-/*
-print dbo.func_CheckLogin('STA001','@123456')
-*/
-
---------------------------------------------------------------------------------------------------
---ADD, UPDATE, DELETE, SEARCH BY ID PROCEDURE OF Accounts, Customers, Products TABLE-----------
---------ADD PROC OF Account, Customers, Product TABLE-------------
-GO
-CREATE OR ALTER PROC SP_Account_Add
-(@id nvarchar(10), @password nvarchar(20))
-AS
-	INSERT INTO dbo.Account(AccountID, Passwords)
-	VALUES (@id, @password)
-
-GO
-CREATE OR ALTER PROC SP_Customers_Add
-(@id nvarchar(10), @name nvarchar(100), @phone nvarchar(20))
-AS
-	INSERT INTO dbo.Customers(CustomerID, NameCustomer, NumberPhone)
-	VALUES (@id, @name, @phone)
-
-GO
-CREATE OR ALTER PROC SP_Product_Add
-(@id nvarchar(10), @name nvarchar(100), @price bigint, @description nvarchar(500), @state bit, @type nvarchar(10))
-AS
-	INSERT INTO dbo.Product(ProductID, NameProduct, Price, Description, ProductState, Product_Type)
-	VALUES(@id, @name, @price, @description, @state, @type)
-
---------UPDATE PROC OF Account, Customers, Product TABLE-------------
-GO
-CREATE OR ALTER PROC SP_Account_Update
-(@id nvarchar(10), @password nvarchar(20))
-AS
-	UPDATE dbo.Account
-	SET Passwords = @password
-	WHERE AccountID = @id
-
-GO
-CREATE OR ALTER PROC SP_Customers_Update
-(@id nvarchar(10), @name nvarchar(100), @phone nvarchar(20))
-AS
-	UPDATE dbo.Customers
-	SET NameCustomer = @name,
-		NumberPhone = @phone
-	WHERE CustomerID = @id
-
-GO
-CREATE OR ALTER PROC SP_Product_Update
-(@id nvarchar(10), @name nvarchar(100), @price bigint, @description nvarchar(500), @state bit, @typeID nvarchar(10))
-AS
-	UPDATE dbo.Product
-	SET NameProduct = @name,
-		Price = @price,
-		Description = @description,
-		ProductState = @state,
-		Product_Type = @typeID
-	WHERE ProductID = @id
-
---------DELETE PROC OF Account, Customers, Product TABLE-------------
-GO
-CREATE OR ALTER PROC SP_Account_Delete
-(@id nvarchar(10))
-AS
-	DELETE FROM dbo.Account
-	WHERE AccountID = @id
-
-GO
-CREATE OR ALTER PROC SP_Customers_Delete
-(@id nvarchar(10))
-AS
-	DELETE FROM dbo.Customers
-	WHERE CustomerID = @id
-
-	GO
-CREATE OR ALTER PROC SP_Product_Delete
-(@id nvarchar(10))
-AS
-	DELETE FROM dbo.Product
-	WHERE ProductID = @id
-
---------SEARCH PROC OF Account, Customers, Product TABLE BY ID-------------
-GO
-CREATE OR ALTER PROC SP_Account_Search
-(@id nvarchar(10))
-AS
-	SELECT * FROM dbo.Account
-	WHERE AccountID = @id
-
-GO
-CREATE OR ALTER PROC SP_Customers_Search
-(@id nvarchar(10))
-AS
-	SELECT * FROM dbo.Customers
-	WHERE CustomerID = @id
-
-GO
-CREATE OR ALTER PROC SP_Product_Search
-(@id nvarchar(10))
-AS
-	SELECT * FROM dbo.Product
-	WHERE ProductID = @id
-
-------------------------------------------------------------SEARCH ORDERS BY ORDER ID-------------------------------------------------
-Go
-CREATE OR ALTER FUNCTION func_SearchOrders(@orderID nvarchar(10))
-RETURNS	@OrdersTable
-TABLE	(OrderID nvarchar(10), DatetimeOrder datetime, Total_Unit_Price bigint, StateOrder bit, CustomerOrder nvarchar(10), OrderStaff nvarchar(10), Invoice nvarchar(10))
-AS 
-BEGIN
-	INSERT INTO @OrdersTable(OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, CustomerOrder, OrderStaff, Invoice)
-	SELECT * FROM Orders
-	WHERE OrderID = @orderID
-	RETURN
-END
------------------------------------------------------- --GET INVOICE BOOKING VIEW BY BOOKING ID---------------------------------------------
-Go
-CREATE OR ALTER FUNCTION func_GetInvoiceBookingDetails(@bookingID nvarchar(10))
-RETURNS @InvoiceBookingDetailsTable
-TABLE (InvoiceID nvarchar(10), BookingID nvarchar(10), IDServices nvarchar(10), CustomerBooking nvarchar(10), TableBooking nvarchar(10), BookingDate date, BookingStatus nvarchar(50), Duration int, NameServices nvarchar(100), Price bigint, TotalPrice bigint, StatusInvoice nvarchar(10))
-AS 
-BEGIN
-	INSERT INTO @InvoiceBookingDetailsTable(InvoiceID, BookingID, IDServices, CustomerBooking, TableBooking, BookingDate,BookingStatus, Duration, NameServices, Price, TotalPrice, StatusInvoice)
-	SELECT * FROM InvoiceBookingView
-	WHERE BookingID = @bookingID
-	RETURN
-END
---select * from dbo.func_GetInvoiceBookingDetails('BI002')
---------------------------------------------------------------GET INVOICE ORDER DETAILS VIEW BY INVOICE ID-------------------------
-go
-CREATE OR ALTER FUNCTION func_GetInvoiceOrderDetails(@invoiceID nvarchar(10)) 
-RETURNS @InvoiceOrderDetailsTable 
-Table  (InvoiceID nvarchar(10),ProductID nvarchar(10),ProductName nvarchar(100),CreationTime datetime,Quantity int,Price bigint,TotalPrice bigint,StatusInvoice nvarchar(10),CheckInTime datetime,CheckOutTime datetime)
-AS
-BEGIN
-	INSERT INTO @InvoiceOrderDetailsTable(InvoiceID,ProductID,ProductName,CreationTime,Quantity,Price,TotalPrice,StatusInvoice,CheckInTime,CheckOutTime)
-	SELECT * FROM InvoiceOrderView
-	WHERE InvoiceID = @invoiceID
-	RETURN 
-END
-
-/*
-Select * from func_GetInvoiceOrderDetails('IN001')
-*/
---------------------------------------------------------------TOTAL THE INVOICE BY INVOICE ID-------------------------------------------------
-go
-CREATE OR ALTER FUNCTION func_TotalTheInvoice(@invoiceID nvarchar(10),@discount int) RETURNS bigint
-AS
-BEGIN
-	Declare @TotalPriceInvoice bigint;
-	SET @TotalPriceInvoice =0;
-	SELECT @TotalPriceInvoice = SUM(TotalPrice) 
-	FROM func_GetInvoiceOrderDetails(@invoiceID)
-	RETURN (@TotalPriceInvoice * (100-@discount))/100
-END
-
-/*
-Select dbo.func_TotalTheInvoice('IN001',50)
-*/
-
--------------------------------------------------------------CREATE INVOICE--------------------------------------------------------------
-go
-CREATE OR ALTER PROC proc_CreateNewInvoice(@orderID nvarchar(10),@invoiceID nvarchar(10))
-AS
-BEGIN
-	BEGIN TRANSACTION
-	IF EXISTS
-    (
-      -- Lấy bản ghi có mã chi tiết đơn trùng với tham số đầu vào
-      SELECT 1
-      FROM Orders
-      WHERE OrderID = @orderID
-    )
-	BEGIN
-		BEGIN TRY
-			INSERT INTO Invoice(InvoiceID,CreationTime,Price)
-			VALUES (@invoiceID,GETDATE(),0);
-			UPDATE Orders SET Invoice = @invoiceID 
-			WHERE OrderID = @orderID
-			COMMIT TRANSACTION
-		END TRY
-		BEGIN CATCH
-			ROLLBACK TRANSACTION
-			RAISERROR('Tạo hóa đơn không thành công!', 16, 1)
-		END CATCH
-	END		
-	ELSE
-	BEGIN 
-		ROLLBACK TRANSACTION
-		RAISERROR ('Order bạn yêu cầu không tồn tại! Vui lòng kiểm tra lại!', 16, 1)
-	END
-END
-
-/*
-	Select * from Orders
-	Select * from Invoice
-	exec proc_CreateNewInvoice 'ORD040','IN111'
-
-*/
------------------------------------------------------- SHOW INVOICE ORDER VIEW BY INVOICE ID---------------------------------------------
---show các sản phẩm được order của hoá đơn trong invoiceOderView
-go
-CREATE OR ALTER PROC proc_ShowInvoiceDetailsView(@invoiceID nvarchar(10)) 
-AS
-BEGIN
-IF EXISTS
-    (
-      SELECT 1
-      FROM Invoice
-      WHERE InvoiceID = @invoiceID
-    )
-	BEGIN
-		SELECT * FROM InvoiceOrderView
-		WHERE InvoiceID = @invoiceID
-	END
-	ELSE
-		RAISERROR ('Hóa đơn bạn yêu cầu không tồn tại! Vui lòng kiểm tra lại!', 16, 1)
-END
-
-/*
-exec proc_ShowInvoiceDetailsView 'IN111'
-*/
--------------------------------------------------------------DESTROY INVOICE--------------------------------------------------------------
-go
-CREATE OR ALTER PROC proc_DesTroyInvoice(@orderID nvarchar(10),@invoiceID nvarchar(10))
-AS
-BEGIN
-	BEGIN TRANSACTION
-	IF EXISTS
-    (
-      SELECT 1
-      FROM Orders
-      WHERE OrderID = @orderID
-    )
-	BEGIN
-		IF EXISTS
-		(
-		  SELECT 1
-		  FROM Invoice
-		  WHERE InvoiceID = @invoiceID
-		)
-		BEGIN
-			BEGIN TRY
-				---Cập nhật orders
-				UPDATE Orders 
-				SET Invoice = null 
-				WHERE OrderID = @orderID
-				--Xóa hóa đơn
-				DELETE FROM Invoice
-				WHERE InvoiceID = @invoiceID
-				COMMIT TRANSACTION
-			END TRY
-			BEGIN CATCH
-				ROLLBACK TRANSACTION
-				RAISERROR('Hủy hóa đơn không thành công!', 16, 1)
-			END CATCH
-		END
-		ELSE
-	BEGIN 
-		ROLLBACK TRANSACTION
-		RAISERROR ('Hóa đơn bạn yêu cầu không tồn tại! Vui lòng kiểm tra lại!', 16, 1)
-	END
-	END		
-	ELSE
-	BEGIN 
-		ROLLBACK TRANSACTION
-		RAISERROR ('Order bạn yêu cầu không tồn tại! Vui lòng kiểm tra lại!', 16, 1)
-	END
-END
-
-/*
-	Select * from Orders
-	Select * from Invoice
-	exec proc_DesTroyInvoice 'ORD040','IN111'
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 --Drop Table

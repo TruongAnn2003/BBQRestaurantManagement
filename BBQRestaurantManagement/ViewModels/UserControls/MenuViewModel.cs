@@ -23,8 +23,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         private ObservableCollection<Product> drinks;
         public ObservableCollection<Product> Drinks { get => drinks; set { drinks = value; OnPropertyChanged(); } }
 
-        private Action<string> loadOrderItemView;
-        public Action<string> LoadOrderItemView { get => loadOrderItemView; set { loadOrderItemView = value; OnPropertyChanged(); } }
+        public Action<string> LoadOrderItemView { get; set; }
+        public Action<Order> ReceiveOrderIns { get; set; }
 
         private ProductsDao productsDao = new ProductsDao();
         private OrdersDao ordersDao = new OrdersDao();
@@ -53,7 +53,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                   () =>
                   {
                       OrderIns = Order.CreateOrderIns();
-                      ordersDao.Add(OrderIns);               
+                      ordersDao.AddNonCustomerAndInvoice(OrderIns);
+                      ReceiveOrderIns(OrderIns);
                   }, null);
                 dialog.Show();
             }

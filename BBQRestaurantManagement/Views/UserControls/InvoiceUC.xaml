@@ -12,6 +12,7 @@
             TextOptions.TextRenderingMode="Auto"
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="{DynamicResource MaterialDesignFont}"    
+             Name="invoiceView"
             mc:Ignorable="d" MinHeight="700" >
     <Grid>
         <Border Margin="10" >
@@ -40,13 +41,13 @@
                                         Grid.Column="0"
                                         VerticalAlignment="Center">
                                 <TextBlock Text="Mã hóa đơn:" Margin="10 0"></TextBlock>
-                                <TextBlock Text="{Binding InvoiceID}" Margin="10 0"></TextBlock>
+                                <TextBlock Text="{Binding ElementName=invoiceView,Path=DataContext.InvoiceID,UpdateSourceTrigger=PropertyChanged}" Margin="10 0"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" 
                                          Grid.Column="1"
                                         VerticalAlignment="Center">
                                 <TextBlock Text="Thời gian:" Margin="10 0"></TextBlock>
-                                <TextBlock Text="{Binding CreationTime }" Margin="10 0"></TextBlock>
+                                <TextBlock Text="{Binding CreationTime ,UpdateSourceTrigger=PropertyChanged}" Margin="10 0"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" 
                                          Grid.Column="2"
@@ -57,7 +58,7 @@
                         </Grid>
                     </Border>
                     <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0.2">
-                        <DataGrid ItemsSource="{Binding ListInvoiceOrderDetails}"></DataGrid>
+                        <DataGrid IsReadOnly="True" ItemsSource="{Binding ListInvoiceOrderDetails,UpdateSourceTrigger=PropertyChanged}"></DataGrid>
                     </Border>
                     <Border Grid.Row="2"  BorderBrush="Gray" BorderThickness="0.2">
                         <Grid>
@@ -66,19 +67,20 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Price,StringFormat='##,#'}" 
+                            <TextBox Text="{Binding Price,UpdateSourceTrigger=PropertyChanged,StringFormat='##,#'}" 
                                      HorizontalAlignment="Left"
                                      Margin="5"
                                      Grid.Column="0"
                                     IsReadOnly="True"
                                     materialDesign:TextFieldAssist.PrefixText="TotalPrice:"
                                     materialDesign:TextFieldAssist.SuffixText="$"/>
-                            <TextBox Text="{Binding Price}"
+                            <TextBox Text="{Binding Discount, UpdateSourceTrigger=PropertyChanged}"
                                      Grid.Column="1"
                                      Margin="10 5"
                                     HorizontalAlignment="Center"
-                                    IsReadOnly="True"
-                                    materialDesign:TextFieldAssist.PrefixText="Trạng thái:"/>
+                                    IsReadOnly="False"
+                                     materialDesign:TextFieldAssist.SuffixText="%"
+                                    materialDesign:TextFieldAssist.PrefixText="Giảm giá: "/>
                             <Button Grid.Column="2" Content="Thanh toán" Command="{Binding PaymentCommand}" Margin="20 10">
                                 
                             </Button>

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -25,6 +26,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         public Order OrderIns { get => orderIns; set => orderIns = value; }
 
+        private Visibility visibilityOrderDetailsView = Visibility.Visible;
+        public Visibility VisibilityOrderDetailsView { get => visibilityOrderDetailsView; set { visibilityOrderDetailsView = value; OnPropertyChanged(); } }
 
         private bool statusMenuView = false;
         public bool StatusMenuView { get => statusMenuView; set { statusMenuView = value; OnPropertyChanged(); } }
@@ -91,13 +94,27 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                      //ReturnView
                      MenuView.DataContext = new MenuViewModel();
                      ((MenuViewModel)(MenuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
-                     CurrentChildView = MenuView;
+                     ((MenuViewModel)(MenuView.DataContext)).ReceiveOrderIns = new Action<Order>(ReceiveOrderIns);                    
                      ((MenuViewModel)MenuView.DataContext).OrderIns = null;
                      ListOrderItem = new List<OrderDetails>();
-                     OrderIns = new Order();
+                     OrderIns = null;
+                     CurrentChildView = MenuView;
                  }, null);
                 dialog.Show();
             }    
+        }
+
+        private void CompleteTheOrder(object o)
+        {
+            ListOrderItem = new List<OrderDetails>();
+            OrderIns = null;            
+            ExecuteShowMenuView(null);
+        }
+
+        private void ReceiveOrderIns(Order order)
+        {
+            if (order == null) return;
+            OrderIns = order;
         }
 
         private void ExecuteMinusCommand(OrderDetails orderDetails)
@@ -126,39 +143,49 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         }
 
         private void ExecuteShowInvoiceView(object obj)
-        {        
-            AlertDialogService dialog = new AlertDialogService(
-              "Order",
-              "Create Invoice?",
-              () =>
-              {
-                  InvoiceView.DataContext = new InvoiceViewModel();
-                  var newInvoie = Invoice.CreateInvoiceIns();
-                  invoicesDao.CreateNewInvoice(OrderIns.ID, newInvoie.ID);
-                  ((InvoiceViewModel)InvoiceView.DataContext).InvoiceIns = newInvoie;
-                  ((InvoiceViewModel)InvoiceView.DataContext).LoadListInvoiceOrderDetails();
-                  CurrentChildView = InvoiceView;
-                  StatusInvoiceView = true;
-              }, null);
-            dialog.Show();          
+        {
+           if(OrderIns != null) 
+            {
+                AlertDialogService dialog = new AlertDialogService(
+                 "Order",
+                 "Create Invoice?",
+                 () =>
+                 {
+                     VisibilityOrderDetailsView = Visibility.Collapsed;
+                     InvoiceView.DataContext = new InvoiceViewModel();
+                     var newInvoie = Invoice.CreateInvoiceIns();
+                     invoicesDao.CreateNewInvoice(OrderIns.ID, newInvoie.ID);
+                     ((InvoiceViewModel)InvoiceView.DataContext).InvoiceIns = newInvoie;
+                     ((InvoiceViewModel)InvoiceView.DataContext).LoadListInvoiceOrderDetails();
+                     ((InvoiceViewModel)(InvoiceView.DataContext)).MoveToTheInvoiceView = new Action<object>(CompleteTheOrder);
+                     CurrentChildView = InvoiceView;
+                     StatusInvoiceView = true;
+                 }, null);
+                dialog.Show();
+            }               
         }
 
         private void ExecuteShowMenuView(object obj)
         {
-            MenuView.DataContext = new MenuViewModel();
-            AlertDialogService dialog = new AlertDialogService(
-               "Order",
-               "Create new order?",
-               () => 
-               {
-                   OrderIns = Order.CreateOrderIns();
-                   ordersDao.AddNonCustomerAndInvoice(OrderIns);
-                   ((MenuViewModel)MenuView.DataContext).OrderIns = OrderIns;
-               }, null);
-            dialog.Show();
-            ((MenuViewModel)(MenuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
-            CurrentChildView = MenuView;
-            StatusMenuView = true;
+            if(orderIns == null)
+            {               
+                MenuView.DataContext = new MenuViewModel();
+                AlertDialogService dialog = new AlertDialogService(
+                   "Order",
+                   "Create new order?",
+                   () =>
+                   {
+                       VisibilityOrderDetailsView = Visibility.Visible;
+                       OrderIns = Order.CreateOrderIns();
+                       ordersDao.AddNonCustomerAndInvoice(OrderIns);
+                       ((MenuViewModel)MenuView.DataContext).OrderIns = OrderIns;             
+                   }, null);
+                dialog.Show();
+                ((MenuViewModel)(MenuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
+                ((MenuViewModel)(MenuView.DataContext)).ReceiveOrderIns = new Action<Order>(ReceiveOrderIns);
+                CurrentChildView = MenuView;
+                StatusMenuView = true;
+            }    
         }
 
     }

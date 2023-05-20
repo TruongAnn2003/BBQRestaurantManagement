@@ -21,15 +21,16 @@ namespace BBQRestaurantManagement.Database.Base
 
         public const string INVOICE_ORDER_DETAILS_VIEW = "InvoiceOrderView";
         public const string INVOICE_ORDER_DETAILS_INVOICE_ID = "InvoiceID";
-        public const string INVOICE_ORDER_DETAILS_PRODUCT_ID = "ProductID";
         public const string INVOICE_ORDER_DETAILS_PRODUCT_NAME = "ProductName";
         public const string INVOICE_ORDER_DETAILS_QUANTITY = "Quantity";
         public const string INVOICE_ORDER_DETAILS_CREATED_TIME = "CreationTime";
         public const string INVOICE_ORDER_DETAILS_PRICE = "Price";
         public const string INVOICE_ORDER_DETAILS_TOTAL_PRICE = "TotalPrice";
-        public const string INVOICE_ORDER_DETAILS_STATUS_INVOICE = "StatusInvoice";
+        public const string INVOICE_ORDER_DETAILS_STATUS_INVOICE = "NameStatusInvoice";
         public const string INVOICE_ORDER_DETAILS_CHECKIN_TIME = "CheckInTime";
         public const string INVOICE_ORDER_DETAILS_CHECKOUT_TIME = "CheckOutTime";
+        public const string INVOICE_ORDER_DETAILS_DISCOUNT = "Discount";
+        public const string INVOICE_ORDER_DETAILS_TOTAL_PRICE_AFTER_DISCOUNT = "TotalPriceAfterDiscount";
 
         protected const string BOOKING_TABLE = "Booking";
         public const string BOOKING_ID = "BookingID";
@@ -113,6 +114,7 @@ namespace BBQRestaurantManagement.Database.Base
         public const string INVOICE_ID = "InvoiceID";
         public const string INVOICE_CREATION_TIME = "CreationTime";
         public const string INVOICE_PRICE = "Price";
+        public const string INVOICE_DISCOUNT = "Discount";
         public const string INVOICE_DETAILS = "InvoiceDetails";
 
         protected const string STAFF_POSITION_TABLE = "Staff_Position";
