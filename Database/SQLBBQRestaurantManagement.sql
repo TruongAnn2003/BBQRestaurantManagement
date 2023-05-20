@@ -1327,6 +1327,7 @@ BEGIN
 END
 --select * from dbo.func_GetInvoiceBookingDetails('BI002')
 
+<<<<<<< HEAD
 ---------------Add, delete, update, search (Services)---------------
 Go
 CREATE OR ALTER PROC proc_AddServices(@idServices nvarchar(10), @nameServices nvarchar(100))
@@ -1581,6 +1582,8 @@ END
 --BEGIN
 --    Select * from dbo.func_SearchOrders('ORD001')
 --END
+=======
+>>>>>>> ae8e02f (#31 proc_DeleteOrder)
 -----------
 --xóa order
 go
@@ -1594,6 +1597,10 @@ END
 --exec proc_DeleteOrder 'ORD025'
 --select * from Orders
 --select * from OrderDetails
+<<<<<<< HEAD
+=======
+
+>>>>>>> ae8e02f (#31 proc_DeleteOrder)
 
 /*
 print dbo.func_CheckLogin('STA001','@123456')
