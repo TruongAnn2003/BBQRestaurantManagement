@@ -72,11 +72,11 @@ CREATE TABLE StatusInvoice_Details
 
 CREATE TABLE Invoice
 (
-	InvoiceID nvarchar(10) CONSTRAINT InvoiceIDkey PRIMARY KEY,
+	InvoiceID nvarchar(10),
 	CreationTime datetime NOT NULL,
 	Price BIGINT NOT NULL,
 	InvoiceDetails nvarchar(10),
-	CONSTRAINT FK_InvoiceDetails FOREIGN KEY (InvoiceDetails) REFERENCES StatusInvoice_Details(InvoiceDetailsID),
+	--CONSTRAINT FK_InvoiceDetails FOREIGN KEY (InvoiceDetails) REFERENCES StatusInvoice_Details(InvoiceDetailsID),
 	CONSTRAINT RightPriceInvoice CHECK(Price >= 0)
 )
 
@@ -95,11 +95,16 @@ CREATE TABLE Booking
 	CONSTRAINT FK_CustomerBooking FOREIGN KEY (CustomerBooking) REFERENCES Customers(CustomerID),
 	CONSTRAINT FK_ServiceBooking FOREIGN KEY (ServiceBooking) REFERENCES TypeServices(IDType),
 	CONSTRAINT FK_TableBooking FOREIGN KEY (TableBooking) REFERENCES TablesCustomer(TablesID),
-	CONSTRAINT FK_BookingInvoice FOREIGN KEY (BookingInvoice) REFERENCES Invoice(InvoiceID),
+	--CONSTRAINT FK_BookingInvoice FOREIGN KEY (BookingInvoice) REFERENCES Invoice(InvoiceID),
 	CONSTRAINT BookingStatus CHECK(BookingStatus LIKE 'Success' or BookingStatus LIKE 'Received' or BookingStatus LIKE 'Cancel'),
 	--Trạng thái đặt bàn sẽ bao gồm xác nhận đặt bàn thành công, đã nhận bàn và huỷ đặt bàn
 	CONSTRAINT RightNumberCustomer CHECK(NumberCustomer >= 1)
 );
+
+ALTER TABLE Booking
+DROP CONSTRAINT FK_BookingInvoice
+-- Hiện tại Booking không có khóa ngoại FK_BookingInvoice, nên chú ý khi insert
+
 
 CREATE TABLE Staff_Position
 (
@@ -945,25 +950,7 @@ INSERT INTO Service_Product (IDProduct, IDServices) VALUES
 --	UPDATE TablesCustomer SET Status = 0 WHERE TablesID = @TabID
 --END
 
---GO
---CREATE OR ALTER TRIGGER tg_InsertInvoice
---ON	  Invoice 
---FOR	  INSERT
---AS
---BEGIN 
---	DECLARE  @IDDet nvarchar(10), @IDInv nvarchar(10)
 
---	SELECT @IDInv = i.InvoiceID
---	FROM INSERTED i
-
---	SELECT @IDDet = COUNT(*) + 1
---	FROM StatusInvoice_Details
-
---	INSERT INTO StatusInvoice_Details(InvoiceDetailsID,CheckIn_Time,CheckOut_Time,StatusInvoice) 
---	VALUES (@IDDet,GETDATE(),null,'STA001'); --'STA001' là chưa thanh toán 
-
---	UPDATE Invoice SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv
---END
 ----InsertOrderDetails
 GO
 CREATE OR ALTER TRIGGER tg_InsertOrderDetails
@@ -980,14 +967,20 @@ BEGIN
 		PRINT 'OrderDetailsID already exist'
 		RETURN
 	END 
+	
+	SET @OrderDetailsID = CONCAT('ODETAIL',CAST(RAND() * 10000 AS INT));
+	WHILE @OrderDetailsID IN (SELECT OrderDetailsID FROM OrderDetails)
+	BEGIN
+		SET @OrderDetailsID = CONCAT('ODETAIL',CAST(RAND() * 10000 AS INT));
+	END
 
 	UPDATE OrderDetails
-    SET OrderDetailsID = CONCAT('ODETAIL', (SELECT COUNT(*) FROM OrderDetails))
+    SET OrderDetailsID = @OrderDetailsID
     WHERE OrderDetailsID IS NULL OR OrderDetailsID NOT LIKE 'ODETAIL%';
 END
 
 --INSERT INTO OrderDetails (ProductID, Quantity, OrderID) VALUES
---('PRO007', '4', 'ORD001')
+--('PRO003', '4', 'ORD001')
 
 ----Check FK Order can null
 GO
@@ -1044,6 +1037,63 @@ AS
 
 --DELETE FROM OrderDetails WHERE OrderID ='ORD001'
 
+-- check khóa ngoại có thể null
+GO
+CREATE OR ALTER TRIGGER Check_FKN_Invoice
+ON Invoice
+FOR INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @InvoiceDetails nvarchar(10)
+	SELECT @InvoiceDetails = InvoiceDetails 
+	FROM INSERTED
+    
+    IF (@InvoiceDetails IS NOT NULL) AND (NOT EXISTS(SELECT InvoiceDetailsID FROM StatusInvoice_Details WHERE InvoiceDetailsID = @InvoiceDetails))
+    BEGIN
+		ROLLBACK TRAN
+		PRINT 'Invalid InvoiceDetails'
+		RETURN;
+    END;
+END
+-- Insert Invoice
+GO
+CREATE OR ALTER TRIGGER tg_InsertInvoice
+ON	  Invoice 
+FOR	  INSERT
+AS
+BEGIN 
+	DECLARE  @IDDet nvarchar(10), @IDInv nvarchar(10), @IDInvED nvarchar(10)
+
+	SELECT @IDInv = i.InvoiceID, @IDInvED = i.InvoiceID
+	FROM INSERTED i
+
+	IF (SELECT count(*) FROM  Invoice WHERE InvoiceID =@IDInv AND InvoiceID IS NOT NULL) >1
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'InvoiceID already exist'
+		RETURN
+	END 
+
+	SET @IDInv = CONCAT('IN',CAST(RAND() * 10000 AS INT));
+	WHILE @IDInv IN (SELECT OrderDetailsID FROM OrderDetails)
+	BEGIN
+		SET @IDInv = CONCAT('IN',CAST(RAND() * 10000 AS INT));
+	END
+
+	SET @IDDet = CONCAT('DEID',CAST(RAND() * 10000 AS INT));
+	WHILE @IDDet IN (SELECT InvoiceDetailsID FROM StatusInvoice_Details)
+	BEGIN
+		SET @IDDet = CONCAT('DEID',CAST(RAND() * 10000 AS INT));
+	END
+
+	INSERT INTO StatusInvoice_Details(InvoiceDetailsID,CheckIn_Time,CheckOut_Time,StatusInvoice) 
+	VALUES (@IDDet,null,null,'STATUS001'); --'STA001' là chưa thanh toán 
+
+	UPDATE Invoice SET InvoiceDetails = @IDDet, InvoiceID = @IDInv WHERE InvoiceID = @IDInvED OR InvoiceID IS NULL
+END
+
+--INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
+--(NULL, GETDATE(), 1220000, NULL)
 
 -----VIEW-------------------------------
 
