@@ -72,11 +72,12 @@ CREATE TABLE StatusInvoice_Details
 
 CREATE TABLE Invoice
 (
-	InvoiceID nvarchar(10) CONSTRAINT InvoiceIDkey PRIMARY KEY,
+	InvoiceID nvarchar(10) CONSTRAINT InvoiceIDKey PRIMARY KEY,
 	CreationTime datetime NOT NULL,
 	Price BIGINT NOT NULL,
+	Discount int,
 	InvoiceDetails nvarchar(10),
-	CONSTRAINT FK_InvoiceDetails FOREIGN KEY (InvoiceDetails) REFERENCES StatusInvoice_Details(InvoiceDetailsID),
+	--CONSTRAINT FK_InvoiceDetails FOREIGN KEY (InvoiceDetails) REFERENCES StatusInvoice_Details(InvoiceDetailsID),
 	CONSTRAINT RightPriceInvoice CHECK(Price >= 0)
 )
 
@@ -101,6 +102,8 @@ CREATE TABLE Booking
 	CONSTRAINT RightNumberCustomer CHECK(NumberCustomer >= 1)
 );
 
+
+go
 CREATE TABLE Staff_Position
 (
 	IDPosition nvarchar(10) CONSTRAINT Staff_PositionIDkey PRIMARY KEY,
@@ -176,7 +179,12 @@ CREATE TABLE OrderDetails
 ---	CONSTRAINT FK_OrderID FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
 
--------INSERT DATA--------------------------
+---------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
+/*																																			*/
+/*																		INSERT DATA															*/
+/*																																			*/
+---------------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 go
 INSERT INTO Staff_Position(IDPosition,Position) VALUES
@@ -280,43 +288,43 @@ INSERT INTO StatusInvoice_Details(InvoiceDetailsID, CheckIn_Time, CheckOut_Time,
 ('DEID036', null, null, 'STATUS001')
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
-('IN001', '2023/02/12 18:32:43', 1220000, 'DEID001'),
-('IN002', '2023/03/12 14:11:43', 84000, 'DEID002'),
-('IN003', '2022/07/11 06:32:43', 428000, 'DEID003'),
-('IN004', '2021/04/16 13:11:21', 290000, 'DEID004'),
-('IN005', '2023/01/01 23:11:43', 1900000, 'DEID005'),
-('IN006', '2019/12/05 14:11:43', 160000, 'DEID006'),
-('IN007', '2022/08/31 16:10:32', 420000, 'DEID007'),
-('IN008', '2023/01/31 18:40:43', 270000, 'DEID008'),
-('IN009', '2021/06/23 19:11:43', 1920000, 'DEID009'),
-('IN010', '2022/03/22 23:32:43', 300000, 'DEID010'),
-('IN011', '2022/02/14 12:32:43', 2180000, 'DEID011'),
-('IN012', '2022/09/01 10:11:23', 3600000, 'DEID012'),
-('IN013', '2021/01/12 09:00:12', 2500000, 'DEID013'),
-('IN014', '2022/06/27 07:40:43', 202000, 'DEID014'),
-('IN015', '2022/03/27 11:32:43', 190000, 'DEID015'),
-('IN016', '2023/03/20 18:00:01', 340000, 'DEID016'),
-('IN017', '2023/05/02 18:55:43', 360000, 'DEID017'),
-('IN018', '2023/02/26 20:17:12', 210000, 'DEID018'),
-('IN019', '2023/02/12 20:32:12', 2450000, 'DEID019'),
-('IN020', '2021/05/17 19:10:17', 1560000, 'DEID020'),
-('IN021', '2021/09/30 13:19:41', 390000, 'DEID021'),
-('IN022', '2022/04/12 14:12:03', 720000, 'DEID022'),
-('IN023', '2022/11/06 15:16:06', 345000, 'DEID023'),
-('IN024', '2021/12/12 10:18:07', 186000, 'DEID024'),
-('IN025', '2022/03/04 18:12:01', 200000, 'DEID025'),
-('IN026', '2023/01/05 20:32:43', 400000, 'DEID026'),
-('IN027', '2023/02/04 08:12:02', 150000, 'DEID027'),
-('IN028', '2023/02/04 14:13:02', 1020000, 'DEID028'),
-('IN029', '2023/03/01 18:30:32', 200000, 'DEID029'),
-('IN030', '2023/01/19 17:30:32', 800000, 'DEID030'),
-('IN031', '2023/03/22 21:00:01', 640000, 'DEID031'),
-('IN032', '2023/04/11 22:01:49', 250000, 'DEID032'),
-('IN033', '2023/04/04 19:02:00', 72000, 'DEID033'),
-('IN034', '2023/02/28 10:32:11', 100000, 'DEID034'),
-('IN035', '2023/01/28 12:48:21', 20000, 'DEID035'),
-('IN036', '2023/05/01 13:50:21', 60000, 'DEID036')
+INSERT INTO Invoice(InvoiceID, CreationTime, Price,Discount, InvoiceDetails) VALUES
+('IN001', '2023/02/12 18:32:43', 1220000,0, 'DEID001'),
+('IN002', '2023/03/12 14:11:43', 84000,0, 'DEID002'),
+('IN003', '2022/07/11 06:32:43', 428000,0, 'DEID003'),
+('IN004', '2021/04/16 13:11:21', 290000,0, 'DEID004'),
+('IN005', '2023/01/01 23:11:43', 1900000,0, 'DEID005'),
+('IN006', '2019/12/05 14:11:43', 160000,0, 'DEID006'),
+('IN007', '2022/08/31 16:10:32', 420000,0, 'DEID007'),
+('IN008', '2023/01/31 18:40:43', 270000,0, 'DEID008'),
+('IN009', '2021/06/23 19:11:43', 1920000,0, 'DEID009'),
+('IN010', '2022/03/22 23:32:43', 300000,0, 'DEID010'),
+('IN011', '2022/02/14 12:32:43', 2180000,0, 'DEID011'),
+('IN012', '2022/09/01 10:11:23', 3600000,0, 'DEID012'),
+('IN013', '2021/01/12 09:00:12', 2500000,0, 'DEID013'),
+('IN014', '2022/06/27 07:40:43', 202000,0, 'DEID014'),
+('IN015', '2022/03/27 11:32:43', 190000,0, 'DEID015'),
+('IN016', '2023/03/20 18:00:01', 340000,0, 'DEID016'),
+('IN017', '2023/05/02 18:55:43', 360000,0, 'DEID017'),
+('IN018', '2023/02/26 20:17:12', 210000,0, 'DEID018'),
+('IN019', '2023/02/12 20:32:12', 2450000,0, 'DEID019'),
+('IN020', '2021/05/17 19:10:17', 1560000,0, 'DEID020'),
+('IN021', '2021/09/30 13:19:41', 390000,0, 'DEID021'),
+('IN022', '2022/04/12 14:12:03', 720000,0, 'DEID022'),
+('IN023', '2022/11/06 15:16:06', 345000,0, 'DEID023'),
+('IN024', '2021/12/12 10:18:07', 186000,0, 'DEID024'),
+('IN025', '2022/03/04 18:12:01', 200000,0, 'DEID025'),
+('IN026', '2023/01/05 20:32:43', 400000,0, 'DEID026'),
+('IN027', '2023/02/04 08:12:02', 150000,0, 'DEID027'),
+('IN028', '2023/02/04 14:13:02', 1020000,0, 'DEID028'),
+('IN029', '2023/03/01 18:30:32', 200000,0, 'DEID029'),
+('IN030', '2023/01/19 17:30:32', 800000,0, 'DEID030'),
+('IN031', '2023/03/22 21:00:01', 640000,0, 'DEID031'),
+('IN032', '2023/04/11 22:01:49', 250000,0, 'DEID032'),
+('IN033', '2023/04/04 19:02:00', 72000,0, 'DEID033'),
+('IN034', '2023/02/28 10:32:11', 100000,0, 'DEID034'),
+('IN035', '2023/01/28 12:48:21', 20000,0, 'DEID035'),
+('IN036', '2023/05/01 13:50:21', 60000,0, 'DEID036')
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Services(IDServices ,NameServices) VALUES 
@@ -335,30 +343,7 @@ INSERT INTO TypeServices(IDType,NameType,IDServices,Price) VALUES
 ('TYP312', 'Piano music','SER333',0),  --combo gia đình
 ('TYP313', 'Karaoke','SER333',0)		  --combo bạn bè
 
--------------------------------------------------------------------------------------------------------------------------------------------------------
 
-INSERT INTO Service_Product (IDProduct, IDServices) VALUES
-('PRO001', 'TYP111'),
-('PRO002', 'TYP112'),
-('PRO003', 'TYP113'),
-('PRO004', 'TYP114'),
-('PRO005', 'TYP211'),
-('PRO006', 'TYP212'),
-('PRO007', 'TYP311'),
-('PRO008', 'TYP312'),
-('PRO009', 'TYP313'),
-('PRO010', 'TYP313'),
-('PRO011', 'TYP312'),
-('PRO012', 'TYP111'),
-('PRO013', 'TYP111'),
-('PRO014', 'TYP112'),
-('PRO015', 'TYP112'),
-('PRO016', 'TYP113'),
-('PRO017', 'TYP113'),
-('PRO018', 'TYP114'),
-('PRO019', 'TYP114'),
-('PRO020', 'TYP212'),
-('PRO021', 'TYP311');
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO TablesCustomer(TablesID,MaxSeats,RoomType,Status) VALUES
 ('TAB001', 4,'TYP111',1),
@@ -439,7 +424,6 @@ INSERT INTO Booking (BookingID,BookingDate,BookingStatus,Duration,Note,NumberCus
 ('BI024','2022/02/04','Success',2,'None note',5,'CUS024','TYP114','TAB012','IN024'),
 ('BI025','2022/03/01','Success',3,'None note',6,'CUS025','TYP111','TAB011','IN025'),
 ('BI026','2022/03/02','Success',4,'None note',6,'CUS026','TYP112','TAB001','IN026'),
-
 ('BI027','2023/01/02','Success',4,'None note',6,'CUS001','TYP112','TAB001','IN027'),
 ('BI028','2023/01/21','Received',4,'None note',6,'CUS002','TYP113','TAB009','IN028'),
 ('BI029','2022/12/31','Cancel',4,'None note',6,'CUS003','TYP112','TAB010','IN029'),
@@ -511,30 +495,30 @@ INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, Custom
 ('ORD024', '2021/12/12', 156000, 1, 'CUS024', 'STA004', 'IN024'),
 ('ORD025', '2022/03/04', 200000, 1, 'CUS025', 'STA005', 'IN025'),
 ('ORD026', '2023/01/05', 400000, 1, 'CUS026', 'STA001', 'IN026'),
-('ORD027', '2023/02/12', 20000, 1, 'CUS001', 'STA001', 'IN001'),
-('ORD028', '2023/03/12', 60000, 1, 'CUS002', 'STA005', 'IN002'),
-('ORD029', '2022/07/11', 320000, 1, 'CUS003', 'STA005', 'IN003'),
-('ORD030', '2021/04/16', 200000, 1, 'CUS004', 'STA004', 'IN004'),
-('ORD031', '2022/02/21', 900000, 1, 'CUS005', 'STA005', 'IN005'),
-('ORD032', '2023/01/03', 100000, 1, 'CUS006', 'STA006', 'IN006'),
-('ORD033', '2022/08/31', 320000, 1, 'CUS007', 'STA002', 'IN007'),
-('ORD034', '2023/01/31', 180000, 1, 'CUS008', 'STA001', 'IN008'),
-('ORD035', '2021/06/23', 320000, 1, 'CUS009', 'STA009', 'IN009'),
-('ORD036', '2022/03/22', 100000, 1, 'CUS010', 'STA006', 'IN010'),
-('ORD037', '2022/02/14', 680000, 1, 'CUS011', 'STA003', 'IN011'),
-('ORD038', '2022/09/01', 1500000, 1, 'CUS012', 'STA004', 'IN012'),
-('ORD039', '2021/01/12', 1500000, 1, 'CUS013', 'STA008', 'IN013'),
-('ORD040', '2022/06/27', 52000, 1, 'CUS014', 'STA003', 'IN014'),
-('ORD041', '2022/03/27', 150000, 1, 'CUS015', 'STA006', 'IN015'),
-('ORD042', '2023/03/20', 90000, 1, 'CUS016', 'STA007', 'IN016'),
-('ORD043', '2023/05/02', 160000, 1, 'CUS017', 'STA007', 'IN017'),
-('ORD044', '2023/02/26', 200000, 1, 'CUS018', 'STA002', 'IN018'),
-('ORD045', '2023/02/12', 50000, 1, 'CUS019', 'STA009', 'IN019'),
-('ORD046', '2021/05/17', 60000, 1, 'CUS020', 'STA008', 'IN020'),
-('ORD047', '2021/09/30', 150000, 1, 'CUS021', 'STA002', 'IN021'),
-('ORD048', '2022/04/12', 680000, 1, 'CUS022', 'STA008', 'IN022'),
-('ORD049', '2022/11/06', 75000, 1, 'CUS023', 'STA003', 'IN023'),
-('ORD050', '2021/12/12', 30000, 1, 'CUS024', 'STA004', 'IN024'),
+('ORD027', '2023/02/12', 20000, 1, null, 'STA001', null),
+('ORD028', '2023/03/12', 60000, 1, null, 'STA005', null),
+('ORD029', '2022/07/11', 320000, 1, null, 'STA005', null),
+('ORD030', '2021/04/16', 200000, 1, null, 'STA004', null),
+('ORD031', '2022/02/21', 900000, 1, null, 'STA005', null),
+('ORD032', '2023/01/03', 100000, 1,null, 'STA006', null),
+('ORD033', '2022/08/31', 320000, 1,null, 'STA002',null),
+('ORD034', '2023/01/31', 180000, 1, null, 'STA001', null),
+('ORD035', '2021/06/23', 320000, 1,null, 'STA009',null),
+('ORD036', '2022/03/22', 100000, 1, null, 'STA006',null),
+('ORD037', '2022/02/14', 680000, 1,null, 'STA003', null),
+('ORD038', '2022/09/01', 1500000, 1, null, 'STA004', null),
+('ORD039', '2021/01/12', 1500000, 1, null, 'STA008', null),
+('ORD040', '2022/06/27', 52000, 1, null, 'STA003', null),
+('ORD041', '2022/03/27', 150000, 1,null, 'STA006',null),
+('ORD042', '2023/03/20', 90000, 1, null, 'STA007', null),
+('ORD043', '2023/05/02', 160000, 1,null, 'STA007',null),
+('ORD044', '2023/02/26', 200000, 1, null, 'STA002', null),
+('ORD045', '2023/02/12', 50000, 1, null, 'STA009', null),
+('ORD046', '2021/05/17', 60000, 1, null, 'STA008',null),
+('ORD047', '2021/09/30', 150000, 1, null, 'STA002', null),
+('ORD048', '2022/04/12', 680000, 1,null, 'STA008',null),
+('ORD049', '2022/11/06', 75000, 1, null, 'STA003', null),
+('ORD050', '2021/12/12', 30000, 1, null, 'STA004', null),
 ('ORD051', '2023/02/04', 150000, 1, 'CUS001', 'STA002', 'IN027'),
 ('ORD052', '2023/02/04', 1020000, 1, 'CUS002', 'STA003', 'IN028'),
 ('ORD053', '2023/03/01', 200000, 1, 'CUS003', 'STA004', 'IN029'),
@@ -608,7 +592,48 @@ INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
 ('ODETAIL058', 'PRO021', '4', 'ORD058'),
 ('ODETAIL059', 'PRO014', '2', 'ORD059'),
 ('ODETAIL060', 'PRO010', '2', 'ORD060'),
------TRIGGER----------------------------
+('ODETAIL061', 'PRO010', '1', 'ORD001'),
+('ODETAIL062', 'PRO011', '1', 'ORD001'),
+('ODETAIL063', 'PRO008', '3', 'ORD001'),
+('ODETAIL064', 'PRO002', '4', 'ORD002'),
+('ODETAIL065', 'PRO010', '2', 'ORD002'),
+('ODETAIL066', 'PRO012', '5', 'ORD002'),
+('ODETAIL067', 'PRO019', '1', 'ORD003'),
+('ODETAIL068', 'PRO015', '2', 'ORD004'),
+('ODETAIL069', 'PRO011', '1', 'ORD004'),
+('ODETAIL070', 'PRO002', '1', 'ORD001'),
+('ODETAIL071', 'PRO004', '2', 'ORD001');
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO Service_Product (IDProduct, IDServices) VALUES
+('PRO001', 'TYP111'),
+('PRO002', 'TYP112'),
+('PRO003', 'TYP113'),
+('PRO004', 'TYP114'),
+('PRO005', 'TYP211'),
+('PRO006', 'TYP212'),
+('PRO007', 'TYP311'),
+('PRO008', 'TYP312'),
+('PRO009', 'TYP313'),
+('PRO010', 'TYP313'),
+('PRO011', 'TYP312'),
+('PRO012', 'TYP111'),
+('PRO013', 'TYP111'),
+('PRO014', 'TYP112'),
+('PRO015', 'TYP112'),
+('PRO016', 'TYP113'),
+('PRO017', 'TYP113'),
+('PRO018', 'TYP114'),
+('PRO019', 'TYP114'),
+('PRO020', 'TYP212'),
+('PRO021', 'TYP311');
+
+---------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
+/*																																			*/
+/*																			TRIGGER															*/
+/*																																			*/
+---------------------------------------------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 --GO
 --CREATE OR ALTER TRIGGER tg_DeleteCustomer
@@ -932,25 +957,7 @@ INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
 --	UPDATE TablesCustomer SET Status = 0 WHERE TablesID = @TabID
 --END
 
---GO
---CREATE OR ALTER TRIGGER tg_InsertInvoice
---ON	  Invoice 
---FOR	  INSERT
---AS
---BEGIN 
---	DECLARE  @IDDet nvarchar(10), @IDInv nvarchar(10)
 
---	SELECT @IDInv = i.InvoiceID
---	FROM INSERTED i
-
---	SELECT @IDDet = COUNT(*) + 1
---	FROM StatusInvoice_Details
-
---	INSERT INTO StatusInvoice_Details(InvoiceDetailsID,CheckIn_Time,CheckOut_Time,StatusInvoice) 
---	VALUES (@IDDet,GETDATE(),null,'STA001'); --'STA001' là chưa thanh toán 
-
---	UPDATE Invoice SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv
---END
 ----InsertOrderDetails
 GO
 CREATE OR ALTER TRIGGER tg_InsertOrderDetails
@@ -967,16 +974,23 @@ BEGIN
 		PRINT 'OrderDetailsID already exist'
 		RETURN
 	END 
+	
+	SET @OrderDetailsID = CONCAT('ODETAIL',CAST(RAND() * 10000 AS INT));
+	WHILE @OrderDetailsID IN (SELECT OrderDetailsID FROM OrderDetails)
+	BEGIN
+		SET @OrderDetailsID = CONCAT('ODETAIL',CAST(RAND() * 10000 AS INT));
+	END
 
 	UPDATE OrderDetails
-    SET OrderDetailsID = CONCAT('ODETAIL', (SELECT COUNT(*) FROM OrderDetails))
+    SET OrderDetailsID = @OrderDetailsID
     WHERE OrderDetailsID IS NULL OR OrderDetailsID NOT LIKE 'ODETAIL%';
 END
 
 --INSERT INTO OrderDetails (ProductID, Quantity, OrderID) VALUES
---('PRO007', '4', 'ORD001')
+--('PRO003', '4', 'ORD001')
 
 ----Check FK Order can null
+
 GO
 CREATE OR ALTER TRIGGER Check_FKN_Order
 ON Orders
@@ -1008,12 +1022,12 @@ BEGIN
         RETURN;
     END;
 END
-
---INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder) VALUES 
---('ORD0027', '2023/02/12', 1200000, 1)
---INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder,CustomerOrder) VALUES 
---('ORD0028', '2023/02/12', 1200000, 1,'CUS027')
-
+/*
+INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder) VALUES 
+('ORD0111', '2023/02/12', 1200000, 1)
+INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder,CustomerOrder) VALUES 
+('ORD0111', '2023/02/12', 1200000, 1,'CUS027')
+*/
 --Xóa Orders thì không ảnh hưởng các bảng khác nên không cần trigger
 --DeleteOrderDetails
 GO
@@ -1031,11 +1045,66 @@ AS
 
 --DELETE FROM OrderDetails WHERE OrderID ='ORD001'
 
+-- check khóa ngoại có thể null
+GO
+CREATE OR ALTER TRIGGER Check_FKN_Invoice
+ON Invoice
+FOR INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @InvoiceDetails nvarchar(10)
+	SELECT @InvoiceDetails = InvoiceDetails 
+	FROM INSERTED
+    
+    IF (@InvoiceDetails IS NOT NULL) AND (NOT EXISTS(SELECT InvoiceDetailsID FROM StatusInvoice_Details WHERE InvoiceDetailsID = @InvoiceDetails))
+    BEGIN
+		ROLLBACK TRAN
+		PRINT 'Invalid InvoiceDetails'
+		RETURN;
+    END;
+END
+-- Insert Invoice
+GO
+CREATE OR ALTER TRIGGER tg_InsertInvoice
+ON	  Invoice 
+FOR	  INSERT
+AS
+BEGIN 
+	DECLARE  @IDDet nvarchar(10), @IDInv nvarchar(10)
 
------VIEW-------------------------------
+	SELECT @IDInv = i.InvoiceID
+	FROM INSERTED i
+
+	IF (SELECT count(*) FROM  Invoice WHERE InvoiceID =@IDInv AND InvoiceID IS NOT NULL) >1
+	BEGIN
+		ROLLBACK TRAN
+		PRINT 'InvoiceID already exist'
+		RETURN
+	END 
+
+	SET @IDDet = CONCAT('DEID',CAST(RAND() * 10000 AS INT));
+	WHILE @IDDet IN (SELECT InvoiceDetailsID FROM StatusInvoice_Details)
+	BEGIN
+		SET @IDDet = CONCAT('DEID',CAST(RAND() * 10000 AS INT));
+	END
+
+	INSERT INTO StatusInvoice_Details(InvoiceDetailsID,CheckIn_Time,CheckOut_Time,StatusInvoice) 
+	VALUES (@IDDet,null,null,'STATUS001'); --'STA001' là chưa thanh toán 
+
+	UPDATE Invoice SET InvoiceDetails = @IDDet WHERE InvoiceID = @IDInv 
+END
+/*
+INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
+('IN11111', GETDATE(), 1220000, NULL)
+*/
+---------------------------------------------------------------------------------------------------------------------------------------------
+/*																																			*/
+/*																			VIEW															*/
+/*																																			*/
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 Go
-CREATE VIEW FoodsView
+CREATE OR ALTER VIEW FoodsView
 AS
 SELECT	p.ProductID ,p.NameProduct, p.Price, p.Description, p.ProductState, p.Product_Type
 FROM	Product p, Product_Type pt
@@ -1046,7 +1115,7 @@ WHERE	pt.IDType = p.Product_Type
 --SELECT * FROM FoodsView
 
 Go
-CREATE VIEW DrinksView
+CREATE OR ALTER VIEW DrinksView
 AS
 SELECT	p.ProductID ,p.NameProduct, p.Price, p.Description, p.ProductState, p.Product_Type
 FROM	Product p, Product_Type pt
@@ -1058,7 +1127,7 @@ WHERE	pt.IDType = p.Product_Type
 --SELECT * FROM DrinksView
 
 Go
-CREATE VIEW ServicesView
+CREATE OR ALTER VIEW ServicesView
 AS
 SELECT	s.NameServices, ts.NameType, ts.Price
 FROM	Services s, TypeServices ts
@@ -1066,7 +1135,7 @@ WHERE	s.IDServices = ts.IDServices
 --SELECT * FROM ServicesView
 
 Go
-CREATE VIEW CustomerBookingView
+CREATE OR ALTER VIEW CustomerBookingView
 AS
 SELECT	c.NameCustomer, c.NumberPhone, i.InvoiceID, b.BookingDate, i.Price, s.NameStatusInvoice
 FROM	Customers c, Invoice i, Booking b, StatusInvoice_Details sd, StatusInvoice s
@@ -1075,235 +1144,38 @@ WHERE	i.InvoiceDetails = sd.InvoiceDetailsID
 		AND c.CustomerID = b.CustomerBooking
 		AND i.InvoiceID = b.BookingInvoice	
 --SELECT * FROM CustomerBookingView
-
+----------------------------------------------------------------------VIEW INVOICE ODER
 Go
-CREATE VIEW InvoiceOrderView
+CREATE OR ALTER VIEW InvoiceOrderView
 AS
-SELECT	i.InvoiceID , o.OrderID, p.ProductID, i.CreationTime, p.NameProduct, p.Price, o.Total_Unit_Price, s.StatusInvoice, s.CheckIn_Time, s.CheckOut_Time
-FROM	OrderDetails od, Orders o, Invoice i, Product p, StatusInvoice_Details s
+SELECT	i.InvoiceID,p.NameProduct, i.CreationTime,od.Quantity, p.Price, (p.Price * od.Quantity) as TotalPrice,i.Discount, (p.Price * od.Quantity * (1-i.Discount * 0.01)) as TotalPriceAfterDiscount, si.NameStatusInvoice, s.CheckIn_Time, s.CheckOut_Time
+FROM	OrderDetails od, Orders o, Invoice i, Product p, StatusInvoice_Details s, StatusInvoice si
 WHERE	i.InvoiceID = o.Invoice
 		AND o.OrderID = od.OrderID
 		AND p.ProductID = od.ProductID
 		AND s.InvoiceDetailsID = i.InvoiceDetails
+		AND s.StatusInvoice = si.StatusInvoiceID
+--
 --SELECT * FROM InvoiceOrderView
 
-
------STORED-PROCEDURE/FUNCTION----------
-
-------- Lấy sản phẩm theo loại
-go
-CREATE OR ALTER PROC proc_GetAllProductsByTypeID(@typeProductID nvarchar(10))
+Go
+CREATE OR ALTER VIEW  InvoiceBookingView
 AS
-BEGIN
-	SELECT *
-	FROM Product
-	WHERE Product_Type = @typeProductID
-END
-/*
-	Exec proc_GetAllProductsByTypeID 'PROTYPE001'
-*/
-------- Check In 
-go
-CREATE OR ALTER PROC proc_CheckIn(@invoiceID nvarchar(10))
-AS
-BEGIN
-	UPDATE StatusInvoice_Details 
-	SET CheckIn_Time = GETDATE(), StatusInvoice = N'STA004'
-	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
-								FROM Invoice
-								WHERE InvoiceID = @invoiceID)
-END
-/*
-	Exec CheckIn 'IN001'
-*/
------- Check out
-go
-CREATE OR ALTER PROC proc_CheckOut(@invoiceID nvarchar(10))
-AS
-BEGIN
-	UPDATE StatusInvoice_Details 
-	SET CheckOut_Time = GETDATE(), StatusInvoice = N'STA005'
-	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
-								FROM Invoice
-								WHERE InvoiceID = @invoiceID)
-END
-/*
-	Exec CheckOut 'IN001'
-*/
-------  Hủy
-go
-CREATE OR ALTER PROC proc_Cancel(@invoiceID nvarchar(10))
-AS
-BEGIN
-	UPDATE StatusInvoice_Details 
-	SET  StatusInvoice = N'STA003'
-	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
-								FROM Invoice
-								WHERE InvoiceID = @invoiceID)
-END
-/*
-	Exec Cancel 'IN001'
-*/
-------  Lọc Sản phẩm theo loại
-go
-CREATE OR ALTER PROC proc_GetAllProductsByTypeName(@typeProductTypeName nvarchar(50))
-AS
-BEGIN
-	SELECT * 
-	FROM Product P, Product_Type T
-	WHERE P.Product_Type = T.IDType 
-	AND T.ProductType = @typeProductTypeName
-END
-/*
-	Exec proc_GetAllProductsByTypeName 'Milk tea'
-*/
------- Lọc hóa đơn theo Tháng Năm
-go
-CREATE OR ALTER PROC proc_GetAllInvoicesByYearMonth(@date DateTime)
-AS
-BEGIN
-	SELECT *
-	FROM Invoice 
-	WHERE Year(CreationTime) = Year(@date) And Month(CreationTime) = Month(@date)
-END
-
-/*
-	Exec proc_GetAllInvoicesByYearMonth '2021-04-01'
-*/
-
------- Lọc hóa đơn theo Ngày
-go
-CREATE OR ALTER PROC proc_GetAllInvoicesByDate(@date DateTime)
-AS
-BEGIN
-	SELECT *
-	FROM Invoice 
-	WHERE Year(CreationTime) = Year(@date) And Month(CreationTime) = Month(@date) And Day(CreationTime) = Day(@date)
-END
-
-/*
-	Exec proc_GetAllInvoicesByDate '2021-01-12'
-*/
------- Lọc bàn trống
-go
-CREATE OR ALTER PROC proc_GetAllTablesIsEmptyByRoomType(@roomtype nvarchar(10))
-AS
-BEGIN
-	SELECT *
-	FROM TablesCustomer 
-	WHERE RoomType = @roomtype And Status = 0
-END
-
-/*
-	Exec proc_GetAllTablesIsEmptyByRoomType 'TYP111'
-*/
-
-------- Add orderproduct 
-go
-CREATE OR ALTER PROC proc_AddOrderProduct(@orderID nvarchar(10),@productID nvarchar(10), @quantity int)
-AS
-BEGIN
-	Declare @orderDetailsID nvarchar(10)
-	SELECT @orderDetailsID = OrderDetailsID
-	FROM OrderDetails 
-	WHERE OrderID = @orderID And ProductID = @productID
-	IF @orderDetailsID is null
-	BEGIN
-		DECLARE @count int;
-		SELECT @count = COUNT(OrderDetailsID) FROM OrderDetails 		
-		SET @count = @count +1;
-		--print @count
-		SET @orderDetailsID = 'ODETAIL' + Cast(@count as nvarchar)
-		INSERT INTO OrderDetails(OrderDetailsID,ProductID,Quantity,OrderID) 
-		VALUES (@orderDetailsID,@productID,@quantity,@orderID)
-	END
-	ELSE
-	BEGIN
-		UPDATE OrderDetails 
-		SET Quantity = Quantity + @quantity 
-		WHERE OrderID = @orderID AND ProductID = @productID
-	END
-END
-
-	Exec proc_AddOrderProduct 'ORD019','PRO001',5
-	SELECT * FROM OrderDetails
-
------- Lấy danh sách sản phẩm order
-go
-CREATE OR ALTER FUNCTION func_GetOrders(@orderID nvarchar(10)) RETURNS @ProductOrders Table (OrderID nvarchar(10),ProductID nvarchar(10),ProductName nvarchar(100),Quantity int,Price bigint,TotalPrice bigint)
-AS
-BEGIN
-	INSERT INTO @ProductOrders(OrderID,ProductID,ProductName,Quantity,Price,TotalPrice)
-	SELECT O.OrderID,P.ProductID,P.NameProduct,O.Quantity,P.Price, O.Quantity * P.Price
-	FROM OrderDetails O, Product P
-	WHERE O.OrderID = @orderID AND O.ProductID = P.ProductID
-	RETURN 
-END
-
-
-/*
-	Select * from  func_GetOrders('ORD001')
-*/ 
------- Tính tổng tiền hóa đơn của order
-go
-CREATE OR ALTER FUNCTION func_Bill(@OrderID nvarchar(10)) RETURNS bigint
-AS
-BEGIN
-	Declare @TotalPriceInvoice bigint;
-	SET @TotalPriceInvoice =0;
-	SELECT @TotalPriceInvoice = SUM(TotalPrice) 
-	FROM func_GetOrders(@OrderID)
-	RETURN @TotalPriceInvoice
-END
-
-/*
-print dbo.func_Bill('ORD001')
-*/
------- Kiểm Tra Login
-go
-CREATE OR ALTER FUNCTION func_CheckLogin(@accID nvarchar(10),@password nvarchar(20)) RETURNS Bit
-AS
-BEGIN
-	IF @accID is null RETURN 0
-	IF @password is null RETURN 0
-	DECLARE @pass nvarchar(20);
-	SELECT @pass = Passwords
-	FROM Account 
-	WHERE AccountID = @accID
-	IF @pass = @password RETURN 1
-	RETURN 0
-END
-
-
-<<<<<<< HEAD
-=======
-------------
---show các sản phẩm được order của hoá đơn trong invoiceOderView
-go
-CREATE OR ALTER PROC proc_ShowInvoiceViewDetails(@invoiceID nvarchar(10)) 
-AS
-BEGIN
-	SELECT * FROM InvoiceOrderView
-	WHERE InvoiceID = @invoiceID
-END
-
-exec proc_ShowInvoiceViewDetails 'IN001'
-
-
->>>>>>> e946f734c8884580710a041ba869c5fbe508d4d6
-/*
-print dbo.func_CheckLogin('STA001','@123456')
-*/
-
------TRANSACTION------------------------
-
+SELECT	i.InvoiceID, b.BookingID, s.IDServices, 
+		b.CustomerBooking, b.TableBooking, b.BookingDate, 
+		b.BookingStatus, b.Duration, s.NameServices, 
+		ts.Price, i.Price as TotalPrice, si.StatusInvoice
+FROM	Invoice i, Booking b, Services s, TypeServices ts, StatusInvoice_Details si
+WHERE	i.InvoiceID = b.BookingInvoice
+		AND b.ServiceBooking = ts.IDType
+		AND ts.IDServices = s.IDServices
+		AND i.InvoiceDetails = si.InvoiceDetailsID
+--SELECT * FROM InvoiceBookingView
 
 
 --Drop Table
 /*
 Drop table Service_Product
-Drop table Product
-Drop table Product_Type
 Drop table Account
 Drop table Booking
 Drop table TypeServices
@@ -1319,6 +1191,7 @@ Drop table Customer_TypeServices
 Drop table Customers
 Drop table TypeServices
 Drop table Services 
+Drop table Product
+Drop table Product_Type
 */
-
 

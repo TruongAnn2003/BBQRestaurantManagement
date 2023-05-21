@@ -12,6 +12,7 @@
             TextOptions.TextRenderingMode="Auto"
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="{DynamicResource MaterialDesignFont}"    
+             Name="invoiceView"
             mc:Ignorable="d" MinHeight="700" >
     <Grid>
         <Border Margin="10" >
@@ -40,51 +41,47 @@
                                         Grid.Column="0"
                                         VerticalAlignment="Center">
                                 <TextBlock Text="Mã hóa đơn:" Margin="10 0"></TextBlock>
-                                <TextBlock Text="12234445" Margin="10 0"></TextBlock>
+                                <TextBlock Text="{Binding ElementName=invoiceView,Path=DataContext.InvoiceID,UpdateSourceTrigger=PropertyChanged}" Margin="10 0"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" 
                                          Grid.Column="1"
                                         VerticalAlignment="Center">
                                 <TextBlock Text="Thời gian:" Margin="10 0"></TextBlock>
-                                <TextBlock Text="11/2/2023 12:30:30" Margin="10 0"></TextBlock>
+                                <TextBlock Text="{Binding CreationTime ,UpdateSourceTrigger=PropertyChanged}" Margin="10 0"></TextBlock>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" 
                                          Grid.Column="2"
                                         VerticalAlignment="Center">
                                 <TextBlock Text="Người tạo:" Margin="10 0"></TextBlock>
-                                <TextBlock Text="02351855235" Margin="10 0"></TextBlock>
+                                <TextBlock Text="{Binding StaffCreation.Name}" Margin="10 0"></TextBlock>
                             </StackPanel>
                         </Grid>
                     </Border>
                     <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0.2">
-                        <ScrollViewer>
-                            
-                        </ScrollViewer>
+                        <DataGrid IsReadOnly="True" ItemsSource="{Binding ListInvoiceOrderDetails,UpdateSourceTrigger=PropertyChanged}"></DataGrid>
                     </Border>
                     <Border Grid.Row="2"  BorderBrush="Gray" BorderThickness="0.2">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Orientation="Horizontal" 
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center">
-                                <TextBlock Text="Tổng tiền:" Margin="10 0"></TextBlock>
-                                <TextBlock Text="560.000" Margin="10 0"></TextBlock>
-                            </StackPanel>
-                            <ComboBox
-                                Grid.Column="1"
-                                MinWidth="100"
-                                VerticalAlignment="Center"
-                                materialDesign:HintAssist.Hint="Phương thức thanh toán"
-                                IsEditable="True">
-                                <ComboBoxItem Content="Tiền mặt" />
-                                <ComboBoxItem Content="Ngân hàng" />
-                                <ComboBoxItem Content="Momo" />
-                            </ComboBox>
-                            <Button Grid.Column="2" Content="Thanh toán" Margin="20 10">
+                            <TextBox Text="{Binding Price,UpdateSourceTrigger=PropertyChanged,StringFormat='##,#'}" 
+                                     HorizontalAlignment="Left"
+                                     Margin="5"
+                                     Grid.Column="0"
+                                    IsReadOnly="True"
+                                    materialDesign:TextFieldAssist.PrefixText="TotalPrice:"
+                                    materialDesign:TextFieldAssist.SuffixText="$"/>
+                            <TextBox Text="{Binding Discount, UpdateSourceTrigger=PropertyChanged}"
+                                     Grid.Column="1"
+                                     Margin="10 5"
+                                    HorizontalAlignment="Center"
+                                    IsReadOnly="False"
+                                     materialDesign:TextFieldAssist.SuffixText="%"
+                                    materialDesign:TextFieldAssist.PrefixText="Giảm giá: "/>
+                            <Button Grid.Column="2" Content="Thanh toán" Command="{Binding PaymentCommand}" Margin="20 10">
                                 
                             </Button>
                         </Grid>

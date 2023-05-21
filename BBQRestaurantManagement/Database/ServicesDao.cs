@@ -8,23 +8,27 @@ using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Database
 {
-    public class ViewsDao : BaseDao
+    public class ServicesDao : BaseDao
     {
-
-        public List<Product> GetFoodsView()
-        {
-            string sqlStr = $"SELECT * FROM {FOODS_VIEW}";
-            return dbConnection.GetList(sqlStr, reader => new Product(reader));
-        }
-        public List<Product> GetDrinksView()
-        {
-            string sqlStr = $"SELECT * FROM {DRINKS_VIEW}";
-            return dbConnection.GetList(sqlStr, reader => new Product(reader));
-        }
+        #region Add, Update, Delete
+        //code Add, Update, Delete trong đây
+        #endregion
+        #region Search
+        //code Search trong đây
+        #endregion
+        #region Stored Procedures
+        //code Stored Procedures trong đây
+        #endregion
+        #region Functions
+        //code Functions trong đây
+        #endregion
+        #region Views
         public List<Product> GetServicesView()
         {
             string sqlStr = $"SELECT * FROM {SERVICES_VIEW}";
             return dbConnection.GetList(sqlStr, reader => new Product(reader));
         }
+
+        #endregion
     }
 }

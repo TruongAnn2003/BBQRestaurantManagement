@@ -181,6 +181,7 @@
             </Grid>
         </materialDesign:DrawerHost>
         <Border Grid.Column="1" 
+                Visibility="{Binding VisibilityOrderDetailsView}"
                 BorderBrush="#880e4f"
                 BorderThickness="1"
                 Width="300">
@@ -192,11 +193,11 @@
                 </Grid.RowDefinitions>
                 <materialDesign:ColorZone Height="50"  Grid.Row="0" Background="#880e4f">
                     <TextBlock HorizontalAlignment="Center" 
-                               Text="Danh sách chọn"
-                               Foreground="White"
-                               FontSize="17"
-                               FontWeight="Bold"
-                               VerticalAlignment="Center"></TextBlock>
+                    Text="Danh sách chọn"
+                    Foreground="White"
+                    FontSize="17"
+                    FontWeight="Bold"
+                    VerticalAlignment="Center"></TextBlock>
                 </materialDesign:ColorZone>
                 <ListView  Grid.Row="1" Margin="5" ItemsSource="{Binding ListOrderItem, UpdateSourceTrigger=PropertyChanged}">
                     <ListView.View>
@@ -206,10 +207,10 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding ProductID}"  
-                                                             HorizontalAlignment="Center" 
-                                                             Margin="3"
-                                                             FontSize="10"
-                                                             materialDesign:TextFieldAssist.PrefixText="Name:" />
+                                                HorizontalAlignment="Center" 
+                                                Margin="3"
+                                                FontSize="10"
+                                                materialDesign:TextFieldAssist.PrefixText="Name:" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -218,11 +219,11 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="3">
                                                 <Button  Style="{StaticResource MaterialDesignIconButton}" 
-                                                                 Command="{Binding ElementName=orderUC,Path=DataContext.MinusCommand}"
-                                                                 CommandParameter="{Binding}"
-                                                                 Margin="5 0"
-                                                                 Height="10" 
-                                                                 Width="10">
+                                                    Command="{Binding ElementName=orderUC,Path=DataContext.MinusCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Margin="5 0"
+                                                    Height="10" 
+                                                    Width="10">
                                                     <materialDesign:PackIcon Kind="Minus" Height="10" Width="10" />
                                                 </Button>
                                                 <TextBox HorizontalAlignment="Center"
@@ -230,11 +231,11 @@
                                                         Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
                                                     materialDesign:TextFieldAssist.PrefixText="Quantity:"/>
                                                 <Button  Style="{StaticResource MaterialDesignIconButton}" 
-                                                                 Command="{Binding ElementName=orderUC,Path=DataContext.PlusCommand}"
-                                                                 CommandParameter="{Binding}"
-                                                                 Height="10" 
-                                                                 Margin="5 0"
-                                                                 Width="10">
+                                                    Command="{Binding ElementName=orderUC,Path=DataContext.PlusCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Height="10" 
+                                                    Margin="5 0"
+                                                    Width="10">
                                                     <materialDesign:PackIcon Kind="Plus" Height="10" Width="10" />
                                                 </Button>
                                             </StackPanel>

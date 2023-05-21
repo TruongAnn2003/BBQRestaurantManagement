@@ -23,12 +23,11 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         private ObservableCollection<Product> drinks;
         public ObservableCollection<Product> Drinks { get => drinks; set { drinks = value; OnPropertyChanged(); } }
 
-        private Action<string> loadOrderItemView;
-        public Action<string> LoadOrderItemView { get => loadOrderItemView; set { loadOrderItemView = value; OnPropertyChanged(); } }
+        public Action<string> LoadOrderItemView { get; set; }
+        public Action<Order> ReceiveOrderIns { get; set; }
 
-        private ViewsDao viewDao = new ViewsDao();     
+        private ProductsDao productsDao = new ProductsDao();
         private OrdersDao ordersDao = new OrdersDao();
-        private StoredProceduresDao proceduresDao = new StoredProceduresDao();
 
         public ICommand AddCommand { get; private set; }
 
@@ -54,18 +53,19 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                   () =>
                   {
                       OrderIns = Order.CreateOrderIns();
-                      ordersDao.Add(OrderIns);               
+                      ordersDao.AddNonCustomerAndInvoice(OrderIns);
+                      ReceiveOrderIns(OrderIns);
                   }, null);
                 dialog.Show();
             }
-            proceduresDao.AddOrderProduct(OrderIns.ID, product.ID, 1);
+            ordersDao.AddOrderProduct(OrderIns.ID, product.ID, 1);
             LoadOrderItemView(OrderIns.ID);
         }
 
         private void LoadViewMenu()
         {
-            Foods = new ObservableCollection<Product>(viewDao.GetFoodsView());
-            Drinks = new ObservableCollection<Product>(viewDao.GetDrinksView());
+            Foods = new ObservableCollection<Product>(productsDao.GetFoodsView());
+            Drinks = new ObservableCollection<Product>(productsDao.GetDrinksView());
         }
 
     

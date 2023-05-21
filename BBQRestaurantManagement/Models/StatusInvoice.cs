@@ -5,18 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace BBQRestaurantManagement.Models
 {
-    public class Customer
+    public class StatusInvoice
     {
         private string id;
         private string name;
-        private string phoneNumber;
 
         public string ID
         {
@@ -30,32 +27,24 @@ namespace BBQRestaurantManagement.Models
             set { name = value; }
         }
 
-        public string PhoneNumber
-        {
-            get { return phoneNumber; }
-            set { phoneNumber = value; }
-        }
+        public StatusInvoice() { }
 
-        public Customer() { }
-
-        public Customer(string id, string name, string phone)
+        public StatusInvoice(string id, string name)
         {
             this.id = id;
             this.name = name;
-            this.phoneNumber = phone;
         }
 
-        public Customer(SqlDataReader reader)
+        public StatusInvoice(SqlDataReader rdr)
         {
             try
             {
-                this.id = (string)reader[BaseDao.CUSTOMERS_ID];
-                this.name = (string)reader[BaseDao.CUSTOMERS_NAME];
-                this.phoneNumber = (string)reader[BaseDao.CUSTOMERS_PHONE];
+                this.id = (string)rdr[BaseDao.STATUS_INVOICE_ID];
+                this.name = (string)rdr[BaseDao.STATUS_INVOICE_NAME];
             }
             catch(Exception ex)
             {
-                Log.Instance.Error(nameof(Customer), "CAST ERROR: " + ex.Message);
+                Log.Instance.Error(nameof(StatusInvoice), "CAST ERROR: " + ex.Message);
             }
         }
     }

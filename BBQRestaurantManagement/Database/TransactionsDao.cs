@@ -1,4 +1,5 @@
 ﻿using BBQRestaurantManagement.Database.Base;
+using BBQRestaurantManagement.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,20 @@ namespace BBQRestaurantManagement.Database
     {
         public void CommitTransaction()
         {
-            dbConnection.ExecuteNonQuery("Commit");
+            Log.Instance.Information(nameof(TransactionsDao), "Commit transaction!");
+            dbConnection.ExecuteNonQuery("COMMIT");
         }
 
         public void BeginTransaction()
         {
-            dbConnection.ExecuteNonQuery("Bigin Tran");
+            Log.Instance.Information(nameof(TransactionsDao), "Begin transaction!");
+            dbConnection.ExecuteNonQuery("SET TRANSACTION ISOLATION LEVEL READ COMMITTED BEGIN TRANSACTION");
         }
-
+        
         public void RollBackTransaction()
         {
-            dbConnection.ExecuteNonQuery("RollBack");
+            Log.Instance.Information(nameof(TransactionsDao), "RollBack transaction!");
+            dbConnection.ExecuteNonQuery("ROLLBACK");
         }
     }
 }
