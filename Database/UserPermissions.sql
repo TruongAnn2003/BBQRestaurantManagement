@@ -47,7 +47,7 @@ GRANT EXECUTE TO CASHIER
 go 
 CREATE OR ALTER TRIGGER tg_CreateSQLAccount 
 ON Account
-FOR INSERT
+FOR INSERT,UPDATE
 AS
 BEGIN
 	DECLARE @userName varchar(30), @passWord varchar(255)
@@ -58,21 +58,32 @@ BEGIN
 	BEGIN TRAN
 		BEGIN TRY
 			DECLARE @sqlString nvarchar(2000)
-			SET @sqlString= 'CREATE LOGIN [' + @userName +'] WITH PASSWORD='''+ @passWord 
-			+''', DEFAULT_DATABASE=[BBQRestaurantManagement], CHECK_EXPIRATION=OFF, 
-			CHECK_POLICY=OFF'
-			EXEC (@sqlString)
+			
+			
+			IF NOT EXISTS (SELECT 1 FROM sys.syslogins WHERE name = @userName)
+			BEGIN
+				SET @sqlString= 'CREATE LOGIN [' + @userName +'] WITH PASSWORD='''+ @passWord 
+				+''', DEFAULT_DATABASE=[BBQRestaurantManagement], CHECK_EXPIRATION=OFF, 
+				CHECK_POLICY=OFF'
+				EXEC (@sqlString)
 
-			SET @sqlString= 'CREATE USER ' + @userName +' FOR LOGIN '+ @userName
-			EXEC (@sqlString)
+				SET @sqlString= 'CREATE USER ' + @userName +' FOR LOGIN '+ @userName
+				EXEC (@sqlString)
 
-			IF (@userName like 'ADMIN%')
-				SET @sqlString = 'ALTER SERVER ROLE sysadmin ADD MEMBER ' + @userName;
-			ELSE IF (@userName like 'MAN%')
-				SET @sqlString = 'ALTER ROLE MANAGER ADD MEMBER ' + @userName;
-			ELSE IF (@userName like 'CAS%')
-				SET @sqlString = 'ALTER ROLE CASHIER ADD MEMBER ' + @userName;
-			exec (@sqlString)
+				IF (@userName like 'ADMIN%')
+					SET @sqlString = 'ALTER SERVER ROLE sysadmin ADD MEMBER ' + @userName;
+				ELSE IF (@userName like 'MAN%')
+					SET @sqlString = 'ALTER ROLE MANAGER ADD MEMBER ' + @userName;
+				ELSE IF (@userName like 'CAS%')
+					SET @sqlString = 'ALTER ROLE CASHIER ADD MEMBER ' + @userName;
+				exec (@sqlString)
+			END
+			ELSE
+			BEGIN
+				SET @sqlString= 'ALTER LOGIN [' + @userName +'] WITH PASSWORD='''+ @passWord +''''
+				EXEC (@sqlString)
+			END
+
 			COMMIT TRAN
 		END TRY
 		BEGIN CATCH
