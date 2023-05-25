@@ -1099,6 +1099,28 @@ END
 INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
 ('IN11111', GETDATE(), 1220000, NULL)
 */
+
+--Insert Staff
+GO
+CREATE OR ALTER TRIGGER tg_InsertStaff
+ON	  Staff 
+FOR	  INSERT,UPDATE
+AS
+BEGIN 
+	DECLARE  @ID nvarchar(10), @IDPos nvarchar(10)
+
+	SELECT @ID = i.StaffID, @IDPos = i.Position
+	FROM INSERTED i
+	IF( @ID like 'ADMIN%' and @ID like 'MAN%' and @IDPos LIKE 'POS001' ) OR ( @ID like 'CAS%' and @IDPos LIKE 'POS002' ) OR ( @ID like 'WAIT%' and @IDPos LIKE 'POS003' )
+	BEGIN
+		RETURN
+	END 
+
+	ROLLBACK TRAN
+	PRINT 'StaffID and Position are not connected to each other !!'
+
+END
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 /*																																			*/
 /*																			VIEW															*/
