@@ -1,7 +1,12 @@
 ﻿using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Models;
 using BBQRestaurantManagement.Utilities;
+using BBQRestaurantManagement.Views.UserControls;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.Numerics;
 
 namespace BBQRestaurantManagement.Database
 {
@@ -16,7 +21,14 @@ namespace BBQRestaurantManagement.Database
             Log.Instance.Information(nameof(OrdersDao), sqlStr);
             dbConnection.ExecuteNonQuery(sqlStr);
         }
-
+        public void Add(string orderID, DateTime dateTimeOrder, decimal totalUnitPrice, int stateOrder, string customerID, string orderStaff, string invoiceID)
+        {
+            dbConnection.ExecuteNonQuery($"exec proc_AddOrders '{orderID}', '{dateTimeOrder}', '{totalUnitPrice}', '{stateOrder}', '{customerID}', '{orderStaff}', '{invoiceID}'");
+        }
+        public void Update(string orderID, DateTime newDateTimeOrder, decimal newTotalUnitPrice, int newStateOrder, string newCustomerID, string newOrderStaff, string newInvoiceID)
+        {
+            dbConnection.ExecuteNonQuery($"exec proc_AddOrders '{orderID}', '{newDateTimeOrder}', '{newTotalUnitPrice}', '{newStateOrder}', '{newCustomerID}', '{newOrderStaff}', '{newInvoiceID}'");
+        }
         public void Delete(string orderID) 
         {
             dbConnection.ExecuteNonQuery($"exec proc_DeleteOrder '{orderID}'");
@@ -35,6 +47,12 @@ namespace BBQRestaurantManagement.Database
             string sqlStr = $"SELECT * FROM {ORDER_DETAILS_TABLE} WHERE {ORDER_DETAILS_ORDER_ID} = '{id}'";
             return dbConnection.GetList(sqlStr, reader => new OrderDetails(reader));           
         }
+
+        public List<Order> Search(string orderID)
+        {
+            string sqlStr = string.Format("SELECT * FROM dbo.func_SearchOrders(" + "'@'" + orderID +")");
+            return dbConnection.GetList(sqlStr, reader => new Order(reader));
+        }
         #endregion
         #region Stored Procedures
         public void AddOrderProduct(string orderID, string productID, int quantity)
@@ -43,6 +61,12 @@ namespace BBQRestaurantManagement.Database
         }
         #endregion
         #region Functions
+        public DataTable GetOrders(string orderID)
+        {
+            string sqlStr = string.Format("SELECT * FROM dbo.func_GetOrders(" + "'@'" + orderID + ")");
+            return dbConnection.DanhSach(sqlStr);
+        }
+
         #endregion
         #region Views
         #endregion
