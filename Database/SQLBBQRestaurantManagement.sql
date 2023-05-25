@@ -1172,7 +1172,6 @@ WHERE	i.InvoiceID = b.BookingInvoice
 		AND i.InvoiceDetails = si.InvoiceDetailsID
 --SELECT * FROM InvoiceBookingView
 
-
 --Drop Table
 /*
 Drop table Service_Product
