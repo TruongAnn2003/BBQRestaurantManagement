@@ -1194,6 +1194,3 @@ WHERE	i.InvoiceID = b.BookingInvoice
 --Drop table Services 
 --Drop table Product
 --Drop table Product_Type
-
-
-
