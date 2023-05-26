@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="BBQRestaurantManagement.Views.UserControls.UserInfomationUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
+             mc:Ignorable="d" 
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="White"
+             Name="userView"
+            FontFamily="{DynamicResource MaterialDesignFont}">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Source="{Binding  ElementName=userView,Path=DataContext.AvatarUserSource}" Stretch="Fill"></Image>
+                </Border>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBox Margin="0 10" Text="{Binding ElementName=userView,Path=DataContext.ID}" materialDesign:TextFieldAssist.PrefixText="ID: "/>
+                    <TextBox Margin="0 10" Text="{Binding  ElementName=userView,Path=DataContext.Name}" materialDesign:TextFieldAssist.PrefixText="Name: "/>
+                    <TextBox Margin="0 10" Text="{Binding  ElementName=userView,Path=DataContext.NumberPhone}" materialDesign:TextFieldAssist.PrefixText="NumberPhone: "/>
+                    <TextBox Margin="0 10" Text="{Binding  ElementName=userView,Path=DataContext.Position}" materialDesign:TextFieldAssist.PrefixText="Position: "/>
+                </StackPanel>
+            </Grid>
+            <Expander Header="Description Permissions" 
+                      Foreground="Gray" 
+                      FontWeight="Bold"
+                      Background="White" Grid.Row="1" Margin="20">
+                <TextBlock TextWrapping="Wrap" FontWeight="Black" Text="{Binding  ElementName=userView,Path=DataContext.DescriptionPermissions}"></TextBlock>
+         
+            </Expander>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
