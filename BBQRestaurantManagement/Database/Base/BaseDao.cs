@@ -23,6 +23,7 @@ namespace BBQRestaurantManagement.Database.Base
 
         public const string INVOICE_ORDER_DETAILS_VIEW = "InvoiceOrderView";
         public const string INVOICE_ORDER_DETAILS_INVOICE_ID = "InvoiceID";
+        public const string INVOICE_ORDER_DETAILS_TABLE_ID = "TableID";
         public const string INVOICE_ORDER_DETAILS_PRODUCT_NAME = "ProductName";
         public const string INVOICE_ORDER_DETAILS_QUANTITY = "Quantity";
         public const string INVOICE_ORDER_DETAILS_CREATED_TIME = "CreationTime";
@@ -57,7 +58,7 @@ namespace BBQRestaurantManagement.Database.Base
         protected const string ORDER_TABLE = "Orders";
         public const string ORDER_ID = "OrderID";
         public const string ORDER_DATETIME_ORDER = "DatetimeOrder";
-        public const string ORDER_TOTAL_UNIT_PRICE = "Total_Unit_Price";
+        public const string ORDER_TABLE_ID = "TableID";
         public const string ORDER_STATE = "StateOrder";
         public const string ORDER_CUSTOMER_ORDER = "CustomerOrder";
         public const string ORDER_ORDER_STAFF = "OrderStaff";
@@ -74,22 +75,6 @@ namespace BBQRestaurantManagement.Database.Base
         public const string STAFF_NAME = "NameStaff";
         public const string STAFF_NUMBER_PHONE = "NumberPhone";
         public const string STAFF_POSITION = "Position";
-
-        protected const string SERVICES_TABLE = "ServicesRestaurant";
-        public const string SERVICES_ID = "IDServices";
-        public const string SERVICES_NAME_SERVICES = "NameServices";
-
-        protected const string TYPE_SERVICES_TABLE = "TypeServices";
-        public const string TYPE_SERVICES_ID = "IDType";
-        public const string TYPE_SERVICES_NAME = "NameType";
-        public const string TYPE_SERVICES_ID_SERVICES = "IDServices";
-        public const string TYPE_SERVICES_PRICE = "Price";
-
-        protected const string CUSTOMER_TYPE_SERVICES_TABLE = "Customer_TypeServices";
-        public const string CUSTOMER_TYPE_SERVICES_CUSTOMER_ID = "CustomerID";
-        public const string CUSTOMER_TYPE_SERVICES_ID_TYPE_SERVICES = "IDTypeServices";
-        public const string CUSTOMER_TYPE_SERVICES_QUANTITY = "Quantity";
-        public const string CUSTOMER_TYPE_SERVICES_TOTAL_MONEY = "TotalMoney";
 
         protected const string TABLES_CUSTOMER_TABLE = "TablesCustomer";
         public const string TABLES_CUSTOMER_ID = "TablesID";
@@ -126,10 +111,6 @@ namespace BBQRestaurantManagement.Database.Base
         protected const string PRODUCT_TYPE_TABLE = "Product_Type";
         public const string PRODUCT_TYPE_ID = "IDType";
         public const string PRODUCT_TYPE_PRODUCT_TYPE = "ProductType";
-
-        protected const string SERVICE_PRODUCT_TABLE = "Service_Product";
-        public const string SERVICE_PRODUCT_ID_PRODUCT = "IDProduct";
-        public const string SERVICE_PRODUCT_ID_SERVICES = "IDServices";
 
         protected DBConnection dbConnection = new DBConnection();
        // SqlTransaction transaction = dbConnection..BeginTransaction();

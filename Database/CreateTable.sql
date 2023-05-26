@@ -1,6 +1,6 @@
 --Create Database BBQRestaurantManagement
 --go
---USE BBQRestaurantManagement
+USE BBQRestaurantManagement
 -----------------------------------------------------------------------------------
 
 CREATE TABLE Customers
@@ -52,9 +52,8 @@ CREATE TABLE BookingStatus
 (
 	IDStatus  nvarchar(10) CONSTRAINT IDStatuskey PRIMARY KEY,
 	NameStatus nvarchar(50) NOT NULL,
-	CONSTRAINT NameStatus CHECK(NameStatus LIKE 'Success' or NameStatus LIKE 'Received' or NameStatus LIKE 'Cancel')
+	CONSTRAINT NameStatus CHECK(NameStatus LIKE 'Waiting' or NameStatus LIKE 'Approved' or NameStatus LIKE 'Cancel')
 );
-
 
 CREATE TABLE Booking
 (
