@@ -1,7 +1,6 @@
 ﻿using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Models;
 using BBQRestaurantManagement.Utilities;
-using BBQRestaurantManagement.Views.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,17 +18,7 @@ namespace BBQRestaurantManagement.Database
         //code Search trong đây
         #endregion
         #region Stored Procedures
-        public List<Product> GetAllProductsByTypeID(string typeProductID)
-        {
-            string sqlStr = string.Format("exec proc_GetAllProductsByTypeID" + "'" + typeProductID + "'");
-            return dbConnection.GetList(sqlStr, reader => new Product(reader));
-        }
-
-        public void GetAllProductsByTypeName(string typeProductTypeName)
-        {
-            dbConnection.ExecuteNonQuery($"exec proc_GetAllProductsByTypeName '{typeProductTypeName}'");
-        }
-
+        //code Stored Procedures trong đây
         #endregion
         #region Functions
         //code Functions trong đây
