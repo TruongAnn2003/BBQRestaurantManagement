@@ -11,8 +11,8 @@ namespace BBQRestaurantManagement.Database
  
         public void AddNonCustomerAndInvoice(Order order)
         {
-            string sqlStr = $"INSERT INTO {ORDER_TABLE} ({ORDER_ID}, {ORDER_DATETIME_ORDER},{ORDER_TOTAL_UNIT_PRICE},{ORDER_STATE},{ORDER_ORDER_STAFF})" +
-                            $"VALUES ('{order.ID}','{Utils.ToSQLFormat(order.DatetimeOrder)}',{order.TotalUnitPrice},{order.State},'{order.StaffID}')";
+            string sqlStr = $"INSERT INTO {ORDER_TABLE} ({ORDER_ID}, {ORDER_DATETIME_ORDER},{ORDER_STATE},{ORDER_ORDER_STAFF},{ORDER_TABLE_ID})" +
+                            $"VALUES ('{order.ID}','{Utils.ToSQLFormat(order.DatetimeOrder)}',{order.State},'{order.StaffID}','{order.TableID}')";
             Log.Instance.Information(nameof(OrdersDao), sqlStr);
             dbConnection.ExecuteNonQuery(sqlStr);
         }

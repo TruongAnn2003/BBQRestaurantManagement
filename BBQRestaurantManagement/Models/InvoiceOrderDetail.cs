@@ -13,6 +13,7 @@ namespace BBQRestaurantManagement.Models
     public class InvoiceOrderDetail
     {
         private string invoiceID;
+        private string tableID;
         private string productName;
         private DateTime createdTime;
         private decimal price;
@@ -25,6 +26,7 @@ namespace BBQRestaurantManagement.Models
         private decimal totalPriceAfterDiscount;
 
         public string InvoiceID { get => invoiceID; set => invoiceID = value; }
+        public string TableID { get => tableID; set => tableID = value; }
         public string ProductName { get => productName; set => productName = value; }
         public DateTime CreatedTime { get => createdTime; set => createdTime = value; }
         public decimal Price { get => price; set => price = value; }
@@ -42,6 +44,7 @@ namespace BBQRestaurantManagement.Models
             try
             {
                 InvoiceID = (string)reader[BaseDao.INVOICE_ORDER_DETAILS_INVOICE_ID];
+                TableID = (string)reader[BaseDao.INVOICE_ORDER_DETAILS_TABLE_ID];
                 CreatedTime = Convert.ToDateTime(reader[BaseDao.INVOICE_ORDER_DETAILS_CREATED_TIME]);
                 ProductName = Convert.ToString( reader[BaseDao.INVOICE_ORDER_DETAILS_PRODUCT_NAME]);
                 Quantity = Convert.ToInt32(reader[BaseDao.INVOICE_ORDER_DETAILS_QUANTITY]);
