@@ -80,6 +80,7 @@
     <Compile Include="Database\Base\BaseDao.cs" />
     <Compile Include="Database\AccountDao.cs" />
     <Compile Include="Database\Base\DBConnection.cs" />
+    <Compile Include="Database\CustomerDao.cs" />
     <Compile Include="Database\InvoiceOrderDetailsDao.cs" />
     <Compile Include="Database\InvoicesDao.cs" />
     <Compile Include="Database\OrdersDao.cs" />

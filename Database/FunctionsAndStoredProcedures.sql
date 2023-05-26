@@ -503,96 +503,377 @@ GO
 CREATE OR ALTER PROC SP_Account_Add
 (@id nvarchar(10), @password nvarchar(20))
 AS
-	INSERT INTO dbo.Account(AccountID, Passwords)
-	VALUES (@id, @password)
+BEGIN
+	BEGIN TRANSACTION
+		BEGIN TRY
+			INSERT INTO Account (AccountID, Passwords)
+			VALUES (@id, @password)
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			RAISERROR('Insert failed (Invalid AccountID)', 16, 1)
+			ROLLBACK TRANSACTION
+		END CATCH
+END
+--CHECK
+--SELECT * FROM Account
+--EXEC SP_Account_Add 'esfse', '23234234'
+--EXEC SP_Account_Add 'STA009', '2342342'
+--------
 
-GO
-CREATE OR ALTER PROC SP_Customers_Add
+go
+create or alter proc SP_Customers_Add
 (@id nvarchar(10), @name nvarchar(100), @phone nvarchar(20))
-AS
-	INSERT INTO dbo.Customers(CustomerID, NameCustomer, NumberPhone)
-	VALUES (@id, @name, @phone)
-
-GO
-CREATE OR ALTER PROC SP_Product_Add
-(@id nvarchar(10), @name nvarchar(100), @price bigint, @description nvarchar(500), @state bit, @type nvarchar(10))
-AS
-	INSERT INTO dbo.Product(ProductID, NameProduct, Price, Description, ProductState, Product_Type)
-	VALUES(@id, @name, @price, @description, @state, @type)
-
+as
+begin
+	begin transaction
+		declare @count int
+		select @count = count(*)
+		from dbo.Customers
+		where CustomerID = @id
+		
+		if (@count > 0)
+		begin
+			rollback transaction
+			raiserror('CustomerID existed', 16, 1)
+		end
+		else
+		begin
+			begin try
+				insert into dbo.Customers (CustomerID, NameCustomer, NumberPhone)
+				values (@id, @name, @phone)
+				commit tran
+			end try
+			begin catch
+				rollback tran
+				raiserror('Insert failed', 16, 1)
+			end catch
+		end
+end
+--check---
+--select * from dbo.Customers
+--exec SP_Customers_Add 'CUS027', 'Teo', '324242'
+----------
+go
+create or alter proc SP_Product_Add
+(@id nvarchar(10), @name nvarchar(100), @price bigint, @description nvarchar(500), @state bit, @typeID nvarchar(10))
+as
+begin
+	begin tran
+		declare @count int
+		select @count = count(*) from dbo.Product
+		where ProductID = @id
+		if (@count > 0)
+		begin
+			rollback tran
+			raiserror('ProductID existed', 16, 1)
+		end
+		else
+		begin
+			begin try
+				insert into dbo.Product (ProductID, NameProduct, Price, Description, ProductState, Product_Type)
+				values (@id, @name, @price, @description, @state, @typeID)
+				commit tran
+			end try
+			begin catch
+				rollback tran
+				raiserror('Insert failed', 16, 1)
+			end catch
+		end
+end
+--check--
+--select * from dbo.Product
+--exec SP_Product_Add 'PRO022', 'sdf', 332334, 'haha', 1, 'PROTYPE007'
+---------
 --------UPDATE PROC OF Account, Customers, Product TABLE-------------
 GO
 CREATE OR ALTER PROC SP_Account_Update
 (@id nvarchar(10), @password nvarchar(20))
 AS
-	UPDATE dbo.Account
-	SET Passwords = @password
+BEGIN
+	BEGIN TRANSACTION
+	DECLARE @count INT
+	SELECT @count = COUNT(*) FROM dbo.Account
 	WHERE AccountID = @id
-
+	IF (@count = 0)
+	BEGIN
+		ROLLBACK TRANSACTION
+		RAISERROR('ID không tồn tại!', 16, 1)
+	END
+	ELSE
+	BEGIN
+		BEGIN TRY
+			UPDATE Account SET Passwords = @password WHERE AccountID = @id
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('Cập nhật thất bại!', 16, 1)
+		END CATCH
+	END
+END
+--CHECK--
+--SELECT * FROM dbo.Account
+--EXEC SP_Account_Update 'uawef', '@3433'
+--EXEC SP_Account_Update 'STA009', '@123456'
+---------
 GO
 CREATE OR ALTER PROC SP_Customers_Update
 (@id nvarchar(10), @name nvarchar(100), @phone nvarchar(20))
 AS
-	UPDATE dbo.Customers
-	SET NameCustomer = @name,
-		NumberPhone = @phone
+BEGIN
+	BEGIN TRANSACTION
+	DECLARE @count INT
+	SELECT @count = COUNT(*) FROM dbo.Customers
 	WHERE CustomerID = @id
-
+	IF (@count = 0)
+	BEGIN
+		ROLLBACK TRANSACTION
+		RAISERROR('ID does not exist', 16, 1)
+	END
+	ELSE
+	BEGIN
+		BEGIN TRY
+		UPDATE Customers 
+		SET NameCustomer = @name,
+			NumberPhone = @phone
+		WHERE CustomerID = @id
+		COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('Update failed!', 16, 1)
+		END CATCH
+	END
+END
+--CHECK--
+--SELECT * FROM Customers
+--EXEC SP_Customers_Update 'awef', 'Hưng', '2388888888'
+--EXEC SP_Customers_Update 'CUS026', 'Hưng', '2388888888'
+---------
 GO
 CREATE OR ALTER PROC SP_Product_Update
 (@id nvarchar(10), @name nvarchar(100), @price bigint, @description nvarchar(500), @state bit, @typeID nvarchar(10))
 AS
-	UPDATE dbo.Product
-	SET NameProduct = @name,
-		Price = @price,
-		Description = @description,
-		ProductState = @state,
-		Product_Type = @typeID
+BEGIN
+	BEGIN TRANSACTION
+	DECLARE @count INT
+	SELECT @count = COUNT(*) FROM dbo.Product
 	WHERE ProductID = @id
-
+	IF (@count = 0)
+	BEGIN
+		ROLLBACK TRANSACTION
+		RAISERROR('ID does not exist!', 16, 1)
+	END
+	ELSE
+	BEGIN
+		BEGIN TRY
+			UPDATE dbo.Product
+			SET NameProduct = @name,
+				Price = @price,
+				Description = @description,
+				ProductState = @state,
+				Product_Type = @typeID
+			WHERE ProductID = @id
+			COMMIT TRANSACTION
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION
+			RAISERROR('Update failed (Product_Type does not exist)!', 16, 1)
+		END CATCH
+	END
+END
+--CHECK
+SELECT * FROM dbo.Product
+EXEC SP_Product_Update 'DWEF', 'ABC', '23409', 'haha', 1, 'PROTYPE007'
+EXEC SP_Product_Update 'PRO021', 'ABC', '23409', 'haha', 1, 'AWEF'
+EXEC SP_Product_Update 'PRO021', 'ABC', '23409', 'haha', 1, 'PROTYPE007'
+--------
 --------DELETE PROC OF Account, Customers, Product TABLE-------------
-GO
-CREATE OR ALTER PROC SP_Account_Delete
+go
+create or alter proc SP_Account_Delete
 (@id nvarchar(10))
-AS
-	DELETE FROM dbo.Account
-	WHERE AccountID = @id
+as
+begin
+	begin tran
+		declare @count int
+		select @count = count(*) from dbo.Account
+		where AccountID = @id
+		
+		if (@count = 0)
+		begin
+			rollback tran
+			raiserror('Account does not exist', 16, 1)
+		end
+		else
+		begin
+			begin try
+				delete from dbo.Account
+				where AccountID = @id
+				commit tran
+			end try
+			begin catch
+				rollback tran
+				raiserror('Delete failed', 16, 1)
+			end catch
+		end
+end
+--check
+select * from dbo.Account
+exec SP_Account_Delete 'Sw4t'
+-----
 
-GO
-CREATE OR ALTER PROC SP_Customers_Delete
+go
+create or alter proc SP_Customers_Delete
 (@id nvarchar(10))
-AS
-	DELETE FROM dbo.Customers
-	WHERE CustomerID = @id
+as
+begin
+	begin tran
+		declare @count int
+		select @count = count(*) from dbo.Customers
+		where CustomerID = @id
+		
+		if (@count = 0)
+		begin
+			rollback tran
+			raiserror('Customer does not exist', 16, 1)
+		end
+		else
+		begin
+			begin try
+				delete from dbo.Customers
+				where CustomerID = @id
+				commit tran
+			end try
+			begin catch
+				rollback tran
+				raiserror('Delete failed', 16, 1)
+			end catch
+		end
+end
+--check
+select * from dbo.Customers
+exec SP_Customers_Delete 'CUS027'
+-----
 
-	GO
-CREATE OR ALTER PROC SP_Product_Delete
+go
+create or alter proc SP_Product_Delete
 (@id nvarchar(10))
-AS
-	DELETE FROM dbo.Product
-	WHERE ProductID = @id
+as
+begin
+	begin tran
+		declare @count int
+		select @count = count(*) from dbo.Product
+		where ProductID = @id
+		
+		if (@count = 0)
+		begin
+			rollback tran
+			raiserror('Product does not exist', 16, 1)
+		end
+		else
+		begin
+			begin try
+				delete from dbo.Product
+				where ProductID = @id
+				commit tran
+			end try
+			begin catch
+				rollback tran
+				raiserror('Delete failed', 16, 1)
+			end catch
+		end
+end
+--check
+select * from dbo.Product
+exec SP_Product_Delete 'PRO022'
+-----
 
 --------SEARCH PROC OF Account, Customers, Product TABLE BY ID-------------
-GO
-CREATE OR ALTER PROC SP_Account_Search
+go
+create or alter proc SP_Account_Search
 (@id nvarchar(10))
-AS
-	SELECT * FROM dbo.Account
-	WHERE AccountID = @id
+as
+begin
+	declare @count int
+	select @count = count(*) from dbo.Account
+	where AccountID = @id
+	if (@count = 0)
+	begin
+		select 'Account is not found' as message
+	end
+	else
+	begin
+		begin try
+			select * from dbo.Account
+			where AccountID = @id
+		end try
+		begin catch
+			select 'Search failed' as message
+		end catch
+	end
+end
+----check-----
+--select * from dbo.Account
+--exec SP_Account_Search 'STA00d9'
+--------------
 
-GO
-CREATE OR ALTER PROC SP_Customers_Search
+go
+create or alter proc SP_Customers_Search
 (@id nvarchar(10))
-AS
-	SELECT * FROM dbo.Customers
-	WHERE CustomerID = @id
+as
+begin
+	begin try
+		declare @count int
+		select @count = count(*) from dbo.Customers
+		where CustomerID = @id
+		if (@count = 0)
+		begin
+			select 'Customer is not found' as message
+		end
+		else
+		begin
+			select * from dbo.Customers
+			where CustomerID = @id
+		end
+	end try
+	begin catch
+		select 'Search failed' as message
+	end catch
+end
+--check--
+--select * from dbo.Customers
+--exec SP_Customers_Search 'CUS004'
+---------
 
-GO
-CREATE OR ALTER PROC SP_Product_Search
+go
+create or alter proc SP_Product_Search
 (@id nvarchar(10))
-AS
-	SELECT * FROM dbo.Product
-	WHERE ProductID = @id
+as
+begin
+	begin try
+		declare @count int
+		select @count = count(*)
+		from dbo.Product
+		where ProductID = @id
+		if (@count = 0)
+		begin
+			select 'Product is not found' as message
+		end
+		else
+		begin
+			select * from dbo.Product
+			where ProductID = @id
+		end
+	end try
+	begin catch
+		raiserror('Search failed', 16, 1)
+	end catch
+end
+--check----
+--select * from dbo.Product
+--exec SP_Product_Search 'see'
+-----------
 
 ------------------------------------------------------------SEARCH ORDERS BY ORDER ID-------------------------------------------------
 Go
