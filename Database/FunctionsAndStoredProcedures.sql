@@ -22,13 +22,13 @@ CREATE OR ALTER PROC proc_CheckIn(@invoiceID nvarchar(10))
 AS
 BEGIN
 	UPDATE StatusInvoice_Details 
-	SET CheckIn_Time = GETDATE(), StatusInvoice = N'STA004'
+	SET CheckIn_Time = GETDATE(), StatusInvoice = N'STATUS004'
 	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
 								FROM Invoice
 								WHERE InvoiceID = @invoiceID)
 END
 /*
-	Exec CheckIn 'IN001'
+	Exec proc_CheckIn 'IN001'
 */
 ------ Check out
 go
@@ -36,13 +36,13 @@ CREATE OR ALTER PROC proc_CheckOut(@invoiceID nvarchar(10))
 AS
 BEGIN
 	UPDATE StatusInvoice_Details 
-	SET CheckOut_Time = GETDATE(), StatusInvoice = N'STA005'
+	SET CheckOut_Time = GETDATE(), StatusInvoice = N'STATUS005'
 	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
 								FROM Invoice
 								WHERE InvoiceID = @invoiceID)
 END
 /*
-	Exec CheckOut 'IN001'
+	Exec proc_CheckOut 'IN001'
 */
 ------  Hủy
 go
@@ -50,13 +50,13 @@ CREATE OR ALTER PROC proc_Cancel(@invoiceID nvarchar(10))
 AS
 BEGIN
 	UPDATE StatusInvoice_Details 
-	SET  StatusInvoice = N'STA003'
+	SET  StatusInvoice = N'STATUS005'
 	WHERE InvoiceDetailsID in (	SELECT InvoiceDetails
 								FROM Invoice
 								WHERE InvoiceID = @invoiceID)
 END
 /*
-	Exec Cancel 'IN001'
+	Exec proc_Cancel 'IN001'
 */
 ------  Lọc Sản phẩm theo loại
 go
@@ -100,16 +100,16 @@ END
 */
 ------ Lọc bàn trống
 go
-CREATE OR ALTER PROC proc_GetAllTablesIsEmptyByRoomType(@roomtype nvarchar(10))
+CREATE OR ALTER PROC proc_GetAllTablesIsEmpty
 AS
 BEGIN
 	SELECT *
 	FROM TablesCustomer 
-	WHERE RoomType = @roomtype And Status = 0
+	WHERE Status = 0
 END
 
 /*
-	Exec proc_GetAllTablesIsEmptyByRoomType 'TYP111'
+	Exec proc_GetAllTablesIsEmpty 
 */
 
 -------------------------------- ADD ORDER PRODUCT --------------------------------------------------
@@ -176,37 +176,7 @@ END
 	Exec proc_AddOrderProduct 'ORD019','PRO001',-15
 	SELECT * FROM OrderDetails
 */
-------------------------------------------------GET ORDERS BY ORDER ID ----------------------------------------------------------
-go
-CREATE OR ALTER FUNCTION func_GetOrders(@orderID nvarchar(10)) RETURNS @ProductOrders Table (OrderID nvarchar(10),ProductID nvarchar(10),ProductName nvarchar(100),Quantity int,Price bigint,TotalPrice bigint)
-AS
-BEGIN
-	INSERT INTO @ProductOrders(OrderID,ProductID,ProductName,Quantity,Price,TotalPrice)
-	SELECT O.OrderID,P.ProductID,P.NameProduct,O.Quantity,P.Price, O.Quantity * P.Price
-	FROM OrderDetails O, Product P
-	WHERE O.OrderID = @orderID AND O.ProductID = P.ProductID
-	RETURN 
-END
 
------------Check -----------------------
-/*
-	Select * from  func_GetOrders('ORD001')
-*/ 
-------------------------------------------------- BILL BY ORDER ID------------------------------------------------------------------------------
-go
-CREATE OR ALTER FUNCTION func_Bill(@OrderID nvarchar(10)) RETURNS bigint
-AS
-BEGIN
-	Declare @TotalPriceInvoice bigint;
-	SET @TotalPriceInvoice =0;
-	SELECT @TotalPriceInvoice = SUM(TotalPrice) 
-	FROM func_GetOrders(@OrderID)
-	RETURN @TotalPriceInvoice
-END
------------Check -----------------------
-/*
-print dbo.func_Bill('ORD001')
-*/
 ----------------------------------------------------------- CHECK  LOGIN -----------------------------------------------------------------------------------
 go
 CREATE OR ALTER FUNCTION func_CheckLogin(@accID nvarchar(10),@password nvarchar(20)) RETURNS Bit
@@ -223,97 +193,6 @@ BEGIN
 END
 
 
-
----------------Add, delete, update, search (Services)---------------
-
-----------------------------------------------------ADD, DELETE, UPDATE, SEARCH (SERVICES) ---------------------------------
-Go
-CREATE OR ALTER PROC proc_AddServices(@idServices nvarchar(10), @nameServices nvarchar(100))
-AS 
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchServices(@idServices)
-	IF @count = 0
-	BEGIN
-		INSERT INTO Services(IDServices, NameServices)
-		VALUES(@idServices, @nameServices)
-	END
-	ELSE
-	BEGIN
-		SELECT 'Da ton tai IDService nay' AS Message
-	END
-END
-/*
-	exec proc_AddServices 'SER444', 'test'
-	select * from Services
-*/
-Go
-CREATE OR ALTER PROC proc_UpdateServices(@idServices nvarchar(10), @new_NameServices nvarchar(50))
-AS 
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchServices(@idServices)
-	IF @count != 0
-	BEGIN
-		UPDATE Services
-		SET NameServices = @new_NameServices
-		WHERE IDServices = @idServices
-	END
-	ELSE
-	BEGIN
-		SELECT 'Khong ton tai IDService nay' AS Message
-	END
-END
-/*
-	exec proc_UpdateServices 'SER444', 'TEST'
-*/
-Go
-CREATE OR ALTER PROC proc_DeleteServices(@idServices nvarchar(10))
-AS
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchServices(@idServices)
-	IF @count != 0
-	BEGIN
-		DELETE FROM Services
-		WHERE IDServices = @idServices
-	END
-	ELSE
-	BEGIN
-		SELECT 'Khong ton tai IDService nay' AS Message
-	END
-END
-/*
-exec proc_DeleteServices 'SER444'
-*/
-Go
-CREATE OR ALTER FUNCTION func_SearchServices(@idServices nvarchar(10))
-RETURNS	@ServicesTable
-TABLE	(IdServices nvarchar(10), NameServices nvarchar(50))
-AS 
-BEGIN
-	INSERT INTO @ServicesTable(IdServices, NameServices)
-	SELECT * FROM Services
-	WHERE IDServices = @idServices
-	RETURN
-END
---go
---DECLARE @ResultCount INT;
---SELECT @ResultCount = COUNT(*)
---FROM dbo.func_SearchServices('SER555');
---IF @ResultCount = 0
---BEGIN
---    SELECT 'Khong tim thay' AS Message;
---END
---ELSE
---BEGIN
---    Select * from dbo.func_SearchServices('SER555')
---END
-go
-
 ----------------------------------------------------ADD, DELETE, UPDATE, SEARCH (STAFFS) ---------------------------------
 Go
 CREATE OR ALTER PROC proc_AddStaff(@staffID nvarchar(10), @nameStaff nvarchar(100), @numberPhone nvarchar(20), @position nvarchar(10))
@@ -324,17 +203,22 @@ BEGIN
 	FROM dbo.func_SearchStaff(@staffID)
 	IF @count = 0
 	BEGIN
-		INSERT INTO Staff(StaffID, NameStaff, NumberPhone, Position)
-		VALUES(@staffID, @nameStaff, @numberPhone, @position)
+		BEGIN TRY
+			INSERT INTO Staff(StaffID, NameStaff, NumberPhone, Position)
+			VALUES(@staffID, @nameStaff, @numberPhone, @position)
+		END TRY
+		BEGIN CATCH
+			RAISERROR('Thêm nhân viên không thành công!', 16, 1)
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Da ton tai StaffID nay' AS Message
+		RAISERROR('ID đã tồn tại!', 16, 1)
 	END
 END
 /*
 	select * from Staff_Position
-	exec proc_AddStaff 'STA010', 'test', 'test', 'POS001'
+	exec proc_AddStaff 'CAS005', 'test', 'test', 'POS001'
 	select * from Staff
 */
 Go
@@ -346,13 +230,18 @@ BEGIN
 	FROM dbo.func_SearchStaff(@staffID)
 	IF @count != 0
 	BEGIN
-		UPDATE Staff
-		SET NameStaff = @new_NameStaff, NumberPhone = @new_NumberPhone, Position = @new_Position
-		WHERE StaffID = @staffID
+		BEGIN TRY
+			UPDATE Staff
+			SET NameStaff = @new_NameStaff, NumberPhone = @new_NumberPhone, Position = @new_Position
+			WHERE StaffID = @staffID
+		END TRY
+		BEGIN CATCH
+			RAISERROR('Cập nhật nhân viên không thành công!', 16, 1)
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Khong ton tai StaffID nay' AS Message
+		RAISERROR('ID không tồn tại!', 16, 1)
 	END
 END
 /*
@@ -367,12 +256,17 @@ BEGIN
 	FROM dbo.func_SearchStaff(@staffID)
 	IF @count != 0
 	BEGIN
-		DELETE FROM Staff
-		WHERE StaffID = @staffID
+		BEGIN TRY
+			DELETE FROM Staff
+			WHERE StaffID = @staffID
+		END TRY
+		BEGIN CATCH
+			RAISERROR('Xóa nhân viên không thành công!', 16, 1)
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Khong ton tai StaffID nay' AS Message
+		RAISERROR('ID không tồn tại!', 16, 1)
 	END
 END
 /*
@@ -405,7 +299,7 @@ Go
 
 ----------------------------------------------------ADD, DELETE, UPDATE, SEARCH (ORDER) ---------------------------------
 Go
-CREATE OR ALTER PROC proc_AddOrders(@orderID nvarchar(10), @datetimeOrder datetime, @total_Unit_Price bigint, @stateOrder bit, @customerOrder nvarchar(10), @orderStaff nvarchar(10), @invoice nvarchar(10))
+CREATE OR ALTER PROC proc_AddOrders(@orderID nvarchar(10), @datetimeOrder datetime, @stateOrder bit, @customerOrder nvarchar(10), @orderStaff nvarchar(10), @invoice nvarchar(10),@tableID nvarchar(10))
 AS 
 BEGIN
 	DECLARE @count INT;
@@ -413,19 +307,24 @@ BEGIN
 	FROM dbo.func_SearchOrders(@orderID)
 	IF @count = 0
 	BEGIN
-		INSERT INTO Orders(OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, CustomerOrder, OrderStaff, Invoice)
-		VALUES(@orderID, @datetimeOrder, @total_Unit_Price, @stateOrder, @customerOrder, @orderStaff, @invoice)
+		BEGIN TRY
+			INSERT INTO Orders(OrderID, DatetimeOrder, StateOrder, CustomerOrder, OrderStaff, Invoice,TableID)
+			VALUES(@orderID, @datetimeOrder, @stateOrder, @customerOrder, @orderStaff, @invoice,@tableID)
+		END TRY
+		BEGIN CATCH
+			RAISERROR('Thêm Order không thành công!', 16, 1)
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Da ton tai OrderID nay' AS Message
+		RAISERROR('ID đã tồn tại!', 16, 1)
 	END
 END
 --exec proc_AddOrders 'ORD061', '2023/02/12', 1200000, 1, 'CUS001', 'STA001', 'IN001'
 --select * from Orders
 
 Go
-CREATE OR ALTER PROC proc_UpdateOrders(@orderID nvarchar(10), @new_DatetimeOrder datetime, @new_Total_Unit_Price bigint, @new_StateOrder bit, @new_CustomerOrder nvarchar(10), @new_OrderStaff nvarchar(10), @new_Invoice nvarchar(10))
+CREATE OR ALTER PROC proc_UpdateOrders(@orderID nvarchar(10), @new_DatetimeOrder datetime, @new_StateOrder bit, @new_CustomerOrder nvarchar(10), @new_OrderStaff nvarchar(10), @new_Invoice nvarchar(10),@tableID nvarchar(10))
 AS 
 BEGIN
 	DECLARE @count INT;
@@ -433,36 +332,21 @@ BEGIN
 	FROM dbo.func_SearchOrders(@orderID)
 	IF @count != 0
 	BEGIN
-		UPDATE Orders
-		SET DatetimeOrder = @new_DatetimeOrder, Total_Unit_Price = @new_Total_Unit_Price, StateOrder = @new_StateOrder, CustomerOrder = @new_CustomerOrder, OrderStaff = @new_OrderStaff, Invoice = @new_Invoice
-		WHERE OrderID = @orderID
+		BEGIN TRY
+			UPDATE Orders
+			SET DatetimeOrder = @new_DatetimeOrder, StateOrder = @new_StateOrder, CustomerOrder = @new_CustomerOrder, OrderStaff = @new_OrderStaff, Invoice = @new_Invoice,TableID = @tableID
+			WHERE OrderID = @orderID
+		END TRY
+		BEGIN CATCH
+			RAISERROR('Cập nhật Order không thành công!', 16, 1)
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Khong ton tai OrderID nay' AS Message
+		RAISERROR('ID Không tồn tại!', 16, 1)
 	END
 END
---exec proc_UpdateOrders 'ORD061', '2023/02/12', 1200000, 0, 'CUS001', 'STA001', 'IN001'
-
-Go
-CREATE OR ALTER PROC proc_DeleteOrders(@orderID nvarchar(10))
-AS
-BEGIN
-	DECLARE @count INT;
-	SELECT @count = COUNT(*)
-	FROM dbo.func_SearchOrders(@orderID)
-	IF @count != 0
-	BEGIN
-		DELETE FROM Orders
-		WHERE OrderID = @orderID
-	END
-	ELSE
-	BEGIN
-		SELECT 'Khong ton tai OderID nay' AS Message
-	END
-END
---exec proc_DeleteOrders 'ORD061'
-
+--exec proc_UpdateOrders 'ORD061', '2023/02/12', 0, 'CUS001', 'STA001', 'IN001','TAB015'
 
 --go
 --DECLARE @ResultCount INT;
@@ -483,7 +367,12 @@ go
 CREATE OR ALTER PROC proc_DeleteOrder(@OrderID nvarchar(10)) 
 AS
 BEGIN
-	DELETE FROM OrderDetails WHERE OrderID = @OrderID;
+	BEGIN TRY
+		DELETE FROM OrderDetails WHERE OrderID = @OrderID;
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Xóa Order không thành công!', 16, 1)
+	END CATCH
 	--Không có xóa trong Order vì có trigger tg_DeleteOrderDetails xóa giúp
 END
 
@@ -500,86 +389,75 @@ print dbo.func_CheckLogin('STA001','@123456')
 --ADD, UPDATE, DELETE, SEARCH BY ID PROCEDURE OF Accounts, Customers, Products TABLE-----------
 --------ADD PROC OF Account, Customers, Product TABLE-------------
 GO
-CREATE OR ALTER PROC SP_Account_Add
+CREATE OR ALTER PROC proc_Account_Add
 (@id nvarchar(10), @password nvarchar(20))
 AS
 BEGIN
-	BEGIN TRANSACTION
-		BEGIN TRY
-			INSERT INTO Account (AccountID, Passwords)
-			VALUES (@id, @password)
-			COMMIT TRANSACTION
-		END TRY
-		BEGIN CATCH
-			RAISERROR('Insert failed (Invalid AccountID)', 16, 1)
-			ROLLBACK TRANSACTION
-		END CATCH
+	BEGIN TRY
+		INSERT INTO Account (AccountID, Passwords)
+		VALUES (@id, @password)
+	END TRY
+	BEGIN CATCH
+		RAISERROR('Insert failed (Invalid AccountID)', 16, 1)
+	END CATCH
 END
 --CHECK
 --SELECT * FROM Account
---EXEC SP_Account_Add 'esfse', '23234234'
---EXEC SP_Account_Add 'STA009', '2342342'
+--EXEC proc_Account_Add 'esfse', '23234234'
+--EXEC proc_Account_Add 'STA009', '2342342'
 --------
 
 go
-create or alter proc SP_Customers_Add
+create or alter proc proc_Customers_Add
 (@id nvarchar(10), @name nvarchar(100), @phone nvarchar(20))
 as
 begin
-	begin transaction
-		declare @count int
-		select @count = count(*)
-		from dbo.Customers
-		where CustomerID = @id
+	declare @count int
+	select @count = count(*)
+	from dbo.Customers
+	where CustomerID = @id
 		
-		if (@count > 0)
-		begin
-			rollback transaction
-			raiserror('CustomerID existed', 16, 1)
-		end
-		else
-		begin
-			begin try
-				insert into dbo.Customers (CustomerID, NameCustomer, NumberPhone)
-				values (@id, @name, @phone)
-				commit tran
-			end try
-			begin catch
-				rollback tran
-				raiserror('Insert failed', 16, 1)
-			end catch
-		end
+	if (@count > 0)
+	begin
+		raiserror('CustomerID existed', 16, 1)
+	end
+	else
+	begin
+		begin try
+			insert into dbo.Customers (CustomerID, NameCustomer, NumberPhone)
+			values (@id, @name, @phone)
+		end try
+		begin catch
+			raiserror('Insert failed', 16, 1)
+		end catch
+	end
 end
 --check---
 --select * from dbo.Customers
 --exec SP_Customers_Add 'CUS027', 'Teo', '324242'
 ----------
 go
-create or alter proc SP_Product_Add
+create or alter proc proc_Product_Add
 (@id nvarchar(10), @name nvarchar(100), @price bigint, @description nvarchar(500), @state bit, @typeID nvarchar(10))
 as
 begin
-	begin tran
-		declare @count int
-		select @count = count(*) from dbo.Product
-		where ProductID = @id
-		if (@count > 0)
-		begin
-			rollback tran
-			raiserror('ProductID existed', 16, 1)
-		end
-		else
-		begin
-			begin try
-				insert into dbo.Product (ProductID, NameProduct, Price, Description, ProductState, Product_Type)
-				values (@id, @name, @price, @description, @state, @typeID)
-				commit tran
-			end try
-			begin catch
-				rollback tran
-				raiserror('Insert failed', 16, 1)
-			end catch
-		end
+	declare @count int
+	select @count = count(*) from dbo.Product
+	where ProductID = @id
+	if (@count > 0)
+	begin
+		raiserror('ProductID existed', 16, 1)
+	end
+	else
+	begin
+		begin try
+			insert into dbo.Product (ProductID, NameProduct, Price, Description, ProductState, Product_Type)
+			values (@id, @name, @price, @description, @state, @typeID)
+		end try
+		begin catch
+			raiserror('Insert failed', 16, 1)
+		end catch
+	end
 end
 --check--
 --select * from dbo.Product
@@ -587,27 +465,23 @@ end
 ---------
 --------UPDATE PROC OF Account, Customers, Product TABLE-------------
 GO
-CREATE OR ALTER PROC SP_Account_Update
+CREATE OR ALTER PROC proc_Account_Update
 (@id nvarchar(10), @password nvarchar(20))
 AS
 BEGIN
-	BEGIN TRANSACTION
 	DECLARE @count INT
 	SELECT @count = COUNT(*) FROM dbo.Account
 	WHERE AccountID = @id
 	IF (@count = 0)
 	BEGIN
-		ROLLBACK TRANSACTION
 		RAISERROR('ID không tồn tại!', 16, 1)
 	END
 	ELSE
 	BEGIN
 		BEGIN TRY
 			UPDATE Account SET Passwords = @password WHERE AccountID = @id
-			COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
-			ROLLBACK TRANSACTION
 			RAISERROR('Cập nhật thất bại!', 16, 1)
 		END CATCH
 	END
@@ -618,17 +492,15 @@ END
 --EXEC SP_Account_Update 'STA009', '@123456'
 ---------
 GO
-CREATE OR ALTER PROC SP_Customers_Update
+CREATE OR ALTER PROC proc_Customers_Update
 (@id nvarchar(10), @name nvarchar(100), @phone nvarchar(20))
 AS
 BEGIN
-	BEGIN TRANSACTION
 	DECLARE @count INT
 	SELECT @count = COUNT(*) FROM dbo.Customers
 	WHERE CustomerID = @id
 	IF (@count = 0)
 	BEGIN
-		ROLLBACK TRANSACTION
 		RAISERROR('ID does not exist', 16, 1)
 	END
 	ELSE
@@ -638,10 +510,8 @@ BEGIN
 		SET NameCustomer = @name,
 			NumberPhone = @phone
 		WHERE CustomerID = @id
-		COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
-			ROLLBACK TRANSACTION
 			RAISERROR('Update failed!', 16, 1)
 		END CATCH
 	END
@@ -652,17 +522,15 @@ END
 --EXEC SP_Customers_Update 'CUS026', 'Hưng', '2388888888'
 ---------
 GO
-CREATE OR ALTER PROC SP_Product_Update
+CREATE OR ALTER PROC proc_Product_Update
 (@id nvarchar(10), @name nvarchar(100), @price bigint, @description nvarchar(500), @state bit, @typeID nvarchar(10))
 AS
 BEGIN
-	BEGIN TRANSACTION
 	DECLARE @count INT
 	SELECT @count = COUNT(*) FROM dbo.Product
 	WHERE ProductID = @id
 	IF (@count = 0)
 	BEGIN
-		ROLLBACK TRANSACTION
 		RAISERROR('ID does not exist!', 16, 1)
 	END
 	ELSE
@@ -675,123 +543,117 @@ BEGIN
 				ProductState = @state,
 				Product_Type = @typeID
 			WHERE ProductID = @id
-			COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
-			ROLLBACK TRANSACTION
 			RAISERROR('Update failed (Product_Type does not exist)!', 16, 1)
 		END CATCH
 	END
 END
 --CHECK
+/*
 SELECT * FROM dbo.Product
-EXEC SP_Product_Update 'DWEF', 'ABC', '23409', 'haha', 1, 'PROTYPE007'
-EXEC SP_Product_Update 'PRO021', 'ABC', '23409', 'haha', 1, 'AWEF'
-EXEC SP_Product_Update 'PRO021', 'ABC', '23409', 'haha', 1, 'PROTYPE007'
+EXEC proc_Product_Update 'DWEF', 'ABC', '23409', 'haha', 1, 'PROTYPE007'
+EXEC proc_Product_Update 'PRO021', 'ABC', '23409', 'haha', 1, 'AWEF'
+EXEC proc_Product_Update 'PRO021', 'ABC', '23409', 'haha', 1, 'PROTYPE007'
+*/
 --------
 --------DELETE PROC OF Account, Customers, Product TABLE-------------
 go
-create or alter proc SP_Account_Delete
+create or alter proc proc_Account_Delete
 (@id nvarchar(10))
 as
 begin
-	begin tran
-		declare @count int
-		select @count = count(*) from dbo.Account
-		where AccountID = @id
+	declare @count int
+	select @count = count(*) from dbo.Account
+	where AccountID = @id
 		
-		if (@count = 0)
-		begin
-			rollback tran
-			raiserror('Account does not exist', 16, 1)
-		end
-		else
-		begin
-			begin try
-				delete from dbo.Account
-				where AccountID = @id
-				commit tran
-			end try
-			begin catch
-				rollback tran
-				raiserror('Delete failed', 16, 1)
-			end catch
-		end
+	if (@count = 0)
+	begin
+		raiserror('Account does not exist', 16, 1)
+	end
+	else
+	begin
+		begin try
+			delete from dbo.Account
+			where AccountID = @id
+		end try
+		begin catch
+			raiserror('Delete failed', 16, 1)
+		end catch
+	end
 end
 --check
+/*
 select * from dbo.Account
-exec SP_Account_Delete 'Sw4t'
+exec proc_Account_Delete 'Sw4t'
+*/
 -----
 
 go
-create or alter proc SP_Customers_Delete
+create or alter proc proc_Customers_Delete
 (@id nvarchar(10))
 as
 begin
-	begin tran
-		declare @count int
-		select @count = count(*) from dbo.Customers
-		where CustomerID = @id
+	declare @count int
+	select @count = count(*) from dbo.Customers
+	where CustomerID = @id
 		
-		if (@count = 0)
-		begin
-			rollback tran
-			raiserror('Customer does not exist', 16, 1)
-		end
-		else
-		begin
-			begin try
-				delete from dbo.Customers
-				where CustomerID = @id
-				commit tran
-			end try
-			begin catch
-				rollback tran
-				raiserror('Delete failed', 16, 1)
-			end catch
-		end
+	if (@count = 0)
+	begin
+		raiserror('Customer does not exist', 16, 1)
+	end
+	else
+	begin
+		begin try
+			delete from dbo.Customers
+			where CustomerID = @id
+		end try
+		begin catch
+			raiserror('Delete failed', 16, 1)
+		end catch
+	end
 end
 --check
+/*
 select * from dbo.Customers
-exec SP_Customers_Delete 'CUS027'
+exec proc_Customers_Delete 'CUS027'
+*/
 -----
 
 go
-create or alter proc SP_Product_Delete
+create or alter proc proc_Product_Delete
 (@id nvarchar(10))
 as
 begin
-	begin tran
-		declare @count int
-		select @count = count(*) from dbo.Product
-		where ProductID = @id
+	declare @count int
+	select @count = count(*) from dbo.Product
+	where ProductID = @id
 		
-		if (@count = 0)
-		begin
-			rollback tran
-			raiserror('Product does not exist', 16, 1)
-		end
-		else
-		begin
-			begin try
-				delete from dbo.Product
-				where ProductID = @id
-				commit tran
-			end try
-			begin catch
-				rollback tran
-				raiserror('Delete failed', 16, 1)
-			end catch
-		end
+	if (@count = 0)
+	begin
+		raiserror('Product does not exist', 16, 1)
+	end
+	else
+	begin
+		begin try
+			delete from dbo.Product
+			where ProductID = @id
+		end try
+		begin catch
+			raiserror('Delete failed', 16, 1)
+		end catch
+	end
 end
 --check
+/*
 select * from dbo.Product
-exec SP_Product_Delete 'PRO022'
+exec proc_Product_Delete 'PRO022'
+*/
 -----
 
 --------SEARCH PROC OF Account, Customers, Product TABLE BY ID-------------
 go
-create or alter proc SP_Account_Search
+create or alter proc proc_Account_Search
 (@id nvarchar(10))
 as
 begin
@@ -800,7 +662,7 @@ begin
 	where AccountID = @id
 	if (@count = 0)
 	begin
-		select 'Account is not found' as message
+		raiserror('Account is not found', 16, 1)
 	end
 	else
 	begin
@@ -809,17 +671,17 @@ begin
 			where AccountID = @id
 		end try
 		begin catch
-			select 'Search failed' as message
+			raiserror('Search failed', 16, 1)
 		end catch
 	end
 end
 ----check-----
 --select * from dbo.Account
---exec SP_Account_Search 'STA00d9'
+--exec proc_Account_Search 'STA00d9'
 --------------
 
 go
-create or alter proc SP_Customers_Search
+create or alter proc proc_Customers_Search
 (@id nvarchar(10))
 as
 begin
@@ -829,7 +691,7 @@ begin
 		where CustomerID = @id
 		if (@count = 0)
 		begin
-			select 'Customer is not found' as message
+			raiserror('Customer is not found', 16, 1)
 		end
 		else
 		begin
@@ -838,16 +700,16 @@ begin
 		end
 	end try
 	begin catch
-		select 'Search failed' as message
+		raiserror('Search failed', 16, 1)
 	end catch
 end
 --check--
 --select * from dbo.Customers
---exec SP_Customers_Search 'CUS004'
+--exec proc_Customers_Search 'CUS004'
 ---------
 
 go
-create or alter proc SP_Product_Search
+create or alter proc proc_Product_Search
 (@id nvarchar(10))
 as
 begin
@@ -858,7 +720,7 @@ begin
 		where ProductID = @id
 		if (@count = 0)
 		begin
-			select 'Product is not found' as message
+			raiserror('Product is not found', 16, 1)
 		end
 		else
 		begin
@@ -872,42 +734,30 @@ begin
 end
 --check----
 --select * from dbo.Product
---exec SP_Product_Search 'see'
+--exec proc_Product_Search 'see'
 -----------
 
 ------------------------------------------------------------SEARCH ORDERS BY ORDER ID-------------------------------------------------
 Go
 CREATE OR ALTER FUNCTION func_SearchOrders(@orderID nvarchar(10))
 RETURNS	@OrdersTable
-TABLE	(OrderID nvarchar(10), DatetimeOrder datetime, Total_Unit_Price bigint, StateOrder bit, CustomerOrder nvarchar(10), OrderStaff nvarchar(10), Invoice nvarchar(10))
+TABLE	(OrderID nvarchar(10), DatetimeOrder datetime, StateOrder bit, CustomerOrder nvarchar(10), OrderStaff nvarchar(10), Invoice nvarchar(10),TableID nvarchar(10))
 AS 
 BEGIN
-	INSERT INTO @OrdersTable(OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, CustomerOrder, OrderStaff, Invoice)
+	INSERT INTO @OrdersTable(OrderID, DatetimeOrder, StateOrder, CustomerOrder, OrderStaff, Invoice,TableID)
 	SELECT * FROM Orders
 	WHERE OrderID = @orderID
 	RETURN
 END
------------------------------------------------------- --GET INVOICE BOOKING VIEW BY BOOKING ID---------------------------------------------
-Go
-CREATE OR ALTER FUNCTION func_GetInvoiceBookingDetails(@bookingID nvarchar(10))
-RETURNS @InvoiceBookingDetailsTable
-TABLE (InvoiceID nvarchar(10), BookingID nvarchar(10), IDServices nvarchar(10), CustomerBooking nvarchar(10), TableBooking nvarchar(10), BookingDate date, BookingStatus nvarchar(50), Duration int, NameServices nvarchar(100), Price bigint, TotalPrice bigint, StatusInvoice nvarchar(10))
-AS 
-BEGIN
-	INSERT INTO @InvoiceBookingDetailsTable(InvoiceID, BookingID, IDServices, CustomerBooking, TableBooking, BookingDate,BookingStatus, Duration, NameServices, Price, TotalPrice, StatusInvoice)
-	SELECT * FROM InvoiceBookingView
-	WHERE BookingID = @bookingID
-	RETURN
-END
---select * from dbo.func_GetInvoiceBookingDetails('BI002')
+
 --------------------------------------------------------------GET INVOICE ORDER DETAILS VIEW BY INVOICE ID-------------------------
 go
 CREATE OR ALTER FUNCTION func_GetInvoiceOrderDetails(@invoiceID nvarchar(10)) 
 RETURNS @InvoiceOrderDetailsTable 
-Table  (InvoiceID nvarchar(10),ProductName nvarchar(100),CreationTime datetime,Quantity int,Price bigint,TotalPrice bigint,Discount int,TotalPriceAfterDiscount bigint,NameStatusInvoice nvarchar(10),CheckInTime datetime,CheckOutTime datetime)
+Table  (InvoiceID nvarchar(10),TableID nvarchar(10),ProductName nvarchar(100),CreationTime datetime,Quantity int,Price bigint,TotalPrice bigint,Discount int,TotalPriceAfterDiscount bigint,NameStatusInvoice nvarchar(50),CheckInTime datetime,CheckOutTime datetime)
 AS
 BEGIN
-	INSERT INTO @InvoiceOrderDetailsTable(InvoiceID,ProductName,CreationTime,Quantity,Price,TotalPrice,Discount,TotalPriceAfterDiscount,NameStatusInvoice,CheckInTime,CheckOutTime)
+	INSERT INTO @InvoiceOrderDetailsTable(InvoiceID,TableID,ProductName,CreationTime,Quantity,Price,TotalPrice,Discount,TotalPriceAfterDiscount,NameStatusInvoice,CheckInTime,CheckOutTime)
 	SELECT * FROM InvoiceOrderView
 	WHERE InvoiceID = @invoiceID
 	RETURN 

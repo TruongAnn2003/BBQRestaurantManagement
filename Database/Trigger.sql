@@ -392,12 +392,12 @@ BEGIN
         RETURN;
     END;
 
-	IF (@TableID IS NOT NULL) AND (NOT EXISTS(SELECT TablesID FROM TablesCustomer WHERE TablesID = @TableID))
-    BEGIN
-		ROLLBACK TRAN
-		PRINT 'Invalid TableID'
-		RETURN;
-    END;
+	--IF (@TableID IS NOT NULL) AND (NOT EXISTS(SELECT TablesID FROM TablesCustomer WHERE TablesID = @TableID))
+ --   BEGIN
+	--	ROLLBACK TRAN
+	--	PRINT 'Invalid TableID'
+	--	RETURN;
+ --   END;
 END
 /*
 INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder) VALUES 

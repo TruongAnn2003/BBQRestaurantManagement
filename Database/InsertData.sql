@@ -1,4 +1,5 @@
 ---------------------------------
+USE BBQRestaurantManagement
 ---------------------------------------------------------------------------------------------------------------------------------------------
 /*																																			*/
 /*																		INSERT DATA															*/
@@ -169,50 +170,63 @@ INSERT INTO TablesCustomer(TablesID,MaxSeats,Status) VALUES
 ('TAB019', 2,0),
 ('TAB020', 2,0),
 ('TAB021', 4,0),
-('TAB022', 4,0);
+('TAB022', 4,0),
+('TAB023', 4,0),
+('TAB024', 4,0),
+('TAB025', 4,0),
+('TAB026', 4,0),
+('TAB027', 4,0),
+('TAB028', 4,0),
+('TAB029', 4,0),
+('TAB030', 4,0),
+('TAB031', 4,0),
+('TAB032', 4,0),
+('TAB033', 4,0),
+('TAB034', 4,0),
+('TAB035', 4,0);
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO BookingStatus (IDStatus,NameStatus) VALUES	
-('SUCC','Success'),
-('RECE','Received'),
-('CANC','Cancel');
+('BSTA001','Waiting'),
+('BSTA002','Approved'),
+('BSTA003','Cancel');
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Booking (BookingID,BookingDate,BookingStatus,Duration,Note,NumberCustomer,CustomerBooking,TableBooking,BookingInvoice) VALUES	
-('BI001','2022/03/04','SUCC',3,'None note',1,'CUS001','TAB001','IN001'),
-('BI002','2021/03/04','RECE',4,'None note',2,'CUS002','TAB002','IN002'),
-('BI003','2023/06/01','CANC',5,'None note',3,'CUS003','TAB003','IN003'),
-('BI004','2023/06/04','SUCC',2,'None note',4,'CUS004','TAB004','IN004'),
-('BI005','2023/01/04','RECE',6,'None note',5,'CUS005','TAB005','IN005'),
-('BI006','2022/02/04','CANC',3,'None note',4,'CUS006','TAB006','IN006'),
-('BI007','2022/03/03','SUCC',3,'None note',3,'CUS007','TAB007','IN007'),
-('BI008','2022/03/05','CANC',2,'None note',3,'CUS008','TAB008','IN008'),
-('BI009','2022/03/07','SUCC',3,'None note',2,'CUS009','TAB009','IN009'),
-('BI010','2023/03/08','SUCC',4,'None note',2,'CUS010','TAB010','IN010'),
-('BI011','2023/03/09','RECE',3,'None note',6,'CUS011','TAB011','IN011'),
-('BI012','2022/05/04','SUCC',5,'None note',7,'CUS012','TAB012','IN012'),
-('BI013','2022/06/04','SUCC',3,'None note',5,'CUS013','TAB001','IN013'),
-('BI014','2022/08/04','RECE',2,'None note',5,'CUS014','TAB002','IN014'),
-('BI015','2022/07/04','SUCC',3,'None note',3,'CUS015','TAB003','IN015'),
-('BI016','2022/03/06','SUCC',4,'None note',5,'CUS016','TAB004','IN016'),
-('BI017','2022/03/05','RECE',4,'None note',5,'CUS017','TAB005','IN017'),
-('BI018','2022/06/04','SUCC',3,'None note',5,'CUS018','TAB006','IN018'),
-('BI019','2022/04/04','RECE',5,'None note',6,'CUS019','TAB007','IN019'),
-('BI020','2022/03/04','SUCC',5,'None note',2,'CUS020','TAB008','IN020'),
-('BI021','2022/02/04','SUCC',3,'None note',7,'CUS021','TAB009','IN021'),
-('BI022','2022/03/04','CANC',3,'None note',3,'CUS022','TAB010','IN022'),
-('BI023','2022/01/04','CANC',3,'None note',3,'CUS023','TAB011','IN023'),
-('BI024','2022/02/04','SUCC',2,'None note',5,'CUS024','TAB012','IN024'),
-('BI025','2022/03/01','SUCC',3,'None note',6,'CUS025','TAB011','IN025'),
-('BI026','2022/03/02','SUCC',4,'None note',6,'CUS026','TAB001','IN026'),
-('BI027','2023/01/02','SUCC',4,'None note',6,'CUS001','TAB001','IN027'),
-('BI028','2023/01/21','RECE',4,'None note',6,'CUS002','TAB009','IN028'),
-('BI029','2022/12/31','CANC',4,'None note',6,'CUS003','TAB010','IN029'),
-('BI030','2022/11/29','SUCC',4,'None note',6,'CUS004','TAB012','IN030'),
-('BI031','2023/03/02','RECE',4,'None note',6,'CUS005','TAB011','IN031'),
-('BI032','2023/01/02','CANC',4,'None note',6,'CUS006','TAB010','IN032'),
-('BI033','2023/04/02','SUCC',4,'None note',6,'CUS007','TAB012','IN033'),
-('BI034','2023/02/02','CANC',4,'None note',6,'CUS008','TAB002','IN034'),
-('BI035','2023/01/02','RECE',4,'None note',6,'CUS009','TAB004','IN035'),
-('BI036','2023/04/02','RECE',4,'None note',6,'CUS010','TAB004','IN036')
+('BI001','2022/03/04','BSTA002',3,'None note',1,'CUS001','TAB001','IN001'),
+('BI002','2021/03/04','BSTA002',4,'None note',2,'CUS002','TAB002','IN002'),
+('BI003','2023/06/01','BSTA002',5,'None note',3,'CUS003','TAB003','IN003'),
+('BI004','2023/06/04','BSTA002',2,'None note',4,'CUS004','TAB004','IN004'),
+('BI005','2023/01/04','BSTA002',6,'None note',5,'CUS005','TAB005','IN005'),
+('BI006','2022/02/04','BSTA002',3,'None note',4,'CUS006','TAB006','IN006'),
+('BI007','2022/03/03','BSTA002',3,'None note',3,'CUS007','TAB007','IN007'),
+('BI008','2022/03/05','BSTA002',2,'None note',3,'CUS008','TAB008','IN008'),
+('BI009','2022/03/07','BSTA002',3,'None note',2,'CUS009','TAB009','IN009'),
+('BI010','2023/03/08','BSTA002',4,'None note',2,'CUS010','TAB010','IN010'),
+('BI011','2023/03/09','BSTA002',3,'None note',6,'CUS011','TAB011','IN011'),
+('BI012','2022/05/04','BSTA002',5,'None note',7,'CUS012','TAB012','IN012'),
+('BI013','2022/06/04','BSTA002',3,'None note',5,'CUS013','TAB001','IN013'),
+('BI014','2022/08/04','BSTA002',2,'None note',5,'CUS014','TAB002','IN014'),
+('BI015','2022/07/04','BSTA002',3,'None note',3,'CUS015','TAB003','IN015'),
+('BI016','2022/03/06','BSTA002',4,'None note',5,'CUS016','TAB004','IN016'),
+('BI017','2022/03/05','BSTA002',4,'None note',5,'CUS017','TAB005','IN017'),
+('BI018','2022/06/04','BSTA002',3,'None note',5,'CUS018','TAB006','IN018'),
+('BI019','2022/04/04','BSTA002',5,'None note',6,'CUS019','TAB007','IN019'),
+('BI020','2022/03/04','BSTA002',5,'None note',2,'CUS020','TAB008','IN020'),
+('BI021','2022/02/04','BSTA003',3,'None note',7,'CUS021','TAB009',null),
+('BI022','2022/03/04','BSTA001',3,'None note',3,'CUS022','TAB010',null),
+('BI023','2022/01/04','BSTA001',3,'None note',3,'CUS023','TAB011',null),
+('BI024','2022/02/04','BSTA001',2,'None note',5,'CUS024','TAB012',null),
+('BI025','2022/03/01','BSTA001',3,'None note',6,'CUS025','TAB011',null),
+('BI026','2022/03/02','BSTA001',4,'None note',6,'CUS026','TAB001',null),
+('BI027','2023/01/02','BSTA003',4,'None note',6,'CUS001','TAB001',null),
+('BI028','2023/01/21','BSTA003',4,'None note',6,'CUS002','TAB009',null),
+('BI029','2022/12/31','BSTA001',4,'None note',6,'CUS003','TAB010',null),
+('BI030','2022/11/29','BSTA003',4,'None note',6,'CUS004','TAB012',null),
+('BI031','2023/03/02','BSTA003',4,'None note',6,'CUS005','TAB011',null),
+('BI032','2023/01/02','BSTA003',4,'None note',6,'CUS006','TAB010',null),
+('BI033','2023/04/02','BSTA001',4,'None note',6,'CUS007','TAB012',null),
+('BI034','2023/02/02','BSTA001',4,'None note',6,'CUS008','TAB002',null),
+('BI035','2023/01/02','BSTA001',4,'None note',6,'CUS009','TAB004',null),
+('BI036','2023/04/02','BSTA003',4,'None note',6,'CUS010','TAB004',null);
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Product_Type (IDType, ProductType) VALUES
 ('PROTYPE001', 'Barbecue'),
@@ -306,7 +320,7 @@ INSERT INTO Orders (OrderID, DatetimeOrder, StateOrder, CustomerOrder, OrderStaf
 ('ORD057', '2023/04/04', 1, 'CUS007', 'SAS008', 'IN033', null),
 ('ORD058', '2023/02/28', 1, 'CUS008', 'SAS009', 'IN034', null),
 ('ORD059', '2023/01/28', 1, 'CUS009', 'SAS004', 'IN035', null),
-('ORD060', '2023/05/01', 1, 'CUS010', 'ADMIN001', 'IN036', null)
+('ORD060', '2023/05/01', 1, 'CUS010', 'ADMIN001', 'IN036', null);
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
