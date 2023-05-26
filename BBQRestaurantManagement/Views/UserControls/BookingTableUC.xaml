@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
-             mc:Ignorable="d"
+             mc:Ignorable="d"         
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
@@ -15,105 +15,87 @@
              FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label FontSize="30"
-               Grid.Row="0"
-               Margin="20"
-               FontWeight="Bold"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Top">
-            Thông tin đặt bàn
-        </Label>
-        <StackPanel Grid.Row="1"
-                    Margin="10">
-            <Label Content="Họ và tên"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-            <TextBox materialDesign:HintAssist.Hint="Điền họ và tên"
-                     FontSize="15"/>
-        </StackPanel>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Margin="10 0" 
-                        Grid.Column="0">
-                <Label Content="Email"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-                <TextBox materialDesign:HintAssist.Hint="Điền địa chỉ email"
-                     FontSize="15"/>
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                    Margin="10 0">
-                <Label Content="Số điện thoại"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-                <TextBox materialDesign:HintAssist.Hint="Điền số điện thoại"
-                     FontSize="15"/>
+        <Grid Grid.Row="0" Background="#00796b">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Command="{Binding BackDateCommand}" 
+                        Style="{StaticResource MaterialDesignIconButton}">
+                    <materialDesign:PackIcon Kind="ChevronLeft"  Width="20" Height="20" Foreground="White" />
+                </Button>
+                <DatePicker
+                      BorderBrush="White"
+                      Width="80"
+                      SelectedDate="{Binding ElementName=leaveRequestUC,Path=DataContext.TimeCreateLeave,UpdateSourceTrigger=PropertyChanged}"
+                      FlowDirection="RightToLeft" />
+                <Button Command="{Binding NextDateCommand}" 
+                        Style="{StaticResource MaterialDesignIconButton}">
+                    <materialDesign:PackIcon Kind="ChevronRight"  Width="20" Height="20" Foreground="White"/>
+                </Button>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="3" Margin="10" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Margin="10 0" Grid.Column="0">
-                <Label Content="Chọn ngày đặt bàn"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-                <DatePicker MinWidth="229"
-                        materialDesign:HintAssist.Hint="Chọn ngày đặt bàn"
-                        materialDesign:TextFieldAssist.HasClearButton="True"
-                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
-            </StackPanel>
-            <StackPanel Margin="10 0" Grid.Column="1">
-                <Label Content="Chọn giờ đặt bàn"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-                <materialDesign:TimePicker MinWidth="229"
-                                       materialDesign:HintAssist.Hint="Chọn giờ đặt bàn"
-                                       Style="{StaticResource MaterialDesignFloatingHintTimePicker}"/>
-            </StackPanel>
-            <StackPanel Margin="10 0" Grid.Column="2">
-                <Label Content="Số người"
-                FontSize="17"
-                FontWeight="Bold"/>
-                <TextBox materialDesign:HintAssist.Hint="Điền số người"
-                     FontSize="15" Height="35"/>
-            </StackPanel>
+        <Grid Grid.Row="1">
+            <Border BorderBrush="#00796b" BorderThickness="1">
+                <StackPanel Background="White">
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                         BorderBrush="#00796b"
+                        Grid.Column="0"
+                        Margin="10"
+                         MaxLength="50"
+                      VerticalAlignment="Center"
+                      materialDesign:HintAssist.Hint="Tên khách hàng"
+                      Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                        <TextBox
+                            BorderBrush="#00796b"
+                        Grid.Column="1"
+                        Margin="10"
+                         MaxLength="10"
+                      VerticalAlignment="Center"
+                      materialDesign:HintAssist.Hint="Số điện thoại"
+                      Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </Grid>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:TimePicker
+                            BorderBrush="#00796b"
+                        Grid.Column="0"
+                        Margin="10"
+                      materialDesign:HintAssist.Hint="Thời gian"
+                      Is24Hours="True"
+                      Style="{StaticResource MaterialDesignOutlinedTimePicker}" />
+                        <TextBox
+                            BorderBrush="#00796b"
+                        Grid.Column="1"
+                        Margin="10"
+                      VerticalAlignment="Center"
+                      materialDesign:HintAssist.Hint="Số người"
+                      Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </Grid>
+                    <Grid Margin="5">
+                        <TextBox
+                            BorderBrush="#00796b"
+                        Margin="10"
+                        Height="80"
+                        VerticalAlignment="Center"
+                        materialDesign:HintAssist.Hint="Ghi chú"
+                        MaxLength="100"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                    </Grid>
+                    <TextBlock Margin="10" Foreground="Red" VerticalAlignment="Center"></TextBlock>
+                    <Button Margin="200 10" Background="#00796b" BorderThickness="0"  Content="Đặt"/>
+                </StackPanel>
+            </Border>
         </Grid>
-        <StackPanel  Margin="10" 
-                     Grid.Row="4">
-            <Label Content="Ghi chú"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-            <TextBox Height="120"
-                     AcceptsReturn="True"
-                     IsEnabled="{Binding IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
-                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     TextWrapping="Wrap"
-                     VerticalScrollBarVisibility="Auto"/>
-        </StackPanel>
-        <Button Margin="100 10"
-                Height="50"
-                Content="Đặt"
-                FontSize="17"
-                FontWeight="Bold"
-                Foreground="White"
-                Background="#880e4f"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
-                ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-                 Grid.Row="5"
-                HorizontalAlignment="Center"/>
     </Grid>
 </UserControl>

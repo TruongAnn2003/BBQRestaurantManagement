@@ -24,36 +24,33 @@
                Width="200"
               Grid.Column="0"
               Source="/Pictures/Staff.png"></Image>
-        <Grid Grid.Column="1">
-            <ScrollViewer Margin="15 0">
-                <StackPanel Margin="2">
-                    <Expander  Background="White"
+        <ScrollViewer Grid.Column="1" Margin="15 0">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0">
+                    <Expander Name="expanderBookingTable"  Background="White" 
+                            Foreground="#00796b"
+                            FontWeight="Bold" 
+                            Header="Đặt bàn">
+                        <Border Background="Gray" BorderThickness="0.3">
+                            <uc:BookingTableUC></uc:BookingTableUC>
+                        </Border>
+                    </Expander>
+                </Border>
+                <Border Grid.Row="1">
+                    <Expander Name="expanderBookingService"  Background="White" 
                                Foreground="#00796b"
                                FontWeight="Bold" 
-                               Header="Đặt vé BBQ">
+                               Header="Đặt dịch vụ phòng/tiệc">
                         <Border Background="Gray" BorderThickness="0.3">
-                            <uc:BookingBufferTicketUC></uc:BookingBufferTicketUC>
+                            <uc:BookingServicesUC></uc:BookingServicesUC>
                         </Border>
                     </Expander>
-                    <Expander  Background="White" 
-                           Foreground="#00796b"
-                           FontWeight="Bold" 
-                           Header="Đặt bàn">
-                        <Border Background="Gray" BorderThickness="0.3">
-                        <uc:BookingTableUC></uc:BookingTableUC>
-                        </Border>
-                    </Expander>
-                    <Expander  Background="White" 
-                           Foreground="#00796b"
-                           FontWeight="Bold" 
-                           Header="Đặt dịch vụ phòng/tiệc">
-                        <Border Background="Gray" BorderThickness="0.3">
-                        <uc:BookingServicesUC></uc:BookingServicesUC>
-                        </Border>
-                    </Expander>
-            </StackPanel>
-            </ScrollViewer>
-        </Grid>
-        
+                </Border>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>

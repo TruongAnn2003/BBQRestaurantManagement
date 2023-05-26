@@ -8,13 +8,19 @@ using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Database
 {
-    public class ServicesDao : BaseDao
+    public class ServicesRestaurantDao : BaseDao
     {
         #region Add, Update, Delete
         //code Add, Update, Delete trong đây
         #endregion
         #region Search
-        //code Search trong đây
+       
+        public List<ServicesRestaurant> Search(string idServices)
+        {
+            string sqlStr = string.Format("SELECT * FROM dbo.func_SearchServices(" + "'@'" + idServices + ")");
+            return dbConnection.GetList(sqlStr, reader => new ServicesRestaurant(reader));
+        }
+
         #endregion
         #region Stored Procedures
         //code Stored Procedures trong đây

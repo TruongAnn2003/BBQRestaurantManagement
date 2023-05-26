@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BBQRestaurantManagement.Models
 {
-    public class Services
+    public class ServicesRestaurant
     {
         private string id;
         private string nameServices;
@@ -28,15 +28,15 @@ namespace BBQRestaurantManagement.Models
             set { nameServices = value; }
         }
 
-        public Services() { }
+        public ServicesRestaurant() { }
 
-        public Services(string id, string name)
+        public ServicesRestaurant(string id, string name)
         {
             this.id = id;
             this.nameServices = name;
         }
 
-        public Services(SqlDataReader reader)
+        public ServicesRestaurant(SqlDataReader reader)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace BBQRestaurantManagement.Models
             }
             catch(Exception ex)
             {
-                Log.Instance.Error(nameof(Services), "CAST ERROR: " + ex.Message);
+                Log.Instance.Error(nameof(ServicesRestaurant), "CAST ERROR: " + ex.Message);
             }
         }
     }

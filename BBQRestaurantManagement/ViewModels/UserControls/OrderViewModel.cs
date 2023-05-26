@@ -89,25 +89,25 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                  "Cancel order?",
                  () =>
                  {
-                     //Delete
-                     ordersDao.Delete(OrderIns.ID);
-                     //ReturnView
+                     ResetOrder();
                      MenuView.DataContext = new MenuViewModel();
-                     ((MenuViewModel)(MenuView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
-                     ((MenuViewModel)(MenuView.DataContext)).ReceiveOrderIns = new Action<Order>(ReceiveOrderIns);                    
-                     ((MenuViewModel)MenuView.DataContext).OrderIns = null;
-                     ListOrderItem = new List<OrderDetails>();
-                     OrderIns = null;
                      CurrentChildView = MenuView;
                  }, null);
                 dialog.Show();
             }    
         }
 
+        private void ResetOrder()
+        {
+            ordersDao.Delete(OrderIns.ID);
+            OrderIns = null;
+            ListOrderItem = new List<OrderDetails>();
+        }
         private void CompleteTheOrder(object o)
         {
             ListOrderItem = new List<OrderDetails>();
-            OrderIns = null;            
+            OrderIns = null;
+            CurrentChildView = MenuView;
             ExecuteShowMenuView(null);
         }
 
@@ -132,8 +132,23 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void ExecuteShowCheckInOutView(object obj)
         {
-            CurrentChildView = CheckInOutView;
-            StatusCheckInOutView = true;
+            if (StatusMenuView == true && OrderIns != null)
+            {
+                AlertDialogService dialog = new AlertDialogService(
+                "Order",
+                "Cancel order?",
+                () =>
+                {
+                    ResetOrder();
+                }, null);
+                dialog.Show();
+            }    
+                
+            if (orderIns == null)
+            {
+                CurrentChildView = CheckInOutView;
+                StatusCheckInOutView = true;
+            }              
         }
 
         private void ExecuteShowTableEmptyView(object obj)

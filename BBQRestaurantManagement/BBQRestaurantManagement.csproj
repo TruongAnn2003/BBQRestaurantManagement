@@ -85,7 +85,7 @@
     <Compile Include="Database\InvoicesDao.cs" />
     <Compile Include="Database\OrdersDao.cs" />
     <Compile Include="Database\ProductsDao.cs" />
-    <Compile Include="Database\ServicesDao.cs" />
+    <Compile Include="Database\ServicesRestaurantDao.cs" />
     <Compile Include="Database\TransactionsDao.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Booking.cs" />
@@ -98,7 +98,7 @@
     <Compile Include="Models\OrderDetails.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductType.cs" />
-    <Compile Include="Models\Services.cs" />
+    <Compile Include="Models\ServicesRestaurant.cs" />
     <Compile Include="Models\ServiceProduct.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\StaffPosition.cs" />
@@ -110,6 +110,7 @@
     <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\BookingTableViewModel.cs" />
     <Compile Include="ViewModels\UserControls\HomeViewMenuViewModel.cs" />
     <Compile Include="ViewModels\UserControls\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
@@ -119,9 +120,6 @@
     <Compile Include="ViewModels\Windows\HomeViewModel.cs" />
     <Compile Include="Views\Dialogs\AlertDialog.xaml.cs">
       <DependentUpon>AlertDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\BookingBufferTicketUC.xaml.cs">
-      <DependentUpon>BookingBufferTicketUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\BookingServicesUC.xaml.cs">
       <DependentUpon>BookingServicesUC.xaml</DependentUpon>
@@ -150,14 +148,8 @@
     <Compile Include="Views\UserControls\OrderUC.xaml.cs">
       <DependentUpon>OrderUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\OtherService.xaml.cs">
-      <DependentUpon>OtherService.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UserControls\ReservationUC.xaml.cs">
       <DependentUpon>ReservationUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\RoomServiceUC.xaml.cs">
-      <DependentUpon>RoomServiceUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\TableEmptyUC.xaml.cs">
       <DependentUpon>TableEmptyUC.xaml</DependentUpon>
@@ -166,10 +158,6 @@
       <DependentUpon>HomeWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Dialogs\AlertDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\BookingBufferTicketUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -213,15 +201,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\OtherService.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\UserControls\ReservationUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\RoomServiceUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
