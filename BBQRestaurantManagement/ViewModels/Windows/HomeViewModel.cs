@@ -12,9 +12,7 @@ namespace BBQRestaurantManagement.ViewModels.Windows
 {
     public class HomeViewModel : BaseViewModel
     {
-        private LoginUC LoginView = new LoginUC();
         private ReservationUC ReservationView = new ReservationUC();
-        private OrderUC OrderView = new OrderUC();
         private HomeViewUC HomeView = new HomeViewUC();
         private HomeViewMenuUC HomeViewMenuView = new HomeViewMenuUC();
         private HomeViewServicesUC HomeViewServicesView = new HomeViewServicesUC();
@@ -86,14 +84,14 @@ namespace BBQRestaurantManagement.ViewModels.Windows
 
         private void ShowOrderView(object b)
         {
-            CurrentChildView = OrderView;
+            CurrentChildView = new OrderUC();
             VisibilityTabView = Visibility.Collapsed;
         }
 
         private void ExecuteShowLoginView(object obj)
         {
-            CurrentChildView = LoginView;
-            ((LoginViewModel)(LoginView.DataContext)).LoginOrderView = new Action<object>(ShowOrderView);
+            CurrentChildView = new LoginUC();
+            ((LoginViewModel)(CurrentChildView.DataContext)).LoginOrderView = new Action<object>(ShowOrderView);
             StatusLoginView = true;
         }
     }

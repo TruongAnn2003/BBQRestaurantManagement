@@ -11,6 +11,8 @@ namespace BBQRestaurantManagement.Database.Base
 {
     public class BaseDao
     {
+        public const string Manager = "POS001";
+        public const string Cashier = "POS002";
         protected const string ACCOUNT_TABLE = "Account";
         public const string ACCOUNT_PASSWORD = "Passwords";
         public const string ACCOUNT_ID = "AccountID";

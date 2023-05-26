@@ -24,7 +24,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         public ObservableCollection<Product> Drinks { get => drinks; set { drinks = value; OnPropertyChanged(); } }
 
         public Action<string> LoadOrderItemView { get; set; }
-        public Action<Order> ReceiveOrderIns { get; set; }
+        public Action<object> CreateOrder { get; set; }
 
         private ProductsDao productsDao = new ProductsDao();
         private OrdersDao ordersDao = new OrdersDao();
@@ -47,16 +47,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         {         
             if(OrderIns == null)
             {
-                AlertDialogService dialog = new AlertDialogService(
-                  "Order",
-                  "Create new order?",
-                  () =>
-                  {
-                      OrderIns = Order.CreateOrderIns();
-                      ordersDao.AddNonCustomerAndInvoice(OrderIns);
-                      ReceiveOrderIns(OrderIns);
-                  }, null);
-                dialog.Show();
+                CreateOrder(null);
             }
             ordersDao.AddOrderProduct(OrderIns.ID, product.ID, 1);
             LoadOrderItemView(OrderIns.ID);
