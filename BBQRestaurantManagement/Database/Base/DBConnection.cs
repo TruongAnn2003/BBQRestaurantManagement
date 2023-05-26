@@ -14,7 +14,9 @@ namespace BBQRestaurantManagement.Database.Base
        
         public DBConnection()
         {
+
             string strConnection = "Data Source=desktop-56m3but\\thanhloi;Initial Catalog=BBQRestaurantManagement;Persist Security Info=True;User ID=sa;Password=26012003";
+
             conn = new SqlConnection(strConnection);
         }
         

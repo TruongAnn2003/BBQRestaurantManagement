@@ -25,34 +25,34 @@
               Grid.Column="0"
               Source="/Pictures/Staff.png"></Image>
         <Grid Grid.Column="1">
-            <ScrollViewer Margin="15 0">
-                <StackPanel Margin="2">
-                    <Expander  Background="White"
-                               Foreground="#00796b"
-                               FontWeight="Bold" 
-                               Header="Đặt vé BBQ">
-                        <Border Background="Gray" BorderThickness="0.3">
-                            <uc:BookingBufferTicketUC></uc:BookingBufferTicketUC>
-                        </Border>
-                    </Expander>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0">
+                <ScrollViewer Margin="15 0">
                     <Expander  Background="White" 
                            Foreground="#00796b"
                            FontWeight="Bold" 
                            Header="Đặt bàn">
                         <Border Background="Gray" BorderThickness="0.3">
-                        <uc:BookingTableUC></uc:BookingTableUC>
+                            <uc:BookingTableUC></uc:BookingTableUC>
                         </Border>
                     </Expander>
+                </ScrollViewer>
+            </Border>
+            <Border Grid.Row="1">
+                <ScrollViewer Margin="15 0">
                     <Expander  Background="White" 
                            Foreground="#00796b"
                            FontWeight="Bold" 
                            Header="Đặt dịch vụ phòng/tiệc">
                         <Border Background="Gray" BorderThickness="0.3">
-                        <uc:BookingServicesUC></uc:BookingServicesUC>
+                            <uc:BookingServicesUC></uc:BookingServicesUC>
                         </Border>
                     </Expander>
-            </StackPanel>
-            </ScrollViewer>
+                </ScrollViewer>
+            </Border>
         </Grid>
         
     </Grid>

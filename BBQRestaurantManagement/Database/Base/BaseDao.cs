@@ -73,7 +73,7 @@ namespace BBQRestaurantManagement.Database.Base
         public const string STAFF_NUMBER_PHONE = "NumberPhone";
         public const string STAFF_POSITION = "Position";
 
-        protected const string SERVICES_TABLE = "Services";
+        protected const string SERVICES_TABLE = "ServicesRestaurant";
         public const string SERVICES_ID = "IDServices";
         public const string SERVICES_NAME_SERVICES = "NameServices";
 

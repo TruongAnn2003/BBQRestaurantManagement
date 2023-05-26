@@ -71,8 +71,104 @@
                            Foreground="#00796b"
                            FontWeight="Bold" 
                            Header="Đặt dịch vụ phòng">
-                    <Border Background="Gray" BorderThickness="0.3">
-                        <uc:RoomServiceUC></uc:RoomServiceUC>
+                    <Border Background="White" BorderThickness="0.3">
+                        <Grid Height="150">
+                            <Border BorderBrush="#00796b" BorderThickness="0.5">
+                                <StackPanel>
+                                    <Label FontSize="15" 
+                                       Grid.Row="0"
+                                       Margin="10"
+                                       FontWeight="Bold"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Top">
+                                        Đặt phòng
+                                    </Label>
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Margin="5 0" Grid.Column="0">
+                                            <Label Background="White" 
+                                               Foreground="#00796b"
+                                               FontWeight="Bold" 
+                                               FontSize="10"
+                                               Content="Buffet"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center">
+                                            </Label>
+                                            <Menu HorizontalAlignment="Center"
+                                                    materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
+                                                <MenuItem
+                                                    Header="Chọn" FontSize="8">
+                                                    <MenuItem
+                                                        Header="Phòng 1" FontSize="10"/>
+                                                    <MenuItem
+                                                        Header="Phòng 2" FontSize="10"/>
+                                                    <MenuItem
+                                                        Header="Phòng 3" FontSize="10"/>
+                                                </MenuItem>
+
+                                            </Menu>
+                                        </StackPanel>
+                                        <StackPanel Margin="5 0" Grid.Column="1">
+                                            <Label Background="White" 
+                                                   Foreground="#00796b"
+                                                   FontWeight="Bold" 
+                                                   FontSize="10"
+                                                   Content="Phòng riêng"                     
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center">
+                                            </Label>
+                                            <Menu HorizontalAlignment="Center"
+                                                    materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
+                                                <MenuItem
+                                                    Header="Thường" FontSize="8">
+                                                    <MenuItem
+                                                    Header="Phòng 1" FontSize="10"/>
+                                                    <MenuItem
+                                                        Header="Phòng 2" FontSize="10"/>
+                                                    <MenuItem
+                                                        Header="Phòng 3" FontSize="10"/>
+                                                </MenuItem>
+                                                <MenuItem
+                                                    Header="VIP" FontSize="8">
+                                                    <MenuItem
+                                                    Header="Phòng 1" FontSize="10"/>
+                                                    <MenuItem
+                                                        Header="Phòng 2" FontSize="10"/>
+                                                    <MenuItem
+                                                            Header="Phòng 3" FontSize="10"/>
+                                                </MenuItem>
+                                            </Menu>
+                                        </StackPanel>
+                                        <StackPanel Margin="5 0" Grid.Column="2">
+                                            <Label Background="White" 
+                                               Foreground="#00796b"
+                                               FontWeight="Bold" 
+                                               FontSize="10"
+                                               Content="Phòng chung"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center">
+                                            </Label>
+                                            <Menu HorizontalAlignment="Center"
+                                                    materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
+                                                <MenuItem
+                                                    Header="Chọn" FontSize="8">
+                                                    <MenuItem
+                                                         Header="Phòng 1" FontSize="10"/>
+                                                    <MenuItem
+                                                        Header="Phòng 2" FontSize="10"/>
+                                                    <MenuItem
+                                                            Header="Phòng 3" FontSize="10"/>
+                                                </MenuItem>
+                                            </Menu>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                     </Border>
                 </Expander>
             </StackPanel>
@@ -81,8 +177,55 @@
                            Foreground="#00796b"
                            FontWeight="Bold" 
                            Header="Đặt dịch vụ ngoài">
-                    <Border Background="Gray" BorderThickness="0.3">
-                        <uc:OtherService></uc:OtherService>
+                    <Border Background="White" BorderThickness="0.3">
+                        <Grid Height="150">
+                            <Border BorderBrush="#00796b" BorderThickness="0.5">
+                                <StackPanel>
+                                    <Label FontSize="15" 
+                                           Grid.Row="0"
+                                           Margin="10"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top">
+                                        Dịch vụ ngoài
+                                    </Label>
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="631*"></ColumnDefinition>
+                                            <ColumnDefinition Width="169*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Margin="5,0,5,0" Grid.Column="0" Grid.ColumnSpan="2">
+                                            <Label Background="White" 
+                                               Foreground="#00796b"
+                                               FontWeight="Bold" 
+                                               FontSize="10"
+                                               Content="Chọn sự kiện"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center">
+                                            </Label>
+                                            <Menu HorizontalAlignment="Center"
+                                                materialDesign:MenuAssist.TopLevelMenuItemHeight="25">
+                                                <MenuItem
+                                                        Header="Chọn" FontSize="8">
+                                                    <MenuItem
+                                                        Header="Sinh nhật" FontSize="10"/>
+                                                    <MenuItem
+                                                         Header="Đám cưới" FontSize="10"/>
+                                                    <MenuItem
+                                                        Header="Họp hội" FontSize="10"/>
+                                                    <MenuItem
+                                                        Header="Tất niên" FontSize="10"/>
+                                                </MenuItem>
+                                            </Menu>
+                                            <CheckBox Content="VIP Staff"
+                                                  FontSize="8"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Bottom"></CheckBox>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                     </Border>
                 </Expander>
             </StackPanel>

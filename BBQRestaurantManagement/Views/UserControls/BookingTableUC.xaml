@@ -13,107 +13,160 @@
              TextOptions.TextRenderingMode="Auto"
              Background="White"
              FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid>
+    <Grid Width="1000" Height="600">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label FontSize="30"
-               Grid.Row="0"
-               Margin="20"
-               FontWeight="Bold"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Top">
-            Thông tin đặt bàn
-        </Label>
-        <StackPanel Grid.Row="1"
-                    Margin="10">
-            <Label Content="Họ và tên"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-            <TextBox materialDesign:HintAssist.Hint="Điền họ và tên"
-                     FontSize="15"/>
-        </StackPanel>
+        <Grid Grid.Row="0" Background="#880e4f">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Command="{Binding BackDateCommand}" 
+                        Style="{StaticResource MaterialDesignIconButton}">
+                    <materialDesign:PackIcon Kind="ChevronLeft"  Width="20" Height="20" Foreground="White" />
+                </Button>
+                <DatePicker
+                      BorderBrush="White"
+                      Width="80"                
+                      SelectedDate="{Binding ElementName=leaveRequestUC,Path=DataContext.TimeCreateLeave,UpdateSourceTrigger=PropertyChanged}"
+                      FlowDirection="RightToLeft" />
+                <Button Command="{Binding NextDateCommand}" 
+                        Style="{StaticResource MaterialDesignIconButton}">
+                    <materialDesign:PackIcon Kind="ChevronRight"  Width="20" Height="20" Foreground="White"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderBrush="#ad1457" BorderThickness="5">
+                <StackPanel>
+                    <materialDesign:ColorZone Height="30"  Grid.Row="0" Background="#ad1457">
+                        <TextBlock HorizontalAlignment="Center" 
+                    Text="Menu"
+                    Foreground="White"
+                    FontSize="12"
+                    FontWeight="Bold"
+                    VerticalAlignment="Center"></TextBlock>
+                    </materialDesign:ColorZone>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" BorderBrush="#ad1457" BorderThickness="2">
+                <StackPanel>
+                    <materialDesign:ColorZone Height="30"  Grid.Row="0" Background="#ad1457">
+                        <TextBlock HorizontalAlignment="Center" 
+                    Text="Danh sách chọn"
+                    Foreground="White"
+                    FontSize="12"
+                    FontWeight="Bold"
+                    VerticalAlignment="Center"></TextBlock>
+                    </materialDesign:ColorZone>
+                    <ListView Margin="5" ItemsSource="{Binding ListOrderItem, UpdateSourceTrigger=PropertyChanged}">
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding ProductID}"  
+                                                HorizontalAlignment="Center" 
+                                                Margin="3"
+                                                FontSize="10"
+                                                materialDesign:TextFieldAssist.PrefixText="Name:" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="3">
+                                                    <Button  Style="{StaticResource MaterialDesignIconButton}" 
+                                                    Command="{Binding ElementName=orderUC,Path=DataContext.MinusCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Margin="5 0"
+                                                    Height="10" 
+                                                    Width="10">
+                                                        <materialDesign:PackIcon Kind="Minus" Height="10" Width="10" />
+                                                    </Button>
+                                                    <TextBox HorizontalAlignment="Center"
+                                                         FontSize="10" IsReadOnly="True"
+                                                        Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
+                                                    materialDesign:TextFieldAssist.PrefixText="Quantity:"/>
+                                                    <Button  Style="{StaticResource MaterialDesignIconButton}" 
+                                                    Command="{Binding ElementName=orderUC,Path=DataContext.PlusCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Height="10" 
+                                                    Margin="5 0"
+                                                    Width="10">
+                                                        <materialDesign:PackIcon Kind="Plus" Height="10" Width="10" />
+                                                    </Button>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </Border>
+        </Grid>
         <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Margin="10 0" 
-                        Grid.Column="0">
-                <Label Content="Email"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-                <TextBox materialDesign:HintAssist.Hint="Điền địa chỉ email"
-                     FontSize="15"/>
-            </StackPanel>
-            <StackPanel Grid.Column="1"
-                    Margin="10 0">
-                <Label Content="Số điện thoại"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-                <TextBox materialDesign:HintAssist.Hint="Điền số điện thoại"
-                     FontSize="15"/>
-            </StackPanel>
+            <Border BorderBrush="#ad1457" BorderThickness="2">
+                <StackPanel>
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                        Grid.Column="0"
+                        Margin="10 5"
+                         MaxLength="50"
+                      VerticalAlignment="Center"
+                      materialDesign:HintAssist.Hint="Tên khách hàng"
+                      Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                        <TextBox
+                        Grid.Column="1"
+                        Margin="10 5"
+                         MaxLength="10"
+                      VerticalAlignment="Center"
+                      materialDesign:HintAssist.Hint="Số điện thoại"
+                      Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                        <materialDesign:TimePicker
+                        Grid.Column="2"
+                        Margin="10 5"
+                      materialDesign:HintAssist.Hint="Thời gian"
+                      Is24Hours="True"
+                      Style="{StaticResource MaterialDesignOutlinedTimePicker}" />
+                        <TextBox
+                        Grid.Column="3"
+                        Margin="10 5"
+                      VerticalAlignment="Center"
+                      materialDesign:HintAssist.Hint="Số người"
+                      Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    </Grid>
+                    <Grid Margin="5">
+                        <TextBox
+                        Margin="10"
+                        Height="80"
+                        VerticalAlignment="Center"
+                        materialDesign:HintAssist.Hint="Ghi chú"
+                        MaxLength="100"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                    </Grid>
+                </StackPanel>
+            </Border>
         </Grid>
-        <Grid Grid.Row="3" Margin="10" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <StackPanel Margin="10 0" Grid.Column="0">
-                <Label Content="Chọn ngày đặt bàn"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-                <DatePicker MinWidth="229"
-                        materialDesign:HintAssist.Hint="Chọn ngày đặt bàn"
-                        materialDesign:TextFieldAssist.HasClearButton="True"
-                        Style="{StaticResource MaterialDesignFloatingHintDatePicker}"/>
-            </StackPanel>
-            <StackPanel Margin="10 0" Grid.Column="1">
-                <Label Content="Chọn giờ đặt bàn"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-                <materialDesign:TimePicker MinWidth="229"
-                                       materialDesign:HintAssist.Hint="Chọn giờ đặt bàn"
-                                       Style="{StaticResource MaterialDesignFloatingHintTimePicker}"/>
-            </StackPanel>
-            <StackPanel Margin="10 0" Grid.Column="2">
-                <Label Content="Số người"
-                FontSize="17"
-                FontWeight="Bold"/>
-                <TextBox materialDesign:HintAssist.Hint="Điền số người"
-                     FontSize="15" Height="35"/>
-            </StackPanel>
-        </Grid>
-        <StackPanel  Margin="10" 
-                     Grid.Row="4">
-            <Label Content="Ghi chú"
-                   FontSize="17"
-                   FontWeight="Bold"/>
-            <TextBox Height="120"
-                     AcceptsReturn="True"
-                     IsEnabled="{Binding IsChecked, ElementName=MaterialDesignOutlinedTextBoxEnabledComboBox}"
-                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                     TextWrapping="Wrap"
-                     VerticalScrollBarVisibility="Auto"/>
-        </StackPanel>
-        <Button Margin="100 10"
-                Height="50"
-                Content="Đặt"
-                FontSize="17"
-                FontWeight="Bold"
-                Foreground="White"
-                Background="#880e4f"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                Style="{StaticResource MaterialDesignRaisedLightButton}"
-                ToolTip="Resource name: MaterialDesignRaisedLightButton" 
-                 Grid.Row="5"
-                HorizontalAlignment="Center"/>
+        <Button Grid.Row="3" Margin="200 6"> 
+            
+        </Button>
     </Grid>
 </UserControl>
