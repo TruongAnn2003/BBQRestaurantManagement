@@ -40,6 +40,29 @@ namespace BBQRestaurantManagement.Databases
         #endregion
         #region Stored Procedures
         //code Stored Procedures trong đây
+        public void SP_Account_Add(Account acc)
+        {
+            string sqlStr = $"exec SP_Account_Add '{acc.ID}', '{acc.Password}'";
+            dbConnection.ExecuteNonQuery(sqlStr);
+        }
+
+        public void SP_Account_Delete(string id)
+        {
+            string sqlStr = $"exec SP_Account_Delete '{id}'";
+            dbConnection.ExecuteNonQuery(sqlStr);
+        }
+
+        public void SP_Account_Update(Account acc)
+        {
+            string sqlStr = $"exec SP_Account_Add '{acc.ID}', '{acc.Password}'";
+            dbConnection.ExecuteNonQuery(sqlStr);
+        }
+
+        public Account SP_Account_Search(string id)
+        {
+            string sqlStr = $"exec SP_Account_Search '{id}'";
+            return (Account)dbConnection.GetSingleObject(sqlStr, reader => new Account(reader));
+        }
         #endregion
         #region Functions
         public int CheckLogin(string accountID, string password)
