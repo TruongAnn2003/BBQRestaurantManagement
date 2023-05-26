@@ -236,12 +236,17 @@ BEGIN
 	FROM dbo.func_SearchServices(@idServices)
 	IF @count = 0
 	BEGIN
-		INSERT INTO Services(IDServices, NameServices)
-		VALUES(@idServices, @nameServices)
+		BEGIN TRY
+			INSERT INTO Services(IDServices, NameServices)
+			VALUES(@idServices, @nameServices)
+		END TRY
+		BEGIN CATCH
+			SELECT 'INSERT Service không thành công!' AS Message
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Da ton tai IDService nay' AS Message
+		SELECT 'Đã tồn tại IDService này!' AS Message
 	END
 END
 /*
@@ -257,13 +262,18 @@ BEGIN
 	FROM dbo.func_SearchServices(@idServices)
 	IF @count != 0
 	BEGIN
-		UPDATE Services
-		SET NameServices = @new_NameServices
-		WHERE IDServices = @idServices
+		BEGIN TRY
+			UPDATE Services
+			SET NameServices = @new_NameServices
+			WHERE IDServices = @idServices
+		END TRY
+		BEGIN CATCH
+			SELECT 'UPDATE Service không thành công!' AS Message
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Khong ton tai IDService nay' AS Message
+		SELECT 'Không tồn tại IDService này!' AS Message
 	END
 END
 /*
@@ -278,12 +288,17 @@ BEGIN
 	FROM dbo.func_SearchServices(@idServices)
 	IF @count != 0
 	BEGIN
-		DELETE FROM Services
-		WHERE IDServices = @idServices
+		BEGIN TRY
+			DELETE FROM Services
+			WHERE IDServices = @idServices
+		END TRY
+		BEGIN CATCH
+			SELECT 'DELETE Service không thành công!' AS Message
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Khong ton tai IDService nay' AS Message
+		SELECT 'Không tồn tại IDService này!' AS Message
 	END
 END
 /*
@@ -324,12 +339,17 @@ BEGIN
 	FROM dbo.func_SearchStaff(@staffID)
 	IF @count = 0
 	BEGIN
-		INSERT INTO Staff(StaffID, NameStaff, NumberPhone, Position)
-		VALUES(@staffID, @nameStaff, @numberPhone, @position)
+		BEGIN TRY
+			INSERT INTO Staff(StaffID, NameStaff, NumberPhone, Position)
+			VALUES(@staffID, @nameStaff, @numberPhone, @position)
+		END TRY
+		BEGIN CATCH
+			SELECT 'INSERT Staff không thành công!' AS Message
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Da ton tai StaffID nay' AS Message
+		SELECT 'Đã tồn tại StaffID này!' AS Message
 	END
 END
 /*
@@ -346,13 +366,18 @@ BEGIN
 	FROM dbo.func_SearchStaff(@staffID)
 	IF @count != 0
 	BEGIN
-		UPDATE Staff
-		SET NameStaff = @new_NameStaff, NumberPhone = @new_NumberPhone, Position = @new_Position
-		WHERE StaffID = @staffID
+		BEGIN TRY
+			UPDATE Staff
+			SET NameStaff = @new_NameStaff, NumberPhone = @new_NumberPhone, Position = @new_Position
+			WHERE StaffID = @staffID
+		END TRY
+		BEGIN CATCH
+			SELECT 'UPDATE Staff không thành công!' AS Message
+		END CATCH 
 	END
 	ELSE
 	BEGIN
-		SELECT 'Khong ton tai StaffID nay' AS Message
+		SELECT 'Không tồn tại StaffID này!' AS Message
 	END
 END
 /*
@@ -367,12 +392,17 @@ BEGIN
 	FROM dbo.func_SearchStaff(@staffID)
 	IF @count != 0
 	BEGIN
-		DELETE FROM Staff
-		WHERE StaffID = @staffID
+		BEGIN TRY
+			DELETE FROM Staff
+			WHERE StaffID = @staffID
+		END TRY
+		BEGIN CATCH
+			SELECT 'DELETE Staff không thành công!' AS Message
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Khong ton tai StaffID nay' AS Message
+		SELECT 'Không tồn tại StaffID này!' AS Message
 	END
 END
 /*
@@ -413,12 +443,17 @@ BEGIN
 	FROM dbo.func_SearchOrders(@orderID)
 	IF @count = 0
 	BEGIN
-		INSERT INTO Orders(OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, CustomerOrder, OrderStaff, Invoice)
-		VALUES(@orderID, @datetimeOrder, @total_Unit_Price, @stateOrder, @customerOrder, @orderStaff, @invoice)
+		BEGIN TRY
+			INSERT INTO Orders(OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, CustomerOrder, OrderStaff, Invoice)
+			VALUES(@orderID, @datetimeOrder, @total_Unit_Price, @stateOrder, @customerOrder, @orderStaff, @invoice)
+		END TRY
+		BEGIN CATCH
+			SELECT 'INSERT Order Không thành công!' AS Message
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Da ton tai OrderID nay' AS Message
+		SELECT 'Đã tồn tại OrderID này!' AS Message
 	END
 END
 --exec proc_AddOrders 'ORD061', '2023/02/12', 1200000, 1, 'CUS001', 'STA001', 'IN001'
@@ -433,13 +468,18 @@ BEGIN
 	FROM dbo.func_SearchOrders(@orderID)
 	IF @count != 0
 	BEGIN
-		UPDATE Orders
-		SET DatetimeOrder = @new_DatetimeOrder, Total_Unit_Price = @new_Total_Unit_Price, StateOrder = @new_StateOrder, CustomerOrder = @new_CustomerOrder, OrderStaff = @new_OrderStaff, Invoice = @new_Invoice
-		WHERE OrderID = @orderID
+		BEGIN TRY
+			UPDATE Orders
+			SET DatetimeOrder = @new_DatetimeOrder, Total_Unit_Price = @new_Total_Unit_Price, StateOrder = @new_StateOrder, CustomerOrder = @new_CustomerOrder, OrderStaff = @new_OrderStaff, Invoice = @new_Invoice
+			WHERE OrderID = @orderID
+		END TRY
+		BEGIN CATCH
+			SELECT 'UPDATE Order Không thành công!' AS Message
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Khong ton tai OrderID nay' AS Message
+		SELECT 'Không tồn tại OrderID này!' AS Message
 	END
 END
 --exec proc_UpdateOrders 'ORD061', '2023/02/12', 1200000, 0, 'CUS001', 'STA001', 'IN001'
@@ -453,12 +493,17 @@ BEGIN
 	FROM dbo.func_SearchOrders(@orderID)
 	IF @count != 0
 	BEGIN
-		DELETE FROM Orders
-		WHERE OrderID = @orderID
+		BEGIN TRY
+			DELETE FROM Orders
+			WHERE OrderID = @orderID
+		END TRY
+		BEGIN CATCH
+			SELECT 'DELETE Order không thành công!' AS Message
+		END CATCH
 	END
 	ELSE
 	BEGIN
-		SELECT 'Khong ton tai OderID nay' AS Message
+		SELECT 'Không tồn tại orderID này!' AS Message
 	END
 END
 --exec proc_DeleteOrders 'ORD061'
@@ -857,8 +902,7 @@ BEGIN
 	BEGIN
 		ROLLBACK TRANSACTION
 		RAISERROR('Hóa đơn yêu cầu không tồn tại!', 16, 1)
-	END
-		
+	END		
 END
 
 /*

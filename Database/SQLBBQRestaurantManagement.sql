@@ -109,14 +109,14 @@ CREATE TABLE Staff_Position
 	IDPosition nvarchar(10) CONSTRAINT Staff_PositionIDkey PRIMARY KEY,
 	Position nvarchar(50) NOT NULL
 );
-
+-- CẬP NHẬT 
 CREATE TABLE Staff
 (
 	StaffID nvarchar(10) CONSTRAINT StaffIDkey PRIMARY KEY,
 	NameStaff nvarchar(100) NOT NULL,
 	NumberPhone nvarchar(20) NOT NULL,
 	Position nvarchar(10) NOT NULL,
-	CONSTRAINT RightStaffID CHECK(StaffID LIKE 'STA%'),
+	CONSTRAINT RightStaffID CHECK(StaffID LIKE 'ADMIN%' OR StaffID LIKE 'CAS%' OR  StaffID LIKE 'MAN%' OR StaffID LIKE 'WAIT%'),
 	CONSTRAINT FK_Position FOREIGN KEY (Position) REFERENCES Staff_Position(IDPosition)
 );
 
@@ -160,13 +160,13 @@ CREATE TABLE Orders
 (
 	OrderID nvarchar(10) CONSTRAINT Orderskey PRIMARY KEY,
 	DatetimeOrder datetime NOT NULL,
-	Total_Unit_Price BIGINT NOT NULL,
+	--Total_Unit_Price BIGINT NOT NULL,
 	StateOrder bit NOT NULL,
 	CustomerOrder nvarchar(10),
 	OrderStaff nvarchar(10),
 	Invoice nvarchar(10),
 	CONSTRAINT RightOrderID CHECK(OrderID LIKE 'ORD%'),
-	CONSTRAINT RightTotal_Unit_Price CHECK(Total_Unit_Price >= 0),
+	--CONSTRAINT RightTotal_Unit_Price CHECK(Total_Unit_Price >= 0),
 );
 
 CREATE TABLE OrderDetails
@@ -193,26 +193,28 @@ INSERT INTO Staff_Position(IDPosition,Position) VALUES
 ('POS003',N'Phục vụ')
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Staff(StaffID,NameStaff,NumberPhone,Position) VALUES
-('STA001',N'Nguyễn Trường An','0364969450','POS001'),
-('STA002',N'Nguyễn Thành Lợi','0364125263','POS001'),
-('STA003',N'Huỳnh Minh Trí','0364956256','POS001'),
-('STA004',N'Trần Đỗ Thanh An','0364562321','POS001'),
-('STA005',N'Mai Anh Khoa','0364562321','POS002'),
-('STA006',N'Lê Minh Anh','0364562321','POS002'),
-('STA007',N'Trần Đức Trung','0364562321','POS003'),
-('STA008',N'Nguyễn Văn Hoàng','0364562321','POS003'),
-('STA009',N'Lê Xuân Huỳnh','0364562321','POS003')
+('ADMIN001',N'Nguyễn Trường An','0364969450','POS001'),
+('MAN002',N'Nguyễn Thành Lợi','0364125263','POS001'),
+('MAN003',N'Huỳnh Minh Trí','0364956256','POS001'),
+('MAN004',N'Trần Đỗ Thanh An','0364562321','POS001'),
+('CAS005',N'Mai Anh Khoa','0364562321','POS002'),
+('CAS006',N'Lê Minh Anh','0364562321','POS002'),
+('CAS007',N'Trần Đức Trung','0364562321','POS002'),
+('CAS008',N'Trần Đức Hiếu','0364562322','POS002'),
+('CAS009',N'Trần Văn Trung','0364562323','POS002'),
+('WAIT008',N'Nguyễn Văn Hoàng','0364562321','POS003'),
+('WAIT009',N'Lê Xuân Huỳnh','0364562321','POS003')
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Account(AccountID,Passwords) VALUES
-('STA001','@123456'),
-('STA002','@123456'),
-('STA003','@123456'),
-('STA004','@123456'),
-('STA005','@123456'),
-('STA006','@123456'),
-('STA007','@123456'),
-('STA008','@123456'),
-('STA009','@123456')
+('ADMIN001','@123456'),
+('MAN002','@123456'),
+('MAN003','@123456'),
+('MAN004','@123456'),
+('CAS005','@123456'),
+('CAS006','@123456'),
+('CAS007','@123456'),
+('CAS008','@123456'),
+('CAS009','@123456')
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Customers (CustomerID, NameCustomer, NumberPhone)VALUES
 ('CUS001', 'John Smith', '123-456-7890'),
@@ -468,67 +470,67 @@ INSERT INTO Product (ProductID, NameProduct, Price, Description, ProductState, P
 ('PRO020', 'Koi milk tea', 30000, 'Black tea and milk mixed with bubbles or fruit jelly', 1, 'PROTYPE007'),
 ('PRO021', 'Taiwanese milk tea', 25000, 'Brown sugar syrup and strong black tea with creamy milk', 1, 'PROTYPE007');
 -------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder, CustomerOrder, OrderStaff, Invoice) VALUES 
-('ORD001', '2023/02/12', 1200000, 1, 'CUS001', 'STA001', 'IN001'),
-('ORD002', '2023/03/12', 24000, 1, 'CUS002', 'STA005', 'IN002'),
-('ORD003', '2022/07/11', 108000, 1, 'CUS003', 'STA005', 'IN003'),
-('ORD004', '2021/04/16', 90000, 1, 'CUS004', 'STA004', 'IN004'),
-('ORD005', '2023/01/01', 1000000, 1, 'CUS006', 'STA006', 'IN006'),
-('ORD006', '2023/01/03', 60000, 1,'CUS006', 'STA006', 'IN006'),
-('ORD007', '2022/08/31', 100000, 1, 'CUS007', 'STA002', 'IN007'),
-('ORD008', '2023/01/31', 90000, 1, 'CUS008', 'STA001', 'IN008'),
-('ORD009', '2021/06/23', 1600000, 1, 'CUS009', 'STA009', 'IN009'),
-('ORD010', '2022/03/22', 200000, 1, 'CUS010', 'STA006', 'IN010'),
-('ORD011', '2022/02/14', 1500000, 1, 'CUS011', 'STA003', 'IN011'),
-('ORD012', '2022/09/01', 2100000, 1, 'CUS012', 'STA004', 'IN012'),
-('ORD013', '2021/01/12', 1000000, 1, 'CUS013', 'STA008', 'IN013'),
-('ORD014', '2022/06/27', 150000, 1, 'CUS014', 'STA003', 'IN014'),
-('ORD015', '2022/03/27', 40000, 1, 'CUS015', 'STA006', 'IN015'),
-('ORD016', '2023/03/20', 250000, 1, 'CUS016', 'STA007', 'IN016'),
-('ORD017', '2023/05/02', 200000, 1, 'CUS017', 'STA007', 'IN017'),
-('ORD018', '2023/02/26', 10000, 1, 'CUS018', 'STA002', 'IN018'),
-('ORD019', '2023/02/12', 2400000, 1, 'CUS019', 'STA009', 'IN019'),
-('ORD020', '2021/05/17', 1500000, 1, 'CUS020', 'STA008', 'IN020'),
-('ORD021', '2021/09/30', 240000, 1, 'CUS021', 'STA002', 'IN021'),
-('ORD022', '2022/04/12', 40000, 1, 'CUS022', 'STA008', 'IN022'),
-('ORD023', '2022/11/06', 270000, 1, 'CUS023', 'STA003', 'IN023'),
-('ORD024', '2021/12/12', 156000, 1, 'CUS024', 'STA004', 'IN024'),
-('ORD025', '2022/03/04', 200000, 1, 'CUS025', 'STA005', 'IN025'),
-('ORD026', '2023/01/05', 400000, 1, 'CUS026', 'STA001', 'IN026'),
-('ORD027', '2023/02/12', 20000, 1, null, 'STA001', null),
-('ORD028', '2023/03/12', 60000, 1, null, 'STA005', null),
-('ORD029', '2022/07/11', 320000, 1, null, 'STA005', null),
-('ORD030', '2021/04/16', 200000, 1, null, 'STA004', null),
-('ORD031', '2022/02/21', 900000, 1, null, 'STA005', null),
-('ORD032', '2023/01/03', 100000, 1,null, 'STA006', null),
-('ORD033', '2022/08/31', 320000, 1,null, 'STA002',null),
-('ORD034', '2023/01/31', 180000, 1, null, 'STA001', null),
-('ORD035', '2021/06/23', 320000, 1,null, 'STA009',null),
-('ORD036', '2022/03/22', 100000, 1, null, 'STA006',null),
-('ORD037', '2022/02/14', 680000, 1,null, 'STA003', null),
-('ORD038', '2022/09/01', 1500000, 1, null, 'STA004', null),
-('ORD039', '2021/01/12', 1500000, 1, null, 'STA008', null),
-('ORD040', '2022/06/27', 52000, 1, null, 'STA003', null),
-('ORD041', '2022/03/27', 150000, 1,null, 'STA006',null),
-('ORD042', '2023/03/20', 90000, 1, null, 'STA007', null),
-('ORD043', '2023/05/02', 160000, 1,null, 'STA007',null),
-('ORD044', '2023/02/26', 200000, 1, null, 'STA002', null),
-('ORD045', '2023/02/12', 50000, 1, null, 'STA009', null),
-('ORD046', '2021/05/17', 60000, 1, null, 'STA008',null),
-('ORD047', '2021/09/30', 150000, 1, null, 'STA002', null),
-('ORD048', '2022/04/12', 680000, 1,null, 'STA008',null),
-('ORD049', '2022/11/06', 75000, 1, null, 'STA003', null),
-('ORD050', '2021/12/12', 30000, 1, null, 'STA004', null),
-('ORD051', '2023/02/04', 150000, 1, 'CUS001', 'STA002', 'IN027'),
-('ORD052', '2023/02/04', 1020000, 1, 'CUS002', 'STA003', 'IN028'),
-('ORD053', '2023/03/01', 200000, 1, 'CUS003', 'STA004', 'IN029'),
-('ORD054', '2023/01/19', 800000, 1, 'CUS004', 'STA005', 'IN030'),
-('ORD055', '2023/03/22', 640000, 1, 'CUS005', 'STA006', 'IN031'),
-('ORD056', '2023/04/11', 250000, 1, 'CUS006', 'STA007', 'IN032'),
-('ORD057', '2023/04/04', 72000, 1, 'CUS007', 'STA008', 'IN033'),
-('ORD058', '2023/02/28', 100000, 1, 'CUS008', 'STA009', 'IN034'),
-('ORD059', '2023/01/28', 20000, 1, 'CUS009', 'STA004', 'IN035'),
-('ORD060', '2023/05/01', 60000, 1, 'CUS010', 'STA001', 'IN036')
+INSERT INTO Orders (OrderID, DatetimeOrder, StateOrder, CustomerOrder, OrderStaff, Invoice) VALUES 
+('ORD001', '2023/02/12', 1, 'CUS001', 'ADMIN001', 'IN001'),
+('ORD002', '2023/03/12', 1, 'CUS002', 'CAS005', 'IN002'),
+('ORD003', '2022/07/11', 1, 'CUS003', 'CAS005', 'IN003'),
+('ORD004', '2021/04/16', 1, 'CUS004', 'MAN004', 'IN004'),
+('ORD005', '2023/01/01', 1, 'CUS006', 'CAS006', 'IN006'),
+('ORD006', '2023/01/03', 1,'CUS006', 'CAS006', 'IN006'),
+('ORD007', '2022/08/31', 1, 'CUS007', 'MAN002', 'IN007'),
+('ORD008', '2023/01/31', 1, 'CUS008', 'ADMIN001', 'IN008'),
+('ORD009', '2021/06/23', 1, 'CUS009', 'CAS009', 'IN009'),
+('ORD010', '2022/03/22', 1, 'CUS010', 'CAS006', 'IN010'),
+('ORD011', '2022/02/14', 1, 'CUS011', 'MAN003', 'IN011'),
+('ORD012', '2022/09/01', 1, 'CUS012', 'MAN004', 'IN012'),
+('ORD013', '2021/01/12', 1, 'CUS013', 'CAS008', 'IN013'),
+('ORD014', '2022/06/27', 1, 'CUS014', 'MAN003', 'IN014'),
+('ORD015', '2022/03/27', 1, 'CUS015', 'CAS006', 'IN015'),
+('ORD016', '2023/03/20', 1, 'CUS016', 'CAS007', 'IN016'),
+('ORD017', '2023/05/02', 1, 'CUS017', 'CAS007', 'IN017'),
+('ORD018', '2023/02/26', 1, 'CUS018', 'MAN002', 'IN018'),
+('ORD019', '2023/02/12', 1, 'CUS019', 'CAS009', 'IN019'),
+('ORD020', '2021/05/17', 1, 'CUS020', 'CAS008', 'IN020'),
+('ORD021', '2021/09/30', 1, 'CUS021', 'MAN002', 'IN021'),
+('ORD022', '2022/04/12', 1, 'CUS022', 'SAS008', 'IN022'),
+('ORD023', '2022/11/06', 1, 'CUS023', 'MAN003', 'IN023'),
+('ORD024', '2021/12/12', 1, 'CUS024', 'SAS004', 'IN024'),
+('ORD025', '2022/03/04', 1, 'CUS025', 'SAS005', 'IN025'),
+('ORD026', '2023/01/05', 1, 'CUS026', 'ADMIN001', 'IN026'),
+('ORD027', '2023/02/12', 1, null, 'ADMIN001', null),
+('ORD028', '2023/03/12', 1, null, 'SAS005', null),
+('ORD029', '2022/07/11', 1, null, 'SAS005', null),
+('ORD030', '2021/04/16', 1, null, 'SAS004', null),
+('ORD031', '2022/02/21', 1, null, 'SAS005', null),
+('ORD032', '2023/01/03', 1,null, 'SAS006', null),
+('ORD033', '2022/08/31', 1,null, 'MAN002',null),
+('ORD034', '2023/01/31', 1, null, 'ADMIN001', null),
+('ORD035', '2021/06/23', 1,null, 'SAS009',null),
+('ORD036', '2022/03/22', 1, null, 'SAS006',null),
+('ORD037', '2022/02/14', 1,null, 'MAN003', null),
+('ORD038', '2022/09/01', 1, null, 'SAS004', null),
+('ORD039', '2021/01/12', 1, null, 'SAS008', null),
+('ORD040', '2022/06/27', 1, null, 'MAN003', null),
+('ORD041', '2022/03/27', 1,null, 'SAS006',null),
+('ORD042', '2023/03/20', 1, null, 'SAS007', null),
+('ORD043', '2023/05/02', 1,null, 'SAS007',null),
+('ORD044', '2023/02/26', 1, null, 'MAN002', null),
+('ORD045', '2023/02/12', 1, null, 'SAS009', null),
+('ORD046', '2021/05/17', 1, null, 'SAS008',null),
+('ORD047', '2021/09/30', 1, null, 'MAN002', null),
+('ORD048', '2022/04/12', 1,null, 'SAS008',null),
+('ORD049', '2022/11/06', 1, null, 'MAN003', null),
+('ORD050', '2021/12/12', 1, null, 'SAS004', null),
+('ORD051', '2023/02/04', 1, 'CUS001', 'MAN002', 'IN027'),
+('ORD052', '2023/02/04', 1, 'CUS002', 'MAN003', 'IN028'),
+('ORD053', '2023/03/01', 1, 'CUS003', 'SAS004', 'IN029'),
+('ORD054', '2023/01/19', 1, 'CUS004', 'SAS005', 'IN030'),
+('ORD055', '2023/03/22', 1, 'CUS005', 'SAS006', 'IN031'),
+('ORD056', '2023/04/11', 1, 'CUS006', 'SAS007', 'IN032'),
+('ORD057', '2023/04/04', 1, 'CUS007', 'SAS008', 'IN033'),
+('ORD058', '2023/02/28', 1, 'CUS008', 'SAS009', 'IN034'),
+('ORD059', '2023/01/28', 1, 'CUS009', 'SAS004', 'IN035'),
+('ORD060', '2023/05/01', 1, 'CUS010', 'ADMIN001', 'IN036')
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
@@ -1097,6 +1099,28 @@ END
 INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
 ('IN11111', GETDATE(), 1220000, NULL)
 */
+
+--Insert Staff
+GO
+CREATE OR ALTER TRIGGER tg_InsertStaff
+ON	  Staff 
+FOR	  INSERT,UPDATE
+AS
+BEGIN 
+	DECLARE  @ID nvarchar(10), @IDPos nvarchar(10)
+
+	SELECT @ID = i.StaffID, @IDPos = i.Position
+	FROM INSERTED i
+	IF( @ID like 'ADMIN%' and @ID like 'MAN%' and @IDPos LIKE 'POS001' ) OR ( @ID like 'CAS%' and @IDPos LIKE 'POS002' ) OR ( @ID like 'WAIT%' and @IDPos LIKE 'POS003' )
+	BEGIN
+		RETURN
+	END 
+
+	ROLLBACK TRAN
+	PRINT 'StaffID and Position are not connected to each other !!'
+
+END
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 /*																																			*/
 /*																			VIEW															*/
@@ -1174,24 +1198,21 @@ WHERE	i.InvoiceID = b.BookingInvoice
 
 
 --Drop Table
-/*
-Drop table Service_Product
-Drop table Account
-Drop table Booking
-Drop table TypeServices
-Drop table Invoice
-Drop table StatusInvoice_Details
-Drop table StatusInvoice
-Drop table Orders
-Drop table OrderDetails
-Drop table TablesCustomer
-Drop table Staff
-Drop table Staff_Position
-Drop table Customer_TypeServices
-Drop table Customers
-Drop table TypeServices
-Drop table Services 
-Drop table Product
-Drop table Product_Type
-*/
 
+--Drop table Service_Product
+--Drop table Account
+--Drop table Booking
+--Drop table Invoice
+--Drop table StatusInvoice_Details
+--Drop table StatusInvoice
+--Drop table Orders
+--Drop table OrderDetails
+--Drop table TablesCustomer
+--Drop table Staff
+--Drop table Staff_Position
+--Drop table Customer_TypeServices
+--Drop table Customers
+--Drop table TypeServices
+--Drop table Services 
+--Drop table Product
+--Drop table Product_Type

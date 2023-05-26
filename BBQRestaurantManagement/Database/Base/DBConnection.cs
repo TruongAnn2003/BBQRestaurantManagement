@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Windows;
 using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.Utilities;
 
@@ -88,7 +89,25 @@ namespace BBQRestaurantManagement.Database.Base
             }
             return list;
         }
-
+        public DataTable DanhSach(string sqlStr)
+        {
+            DataTable dtds = new DataTable();
+            try
+            {
+                conn.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(sqlStr, conn);
+                adapter.Fill(dtds);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtds;
+        }
 
         public object GetSingleValueFromFunction(string sqlStr, params SqlParameter[] param)
         {
