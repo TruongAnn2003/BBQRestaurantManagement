@@ -1,4 +1,5 @@
-﻿using BBQRestaurantManagement.Services;
+﻿using BBQRestaurantManagement.Models;
+using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.ViewModels.Base;
 using BBQRestaurantManagement.ViewModels.UserControls;
 using BBQRestaurantManagement.Views.UserControls;
@@ -15,8 +16,7 @@ namespace BBQRestaurantManagement.ViewModels.Windows
         private ReservationUC ReservationView = new ReservationUC();
         private HomeViewUC HomeView = new HomeViewUC();
         private HomeViewMenuUC HomeViewMenuView = new HomeViewMenuUC();
-        private HomeViewServicesUC HomeViewServicesView = new HomeViewServicesUC();
-
+      
         private bool statusLoginView = false;
         public bool StatusLoginView { get => statusLoginView; set { statusLoginView = value; OnPropertyChanged(); } }
 
@@ -25,9 +25,6 @@ namespace BBQRestaurantManagement.ViewModels.Windows
 
         private bool statusHomeViewMenuView = false;
         public bool StatusHomeViewMenuView { get => statusHomeViewMenuView; set { statusHomeViewMenuView = value; OnPropertyChanged(); } }
-
-        private bool statusHomeViewServicesView = false;
-        public bool StatusHomeViewServicesView { get => statusHomeViewServicesView; set { statusHomeViewServicesView = value; OnPropertyChanged(); } }
 
         private ContentControl currentChildView = new ContentControl();
         public ContentControl CurrentChildView { get { return currentChildView; } set { currentChildView = value; OnPropertyChanged(); } }
@@ -39,7 +36,6 @@ namespace BBQRestaurantManagement.ViewModels.Windows
         public ICommand ShowReservationView { get; set; }
         public ICommand ShowHomeView { get; set; }
         public ICommand ShowHomeViewMenuView { get; set; }
-        public ICommand ShowHomeViewServicesView { get; set; }
 
         public HomeViewModel()
         {
@@ -52,28 +48,44 @@ namespace BBQRestaurantManagement.ViewModels.Windows
             ShowLoginView = new RelayCommand<object>(ExecuteShowLoginView);
             ShowReservationView = new RelayCommand<object>(ExecuteShowReservationView);
             ShowHomeView = new RelayCommand<object>(ExecuteShowHomeView);
-            ShowHomeViewServicesView = new RelayCommand<object>(ExecuteShowHomeViewServicesView);
             ShowHomeViewMenuView = new RelayCommand<object>(ExecuteShowHomeViewMenuView);
         }
 
         private void ExecuteShowHomeViewMenuView(object obj)
         {
+           
             CurrentChildView = HomeViewMenuView;
-            StatusHomeViewMenuView = true; 
+            StatusHomeViewMenuView = true;
+            
+           
         }
 
-        private void ExecuteShowHomeViewServicesView(object obj)
-        {
-            CurrentChildView = HomeViewServicesView;
-            StatusHomeViewServicesView = true;
-        }
-
+      
         private void ExecuteShowHomeView(object obj)
         {
-            VisibilityTabView = Visibility.Visible;
-            CurrentChildView = HomeView;
-            StatusReservationView = false;
-            StatusLoginView = false;     
+            if (CurrentUser.StatusLogin == true)
+            {
+                AlertDialogService dialog = new AlertDialogService(
+                 "Đăng xuất",
+                 "Bạn có muốn đăng xuất khỏi tài khoản!",
+                 () => {
+                     VisibilityTabView = Visibility.Visible;
+                     CurrentChildView = HomeView;
+                     StatusReservationView = false;
+                     StatusLoginView = false;
+                     CurrentUser.Ins.Staff = null;
+                     CurrentUser.StatusLogin = false;
+                 }, null);
+                    dialog.Show();
+            }
+            else
+            {
+                VisibilityTabView = Visibility.Visible;
+                CurrentChildView = HomeView;
+                StatusReservationView = false;
+                StatusLoginView = false;
+            }
+           
         }
 
         private void ExecuteShowReservationView(object obj)

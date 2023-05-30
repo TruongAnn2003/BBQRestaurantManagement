@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
               xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
               xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:uc ="clr-namespace:BBQRestaurantManagement.Views.UserControls"
             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
             TextElement.FontWeight="Regular"
@@ -16,7 +17,7 @@
             FontFamily="{DynamicResource MaterialDesignFont}" 
              mc:Ignorable="d">
     <Grid>
-        <materialDesign:DrawerHost Grid.Column="0" IsLeftDrawerOpen="False">
+        <materialDesign:DrawerHost Name="dialogStatistics" Grid.Column="0" IsLeftDrawerOpen="True">
             <materialDesign:DrawerHost.LeftDrawerContent >
                 <Border CornerRadius="30" BorderThickness="1">
                     <StackPanel Width="250">
@@ -83,8 +84,16 @@
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0"  Background="Transparent">
+                <Border Grid.Column="0" Background="#fce4ec">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseUp">
+                            <b:InvokeCommandAction
+                                Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                             CommandParameter="{x:Static Dock.Left}"  />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
                     <Button Style="{StaticResource MaterialDesignIconButton}"
+                            Height="50"
                             Width="20"
                             Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                             CommandParameter="{x:Static Dock.Left}"   >

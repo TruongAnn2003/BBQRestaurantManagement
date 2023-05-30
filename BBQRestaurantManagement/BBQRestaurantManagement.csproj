@@ -140,6 +140,7 @@
     <Compile Include="Database\InvoicesDao.cs" />
     <Compile Include="Database\OrdersDao.cs" />
     <Compile Include="Database\ProductsDao.cs" />
+    <Compile Include="Database\StatisticsDao.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\CurrentUser.cs" />
@@ -177,9 +178,6 @@
     <Compile Include="Views\Dialogs\AlertDialog.xaml.cs">
       <DependentUpon>AlertDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\BookingServicesUC.xaml.cs">
-      <DependentUpon>BookingServicesUC.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UserControls\BookingTableUC.xaml.cs">
       <DependentUpon>BookingTableUC.xaml</DependentUpon>
     </Compile>
@@ -191,9 +189,6 @@
     </Compile>
     <Compile Include="Views\UserControls\HomeViewMenuUC.xaml.cs">
       <DependentUpon>HomeViewMenuUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\HomeViewServicesUC.xaml.cs">
-      <DependentUpon>HomeViewServicesUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\HomeViewUC.xaml.cs">
       <DependentUpon>HomeViewUC.xaml</DependentUpon>
@@ -235,10 +230,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\BookingServicesUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\UserControls\BookingTableUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -252,10 +243,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\HomeViewMenuUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\HomeViewServicesUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

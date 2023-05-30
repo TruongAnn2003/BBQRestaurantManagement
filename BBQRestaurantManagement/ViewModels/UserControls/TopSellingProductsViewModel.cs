@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BBQRestaurantManagement.Models;
 using System.Windows.Input;
-
+using BBQRestaurantManagement.Database;
 
 namespace BBQRestaurantManagement.ViewModels.UserControls
 {
@@ -31,6 +31,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         public ICommand ShowTopSellingFoodsCommand { get; set; }
         public ICommand ShowTopSellingDrinksCommand { get; set; }
 
+        private StatisticsDao statisticsDao = new StatisticsDao();
+
         public TopSellingProductsViewModel()
         {
             SetCommands();
@@ -45,14 +47,14 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void ExecuteShowTopSellingDrinksCommand(object obj)
         {
-            initialData = new List<StatisticalUnit> { new StatisticalUnit("trà sữa", 125), new StatisticalUnit("Bia", 263) };
+            initialData = statisticsDao.GetDataTopSellingDrinks();
             Series = new ISeries[] { };
             DrawChart();
         }
 
         private void ExecuteShowTopSellingFoodsCommand(object obj)
         {
-            initialData = new List<StatisticalUnit> { new StatisticalUnit("Bò nướng", 25), new StatisticalUnit("Lẩu", 49) };
+            initialData = statisticsDao.GetDataTopSellingFoods();
             Series = new ISeries[] { };
             DrawChart();
         }

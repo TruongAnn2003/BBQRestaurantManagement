@@ -19,8 +19,31 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Border Margin="10" Grid.Column="0" Height="200">
-            
+        <Border Margin="10" Grid.Column="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" >
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="2"></DropShadowEffect>
+                    </Border.Effect>
+                    <Calendar SelectedDate="{Binding SelectedDay,UpdateSourceTrigger=PropertyChanged}"></Calendar>
+                </Border>
+                <Border Grid.Column="1" Margin="10" BorderBrush="#ad1457" BorderThickness="0.5">
+                    <StackPanel Margin="10" VerticalAlignment="Center">
+                        <Image Grid.Column="0" Height="100" Width="100" Source="/Pictures/FinancialProfit.png"></Image>
+                        <TextBox Margin="10 20" Text="{Binding RevenueToDay,UpdateSourceTrigger=PropertyChanged,StringFormat='##,#'}"  
+                            HorizontalAlignment="Center"
+                            IsReadOnly="True"
+                            FontSize="30"
+                            Foreground="DeepPink"
+                            materialDesign:TextFieldAssist.PrefixText="Revenue to day: "
+                            materialDesign:TextFieldAssist.SuffixText="$"></TextBox>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Border>
         <StackPanel Grid.Row="1" Height="50" Orientation="Horizontal">
             <materialDesign:PackIcon Kind="Clock"
@@ -35,17 +58,12 @@
         </StackPanel>
         <Border Margin="10" Grid.Row="2">
             <DataGrid CanUserAddRows="False" 
-                              Grid.Row="1"
-                              Width="250" 
-                              IsReadOnly="True"
-                              HorizontalAlignment="Center" 
-                              AutoGenerateColumns="False"
-                              Margin="0 20"
-                              ItemsSource="{Binding InitialData,UpdateSourceTrigger=PropertyChanged}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Thời Gian" Binding="{Binding Title}"/>
-                    <DataGridTextColumn Header="Doanh thu" Binding="{Binding ValueIns}"/>
-                </DataGrid.Columns>
+                Grid.Row="1"
+                IsReadOnly="True"
+                HorizontalAlignment="Center" 
+                AutoGenerateColumns="True"
+                Margin="0 20"
+                ItemsSource="{Binding InvoicesHistory,UpdateSourceTrigger=PropertyChanged}">
             </DataGrid>
         </Border>
     </Grid>

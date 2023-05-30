@@ -21,7 +21,7 @@
             <ColumnDefinition Width="auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <materialDesign:DrawerHost Grid.Column="0" IsLeftDrawerOpen="False">
-            <materialDesign:DrawerHost.LeftDrawerContent >
+            <materialDesign:DrawerHost.LeftDrawerContent>
                 <Border CornerRadius="30" BorderThickness="1">
                     <StackPanel Width="250">
                         <Border Height="60" >

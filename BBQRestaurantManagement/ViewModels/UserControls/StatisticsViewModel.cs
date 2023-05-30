@@ -38,7 +38,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         public StatisticsViewModel()
         {
-            ExecuteShowTopSellingProductsView(null);
+            ExecuteShowCurrentDayRevenueView(null);
             SetCommands();
         }
 

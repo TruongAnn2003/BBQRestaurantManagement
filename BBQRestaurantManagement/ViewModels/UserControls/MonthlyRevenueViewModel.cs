@@ -11,23 +11,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using BBQRestaurantManagement.Database;
+using System.Windows;
 
 namespace BBQRestaurantManagement.ViewModels.UserControls
 {
     public class MonthlyRevenueViewModel : BaseViewModel
     {
         private List<StatisticalUnit> initialData;
-        public List<StatisticalUnit> InitialData { get => initialData; private set => initialData = value; }
+        public List<StatisticalUnit> InitialData { get => initialData; set { initialData = value; OnPropertyChanged(); } }
 
         private List<ISeries> series;
-        public List<ISeries> Series { get => series; private set => series = value; }
+        public List<ISeries> Series { get => series; set { series = value; OnPropertyChanged(); } }
 
-        public Axis[] XAxes { get; set; }
-        public Axis[] YAxes { get; set; }
+        private int monthValue;
+        public int MonthValue { get => monthValue; set { monthValue = value; OnPropertyChanged(); } } 
+
+        public List<int> MonthList { get;set; } = new List<int>() {1,2,3,4,5,6,7,8,9,10,11,12};
+
+        private Axis[] xAxes;
+        public Axis[] XAxes { get => xAxes; set { xAxes = value; OnPropertyChanged(); } }
+
+        private Axis[] yAxes;
+        public Axis[] YAxes { get => yAxes; set { yAxes = value; OnPropertyChanged(); } }
+
+        private StatisticsDao statisticsDao = new StatisticsDao();
+
+        public ICommand ShowViewByMonth { get; set; }
+        public ICommand ShowViewByCurrentMonth { get; set; }
 
         public MonthlyRevenueViewModel()
         {
-            LoadData();
+            MonthValue = DateTime.Now.Month;
+            ShowViewByCurrentMonth = new RelayCommand<object>(ExecuteShowViewByCurrentMonth);
+            ShowViewByMonth = new RelayCommand<int>(ExecuteShowViewByMonth);
+            ExecuteShowViewByCurrentMonth(null);
+        }
+
+        private void ExecuteShowViewByMonth(int month)
+        {
+            InitialData = statisticsDao.GetDataMonthlyRevenue(month);
+            DrawChart();
+        }
+
+        private void ExecuteShowViewByCurrentMonth(object obj)
+        {
+            InitialData = statisticsDao.GetDataMonthlyRevenue();
             DrawChart();
         }
 
@@ -44,7 +74,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                         Color = new SKColor(255, 0, 0)
                     },
                     DataLabelsPosition = DataLabelsPosition.Top,
-                    DataLabelsFormatter = point => $"{point.PrimaryValue}$"
+                    DataLabelsFormatter = point => $"{point.PrimaryValue.ToString("##,#")}$"
                 },
                 new LineSeries<ObservableValue>()
                {
@@ -57,8 +87,8 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                    {
                         new Axis
                         {
-                            Name = "Thời Gian",
-                            Labels =InitialData.Select(p=> Convert.ToString( p.Title)).ToList(),
+                            Name = "Ngày",
+                            Labels =InitialData.Select(p=> (Convert.ToDateTime( p.Title)).Date.ToString("dd/MM")).ToList(),
                             LabelsRotation = 15,
                         }
                    };
@@ -79,11 +109,6 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                             Labeler = Labelers.Currency
                         }
                     };
-        }
-
-        private void LoadData()
-        {
-            InitialData = new List<StatisticalUnit> { new StatisticalUnit("23/11/2023", 359), new StatisticalUnit("22/11/2023", 256), new StatisticalUnit("21/11/2023", 562) };
         }
     }
 }

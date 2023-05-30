@@ -36,7 +36,7 @@
                                                              Margin="3"
                                                              IsReadOnly="True"
                                                              materialDesign:TextFieldAssist.PrefixText="Name:" />
-                                                    <TextBox Text="{Binding Price}"  
+                                                    <TextBox Text="{Binding Price,StringFormat='##,#'}"  
                                                              HorizontalAlignment="Center"
                                                               IsReadOnly="True"
                                                               materialDesign:TextFieldAssist.PrefixText="Price:"

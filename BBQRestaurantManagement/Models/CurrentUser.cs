@@ -13,6 +13,8 @@ namespace BBQRestaurantManagement.Models
         private Staff staff;
         public Staff Staff { get => staff; set => staff = value; }
 
+        public static bool StatusLogin { get; set; } = false;
+
         public static CurrentUser Ins
         {
             get

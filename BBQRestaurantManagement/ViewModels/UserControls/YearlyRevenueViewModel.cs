@@ -11,23 +11,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BBQRestaurantManagement.Database;
+using System.Windows.Input;
 
 namespace BBQRestaurantManagement.ViewModels.UserControls
 {
     public class YearlyRevenueViewModel : BaseViewModel
     {
         private List<StatisticalUnit> initialData;
-        public List<StatisticalUnit> InitialData { get => initialData; private set => initialData = value; }
+        public List<StatisticalUnit> InitialData { get => initialData; set { initialData = value; OnPropertyChanged(); } }
 
         private List<ISeries> series;
-        public List<ISeries> Series { get => series; private set => series = value; }
+        public List<ISeries> Series { get => series; set { series = value; OnPropertyChanged(); } }
 
-        public Axis[] XAxes { get; set; }
-        public Axis[] YAxes { get; set; }
+        private int yearValue;
+        public int YearValue { get => yearValue; set { yearValue = value; OnPropertyChanged(); } }
+
+        public List<int> YearList { get; set; } = new List<int>() {2021, 2022, 2023};
+
+        private Axis[] xAxes;
+        public Axis[] XAxes { get => xAxes; set { xAxes = value; OnPropertyChanged(); } }
+
+        private Axis[] yAxes;
+        public Axis[] YAxes { get => yAxes; set { yAxes = value; OnPropertyChanged(); } }
+
+        private StatisticsDao statisticsDao = new StatisticsDao();
+
+        public ICommand ShowViewByYear { get; set; }
+        public ICommand ShowViewByCurrentYear { get; set; }
 
         public YearlyRevenueViewModel()
         {
-            LoadData();
+            YearValue = DateTime.Now.Year;
+            ShowViewByCurrentYear = new RelayCommand<object>(ExecuteShowViewByCurrentYear);
+            ShowViewByYear = new RelayCommand<int>(ExecuteShowViewByYear);
+            ExecuteShowViewByCurrentYear(null);
+        }
+
+        private void ExecuteShowViewByYear(int month)
+        {
+            InitialData = statisticsDao.GetDataYearlyRevenue(month);
+            DrawChart();
+        }
+
+        private void ExecuteShowViewByCurrentYear(object obj)
+        {
+            InitialData = statisticsDao.GetDataYearlyRevenue();
             DrawChart();
         }
 
@@ -44,7 +73,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                         Color = new SKColor(255, 0, 0)
                     },
                     DataLabelsPosition = DataLabelsPosition.Top,
-                    DataLabelsFormatter = point => $"{point.PrimaryValue}$"
+                    DataLabelsFormatter = point => $"{point.PrimaryValue.ToString("##,#")}$"
                 },
                 new LineSeries<ObservableValue>()
                {
@@ -57,7 +86,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                    {
                         new Axis
                         {
-                            Name = "Thời Gian",
+                            Name = "Tháng",
                             Labels =initialData.Select(p=> Convert.ToString( p.Title)).ToList(),
                             LabelsRotation = 15,
                         }
@@ -79,11 +108,6 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                             Labeler = Labelers.Currency
                         }
                     };
-        }
-
-        private void LoadData()
-        {
-            initialData = new List<StatisticalUnit> { new StatisticalUnit("23/11/2023", 359), new StatisticalUnit("22/11/2023", 256), new StatisticalUnit("21/11/2023", 562) };
         }
     }
 }
