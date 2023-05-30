@@ -1042,3 +1042,18 @@ Select * from Invoice
 Select * from func_ListStatisticsYear(2022)
 */
 
+GO
+CREATE OR ALTER FUNCTION func_ListTop10Drink () 
+RETURNS @ListTop10Drink TABLE(Title nvarchar(100),Value bigint)
+AS
+BEGIN
+	INSERT INTO @ListTop10Drink(Title,Value)
+	SELECT TOP(10) d.NameProduct ,sum(Quantity) as value FROM DrinksView d inner join OrderDetails o on d.ProductID = o.ProductID GROUP BY d.NameProduct ORDER BY value DESC
+	RETURN
+END 
+/*
+SELECT * FROM DrinksView
+SELECT * FROM OrderDetails
+Select * from func_ListTop10Drink() 
+*/
+
