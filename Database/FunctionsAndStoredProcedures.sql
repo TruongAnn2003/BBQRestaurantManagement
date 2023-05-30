@@ -1021,10 +1021,10 @@ BEGIN
 	SELECT CreationTime , SUM(Price) FROM Invoice WHERE MONTH(CreationTime) = @Month and YEAR(CreationTime) = YEAR(GETDATE()) GROUP BY CreationTime
 	RETURN
 END 
-
+/*
 Select * from Invoice
 Select * from func_ListStatisticsMonth(1)
-
+*/
 
 GO
 CREATE OR ALTER FUNCTION func_ListStatisticsYear (@Year int = null) 
@@ -1040,6 +1040,22 @@ END
 /*
 Select * from Invoice
 Select * from func_ListStatisticsYear(2022)
+*/
+
+GO
+CREATE OR ALTER FUNCTION func_ListStatisticsDay (@Day int = null) 
+RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
+AS
+BEGIN
+	IF @Day IS NULL
+		set @Day = DAY(GETDATE())
+	INSERT INTO @ListStatistics(Title,Value)
+	SELECT CreationTime , SUM(Price) FROM Invoice WHERE DAY(CreationTime) = @Day and YEAR(CreationTime) = YEAR(GETDATE()) and MONTH(CreationTime) = MONTH(GETDATE()) GROUP BY CreationTime
+	RETURN
+END
+/*
+Select * from Invoice
+Select * from func_ListStatisticsDay(null)
 */
 
 GO
