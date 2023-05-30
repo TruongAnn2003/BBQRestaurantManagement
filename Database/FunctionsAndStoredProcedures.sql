@@ -1072,4 +1072,35 @@ SELECT * FROM DrinksView
 SELECT * FROM OrderDetails
 Select * from func_ListTop10Drink() 
 */
+<<<<<<< HEAD
 
+=======
+GO
+CREATE OR ALTER FUNCTION func_InvoiceHistory (@date Date = null) 
+RETURNS @ListInvoice TABLE(InvoiceID nvarchar(10),CreationTime datetime, Price bigint, Discount int, TotalPrice bigint)
+AS
+BEGIN
+	IF @date IS NULL
+		set @date = GETDATE()
+	INSERT INTO @ListInvoice(InvoiceID,CreationTime,Price, Discount, TotalPrice)
+	SELECT InvoiceID, CreationTime,Price - Discount,Discount,Price FROM Invoice WHERE DAY(CreationTime) = DAY(@date) and YEAR(CreationTime) = YEAR(@date) and MONTH(CreationTime) = MONTH(@date)
+	RETURN
+END
+/*
+Select * from Invoice
+Select * from func_InvoiceHistory('2023-02-12')
+*/
+GO
+CREATE OR ALTER FUNCTION func_InvoiceDetails (@InvoiceID nvarchar(10)) 
+RETURNS @ListDetails TABLE(NameProduct nvarchar(100), Quantity int, Price bigint, Discount int, TotalPrice bigint)
+AS
+BEGIN
+	INSERT INTO @ListDetails(NameProduct, Quantity, Price, Discount, TotalPrice)
+	SELECT NameProduct ,Quantity, Price, Discount, TotalPriceAfterDiscount FROM InvoiceOrderView WHERE InvoiceID = @InvoiceID
+	RETURN
+END
+/*
+Select * from Invoice
+Select * from func_InvoiceDetails('IN001')
+*/
+>>>>>>> 0a2b49f (#31 funct InvoiceHistory)
