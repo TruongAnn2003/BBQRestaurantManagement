@@ -999,6 +999,49 @@ Select * from StatusInvoice_Details
 exec PayTheInvoice 'IN036'
 */
 
+
+-------CREATE BOOKING PROCEDURE------------
+go
+create or alter proc proc_CreateBooking
+(@bookingID nvarchar(10), @bookingStatus nvarchar(10), @duration int, @note nvarchar(100), @numberCustomer int, @customerBooking nvarchar(10), @tableBooking nvarchar(10), @nameCustomer nvarchar(100), @phone nvarchar(20))
+as
+begin
+	begin transaction
+		declare @countBookingID int
+		select @countBookingID = count(*)
+		from Booking
+		where BookingID = @bookingID
+		if (@countBookingID > 0)
+		begin
+			rollback
+			raiserror('BookingID existed', 16, 1)
+		end
+		else
+		begin
+			declare @count int
+			select @count = count(*)
+			from Customers
+			where CustomerID = @customerBooking
+			if (@count = 0) --thực khách này chưa có trong bảng Customers
+			begin
+				exec proc_Customers_Add @customerBooking, @nameCustomer, @phone
+			end
+			begin try
+				insert into Booking (BookingID, BookingDate, BookingStatus, Duration, Note, NumberCustomer, CustomerBooking, TableBooking, BookingInvoice)
+				values (@bookingID, cast(getdate() as date), @bookingStatus, @duration, @note, @numberCustomer, @customerBooking, @tableBooking, null)
+				commit tran
+			end try
+			begin catch
+				rollback tran
+				raiserror('Booking failed', 16, 1)
+			end catch
+		end
+end
+
+select * from Customers
+select * from Booking
+exec proc_CreateBooking 'BI041', 'BSTA002', 3, 'None note', 3, 'CUS027', 'TAB002', N'Minh Tien', '322312312'
+
 --Top 10 Best Selling Foods
 CREATE OR ALTER FUNCTION func_ListTop10Food() 
 RETURNS @ListTop10Food TABLE(Title nvarchar(100),Value bigint)
@@ -1101,3 +1144,4 @@ END
 Select * from Invoice
 Select * from func_InvoiceDetails('IN001')
 */
+
