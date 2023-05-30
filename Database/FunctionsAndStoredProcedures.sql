@@ -1013,17 +1013,19 @@ BEGIN
 END
 --SELECT * FROM dbo.func_ListTop10Food();
 GO
-CREATE OR ALTER FUNCTION func_ListStatisticsMonth (@Month int) 
+CREATE OR ALTER FUNCTION func_ListStatisticsMonth (@Month int = null) 
 RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
 AS
 BEGIN
+	if @Month is null
+		set @Month = Month(GETDATE())
 	INSERT INTO @ListStatistics(Title,Value)
-	SELECT CreationTime , SUM(Price) FROM Invoice WHERE MONTH(CreationTime) = @Month and YEAR(CreationTime) = YEAR(GETDATE()) GROUP BY CreationTime
+	SELECT  CreationTime, SUM(Price) FROM Invoice WHERE MONTH(CreationTime) = @Month and YEAR(CreationTime) = YEAR(GETDATE()) GROUP BY CreationTime
 	RETURN
 END 
 /*
 Select * from Invoice
-Select * from func_ListStatisticsMonth(1)
+Select * from func_ListStatisticsMonth(null)
 */
 
 GO
@@ -1042,21 +1044,34 @@ Select * from Invoice
 Select * from func_ListStatisticsYear(2022)
 */
 
+--GO
+--CREATE OR ALTER FUNCTION func_ListStatisticsDay (@Day int = null) 
+--RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
+--AS
+--BEGIN
+--	IF @Day IS NULL
+--		set @Day = DAY(GETDATE())
+--	INSERT INTO @ListStatistics(Title,Value)
+--	SELECT CreationTime , SUM(Price) FROM Invoice WHERE DAY(CreationTime) = @Day and YEAR(CreationTime) = YEAR(GETDATE()) and MONTH(CreationTime) = MONTH(GETDATE()) GROUP BY CreationTime
+--	RETURN
+--END
 GO
-CREATE OR ALTER FUNCTION func_ListStatisticsDay (@Day int = null) 
-RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
+CREATE OR ALTER FUNCTION func_GetRevenueDay (@date datetime = null) 
+RETURNS  bigint
 AS
 BEGIN
-	IF @Day IS NULL
-		set @Day = DAY(GETDATE())
-	INSERT INTO @ListStatistics(Title,Value)
-	SELECT CreationTime , SUM(Price) FROM Invoice WHERE DAY(CreationTime) = @Day and YEAR(CreationTime) = YEAR(GETDATE()) and MONTH(CreationTime) = MONTH(GETDATE()) GROUP BY CreationTime
-	RETURN
+	DECLARE @result bigint 
+	IF @date IS NULL
+		set @date = GETDATE()
+	SELECT @result = SUM(Price) FROM Invoice WHERE DAY(CreationTime) = Day(@date) and YEAR(CreationTime) = YEAR(@date) and MONTH(CreationTime) = MONTH(@date) GROUP BY CreationTime
+	RETURN @result
 END
 /*
 Select * from Invoice
-Select * from func_ListStatisticsDay(null)
+Select dbo.func_GetRevenueDay('2023/05/01')
 */
+
+
 
 GO
 CREATE OR ALTER FUNCTION func_ListTop10Drink () 
@@ -1074,19 +1089,19 @@ Select * from func_ListTop10Drink()
 */
 
 GO
-CREATE OR ALTER FUNCTION func_InvoiceHistory (@date Date = null) 
+CREATE OR ALTER FUNCTION func_InvoiceHistory (@date date = null) 
 RETURNS @ListInvoice TABLE(InvoiceID nvarchar(10),CreationTime datetime, Price bigint, Discount int, TotalPrice bigint)
 AS
 BEGIN
 	IF @date IS NULL
 		set @date = GETDATE()
 	INSERT INTO @ListInvoice(InvoiceID,CreationTime,Price, Discount, TotalPrice)
-	SELECT InvoiceID, CreationTime,Price - Discount,Discount,Price FROM Invoice WHERE DAY(CreationTime) = DAY(@date) and YEAR(CreationTime) = YEAR(@date) and MONTH(CreationTime) = MONTH(@date)
+	SELECT InvoiceID,CreationTime ,Price - Discount,Discount,Price FROM Invoice WHERE DAY(CreationTime) = DAY(@date) and YEAR(CreationTime) = YEAR(@date) and MONTH(CreationTime) = MONTH(@date)
 	RETURN
 END
 /*
 Select * from Invoice
-Select * from func_InvoiceHistory('2023-02-12')
+Select * from func_InvoiceHistory('2023-05-01')
 */
 GO
 CREATE OR ALTER FUNCTION func_InvoiceDetails (@InvoiceID nvarchar(10)) 
@@ -1100,4 +1115,5 @@ END
 /*
 Select * from Invoice
 Select * from func_InvoiceDetails('IN001')
+
 */
