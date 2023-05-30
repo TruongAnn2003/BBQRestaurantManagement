@@ -1072,9 +1072,7 @@ SELECT * FROM DrinksView
 SELECT * FROM OrderDetails
 Select * from func_ListTop10Drink() 
 */
-<<<<<<< HEAD
 
-=======
 GO
 CREATE OR ALTER FUNCTION func_InvoiceHistory (@date Date = null) 
 RETURNS @ListInvoice TABLE(InvoiceID nvarchar(10),CreationTime datetime, Price bigint, Discount int, TotalPrice bigint)
@@ -1103,4 +1101,3 @@ END
 Select * from Invoice
 Select * from func_InvoiceDetails('IN001')
 */
->>>>>>> 0a2b49f (#31 funct InvoiceHistory)

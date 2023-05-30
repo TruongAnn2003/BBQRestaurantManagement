@@ -41,6 +41,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         {
             if (accountDao.CheckLogin(ID,Password)==1)
             {
+                CurrentUser.StatusLogin = true;
                 CurrentUser.Ins.Staff = accountDao.SearchByAccountID(ID);
                 Log.Instance.Information(nameof(LoginViewModel), "CurrentUser:" + CurrentUser.Ins.Staff.Name + "ID= "+ CurrentUser.Ins.Staff.ID);
                 LoginOrderView(null);

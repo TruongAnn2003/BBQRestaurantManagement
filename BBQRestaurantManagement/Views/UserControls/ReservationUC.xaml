@@ -21,36 +21,18 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Image
-               Width="200"
+               Width="300"
               Grid.Column="0"
               Source="/Pictures/Staff.png"></Image>
-        <ScrollViewer Grid.Column="1" Margin="15 0">
-            <Grid >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"></RowDefinition>
-                    <RowDefinition Height="auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Border Grid.Row="0">
-                    <Expander Name="expanderBookingTable"  Background="White" 
+        <Border Grid.Column="1" Margin="20">
+            <Expander Name="expanderBookingTable"  Background="White" 
                             Foreground="#00796b"
                             FontWeight="Bold" 
                             Header="Đặt bàn">
-                        <Border Background="Gray" BorderThickness="0.3">
-                            <uc:BookingTableUC></uc:BookingTableUC>
-                        </Border>
-                    </Expander>
+                <Border Background="Gray" BorderThickness="0.3">
+                    <uc:BookingTableUC></uc:BookingTableUC>
                 </Border>
-                <Border Grid.Row="1">
-                    <Expander Name="expanderBookingService"  Background="White" 
-                               Foreground="#00796b"
-                               FontWeight="Bold" 
-                               Header="Đặt dịch vụ phòng/tiệc">
-                        <Border Background="Gray" BorderThickness="0.3">
-                            <uc:BookingServicesUC></uc:BookingServicesUC>
-                        </Border>
-                    </Expander>
-                </Border>
-            </Grid>
-        </ScrollViewer>
+            </Expander>
+        </Border>
     </Grid>
 </UserControl>

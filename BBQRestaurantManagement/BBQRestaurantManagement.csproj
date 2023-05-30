@@ -39,11 +39,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HarfBuzzSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\HarfBuzzSharp.2.8.2.3\lib\net462\HarfBuzzSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveChartsCore, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc92a3e13d40c573, processorArchitecture=MSIL">
+      <HintPath>packages\LiveChartsCore.2.0.0-beta.710\lib\netstandard2.0\LiveChartsCore.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveChartsCore.SkiaSharpView, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc92a3e13d40c573, processorArchitecture=MSIL">
+      <HintPath>packages\LiveChartsCore.SkiaSharpView.2.0.0-beta.710\lib\netstandard2.0\LiveChartsCore.SkiaSharpView.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveChartsCore.SkiaSharpView.WPF, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc92a3e13d40c573, processorArchitecture=MSIL">
+      <HintPath>packages\LiveChartsCore.SkiaSharpView.WPF.2.0.0-beta.710\lib\net462\LiveChartsCore.SkiaSharpView.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=2.1.2.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>packages\MaterialDesignColors.2.1.2\lib\net462\MaterialDesignColors.dll</HintPath>
     </Reference>
     <Reference Include="MaterialDesignThemes.Wpf, Version=4.8.0.0, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>packages\MaterialDesignThemes.4.8.0\lib\net462\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Expression.Interaction.3.0.40218.0\lib\net46\Microsoft.Expression.Interactions.dll</HintPath>
@@ -51,11 +66,51 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp, Version=2.88.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\SkiaSharp.2.88.3\lib\net462\SkiaSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp.HarfBuzz, Version=2.88.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\SkiaSharp.HarfBuzz.2.88.3\lib\net462\SkiaSharp.HarfBuzz.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp.Views.Desktop.Common, Version=2.88.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\SkiaSharp.Views.Desktop.Common.2.88.3\lib\net462\SkiaSharp.Views.Desktop.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SkiaSharp.Views.WPF, Version=2.88.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>packages\SkiaSharp.Views.WPF.2.88.3\lib\net462\SkiaSharp.Views.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlClient, Version=4.6.1.5, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Data.SqlClient.4.8.5\lib\net461\System.Data.SqlClient.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Drawing.Common.4.5.1\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Expression.Interaction.3.0.40218.0\lib\net46\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -85,6 +140,7 @@
     <Compile Include="Database\InvoicesDao.cs" />
     <Compile Include="Database\OrdersDao.cs" />
     <Compile Include="Database\ProductsDao.cs" />
+    <Compile Include="Database\StatisticsDao.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\CurrentUser.cs" />
@@ -97,6 +153,7 @@
     <Compile Include="Models\ProductType.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\StaffPosition.cs" />
+    <Compile Include="Models\StatisticalUnit.cs" />
     <Compile Include="Models\StatusInvoice.cs" />
     <Compile Include="Models\StatusInvoiceDetails.cs" />
     <Compile Include="Models\TablesCustomer.cs" />
@@ -105,19 +162,21 @@
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
     <Compile Include="ViewModels\UserControls\BookingTableViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\CurrentDayRevenueViewModel.cs" />
     <Compile Include="ViewModels\UserControls\HomeViewMenuViewModel.cs" />
     <Compile Include="ViewModels\UserControls\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserControls\MenuViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\OrderViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\MainViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\MonthlyRevenueViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ReservationViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\StatisticsViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\TopSellingProductsViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserInfomationViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\YearlyRevenueViewModel.cs" />
     <Compile Include="ViewModels\Windows\HomeViewModel.cs" />
     <Compile Include="Views\Dialogs\AlertDialog.xaml.cs">
       <DependentUpon>AlertDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\BookingServicesUC.xaml.cs">
-      <DependentUpon>BookingServicesUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\BookingTableUC.xaml.cs">
       <DependentUpon>BookingTableUC.xaml</DependentUpon>
@@ -125,11 +184,11 @@
     <Compile Include="Views\UserControls\CheckInOutUC.xaml.cs">
       <DependentUpon>CheckInOutUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\CurrentDayRevenueUC.xaml.cs">
+      <DependentUpon>CurrentDayRevenueUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\HomeViewMenuUC.xaml.cs">
       <DependentUpon>HomeViewMenuUC.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\HomeViewServicesUC.xaml.cs">
-      <DependentUpon>HomeViewServicesUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\HomeViewUC.xaml.cs">
       <DependentUpon>HomeViewUC.xaml</DependentUpon>
@@ -140,26 +199,34 @@
     <Compile Include="Views\UserControls\MenuUC.xaml.cs">
       <DependentUpon>MenuUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\OrderUC.xaml.cs">
-      <DependentUpon>OrderUC.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\MainUC.xaml.cs">
+      <DependentUpon>MainUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\MonthlyRevenueUC.xaml.cs">
+      <DependentUpon>MonthlyRevenueUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\ReservationUC.xaml.cs">
       <DependentUpon>ReservationUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\StatisticsUC.xaml.cs">
+      <DependentUpon>StatisticsUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\TableEmptyUC.xaml.cs">
       <DependentUpon>TableEmptyUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\TopSellingProductsUC.xaml.cs">
+      <DependentUpon>TopSellingProductsUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\UserInfomationUC.xaml.cs">
       <DependentUpon>UserInfomationUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\YearlyRevenueUC.xaml.cs">
+      <DependentUpon>YearlyRevenueUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\HomeWindow.xaml.cs">
       <DependentUpon>HomeWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Dialogs\AlertDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\BookingServicesUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,11 +238,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\HomeViewMenuUC.xaml">
+    <Page Include="Views\UserControls\CurrentDayRevenueUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\HomeViewServicesUC.xaml">
+    <Page Include="Views\UserControls\HomeViewMenuUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -195,7 +262,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\OrderUC.xaml">
+    <Page Include="Views\UserControls\MainUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\MonthlyRevenueUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -203,11 +274,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControls\StatisticsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\TableEmptyUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControls\TopSellingProductsUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControls\UserInfomationUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\YearlyRevenueUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -279,6 +362,15 @@
   <ItemGroup>
     <Resource Include="Pictures\Manager.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\BestSeller.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Dish.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\FinancialProfit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets" Condition="Exists('packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -286,5 +378,13 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MaterialDesignThemes.4.8.0\build\MaterialDesignThemes.targets'))" />
+    <Error Condition="!Exists('packages\HarfBuzzSharp.NativeAssets.macOS.2.8.2.3\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\HarfBuzzSharp.NativeAssets.macOS.2.8.2.3\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets'))" />
+    <Error Condition="!Exists('packages\HarfBuzzSharp.NativeAssets.Win32.2.8.2.3\build\net462\HarfBuzzSharp.NativeAssets.Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\HarfBuzzSharp.NativeAssets.Win32.2.8.2.3\build\net462\HarfBuzzSharp.NativeAssets.Win32.targets'))" />
+    <Error Condition="!Exists('packages\SkiaSharp.NativeAssets.macOS.2.88.3\build\net462\SkiaSharp.NativeAssets.macOS.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SkiaSharp.NativeAssets.macOS.2.88.3\build\net462\SkiaSharp.NativeAssets.macOS.targets'))" />
+    <Error Condition="!Exists('packages\SkiaSharp.NativeAssets.Win32.2.88.3\build\net462\SkiaSharp.NativeAssets.Win32.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\SkiaSharp.NativeAssets.Win32.2.88.3\build\net462\SkiaSharp.NativeAssets.Win32.targets'))" />
   </Target>
+  <Import Project="packages\HarfBuzzSharp.NativeAssets.macOS.2.8.2.3\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets" Condition="Exists('packages\HarfBuzzSharp.NativeAssets.macOS.2.8.2.3\build\net462\HarfBuzzSharp.NativeAssets.macOS.targets')" />
+  <Import Project="packages\HarfBuzzSharp.NativeAssets.Win32.2.8.2.3\build\net462\HarfBuzzSharp.NativeAssets.Win32.targets" Condition="Exists('packages\HarfBuzzSharp.NativeAssets.Win32.2.8.2.3\build\net462\HarfBuzzSharp.NativeAssets.Win32.targets')" />
+  <Import Project="packages\SkiaSharp.NativeAssets.macOS.2.88.3\build\net462\SkiaSharp.NativeAssets.macOS.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.macOS.2.88.3\build\net462\SkiaSharp.NativeAssets.macOS.targets')" />
+  <Import Project="packages\SkiaSharp.NativeAssets.Win32.2.88.3\build\net462\SkiaSharp.NativeAssets.Win32.targets" Condition="Exists('packages\SkiaSharp.NativeAssets.Win32.2.88.3\build\net462\SkiaSharp.NativeAssets.Win32.targets')" />
 </Project>

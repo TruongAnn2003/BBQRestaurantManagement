@@ -91,6 +91,32 @@ namespace BBQRestaurantManagement.Database.Base
             return list;
         }
 
+        public DataTable GetList(string sqlStr)
+        {
+            Log.Instance.Information(nameof(DbConnection), "GetList Command: " + sqlStr);
+            DataTable dataTable = new DataTable();
+            try
+            {
+                conn.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(sqlStr, conn);
+                adapter.Fill(dataTable);
+            }
+            catch (Exception ex)
+            {
+                Log.Instance.Error(nameof(DBConnection), ex.Message);
+                AlertDialogService dialog = new AlertDialogService(
+                 $"Error from {nameof(DBConnection)}",
+                 ex.Message,
+                () => { }, null);
+                dialog.Show();
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dataTable;
+        }
+
 
         public object GetSingleValueFromFunction(string sqlStr, params SqlParameter[] param)
         {

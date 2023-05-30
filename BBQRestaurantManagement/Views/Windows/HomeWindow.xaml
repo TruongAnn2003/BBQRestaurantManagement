@@ -76,15 +76,6 @@
                         Foreground="White"
                         BorderBrush="White" 
                         Style="{StaticResource MaterialDesignTabRadioButtonBottom}" />
-                    <RadioButton
-                        Margin="5 2"
-                        Width="150"
-                        Command="{Binding ShowHomeViewServicesView}"
-                        IsChecked="{Binding StatusHomeViewServicesView}"
-                        Content="Dịch vụ"
-                        Foreground="White"
-                        BorderBrush="White" 
-                        Style="{StaticResource MaterialDesignTabRadioButtonBottom}" />
                 </StackPanel>
             </Grid>
             <ContentControl Grid.Row="1" 
