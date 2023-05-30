@@ -999,6 +999,7 @@ Select * from StatusInvoice_Details
 exec PayTheInvoice 'IN036'
 */
 
+
 -------CREATE BOOKING PROCEDURE------------
 go
 create or alter proc proc_CreateBooking
@@ -1040,3 +1041,107 @@ end
 select * from Customers
 select * from Booking
 exec proc_CreateBooking 'BI041', 'BSTA002', 3, 'None note', 3, 'CUS027', 'TAB002', N'Minh Tien', '322312312'
+
+--Top 10 Best Selling Foods
+CREATE OR ALTER FUNCTION func_ListTop10Food() 
+RETURNS @ListTop10Food TABLE(Title nvarchar(100),Value bigint)
+AS
+BEGIN
+	INSERT INTO @ListTop10Food(Title,Value)
+	SELECT TOP(10) f.NameProduct ,sum(Quantity) as value 
+	FROM FoodsView f inner join OrderDetails o on f.ProductID = o.ProductID 
+	GROUP BY f.NameProduct 
+	ORDER BY value DESC
+	RETURN
+END
+--SELECT * FROM dbo.func_ListTop10Food();
+GO
+CREATE OR ALTER FUNCTION func_ListStatisticsMonth (@Month int) 
+RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
+AS
+BEGIN
+	INSERT INTO @ListStatistics(Title,Value)
+	SELECT CreationTime , SUM(Price) FROM Invoice WHERE MONTH(CreationTime) = @Month and YEAR(CreationTime) = YEAR(GETDATE()) GROUP BY CreationTime
+	RETURN
+END 
+/*
+Select * from Invoice
+Select * from func_ListStatisticsMonth(1)
+*/
+
+GO
+CREATE OR ALTER FUNCTION func_ListStatisticsYear (@Year int = null) 
+RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
+AS
+BEGIN
+	if @Year is null
+		set @Year = YEAR(GETDATE())
+	INSERT INTO @ListStatistics(Title,Value)
+	SELECT DATEPART(month, CreationTime) AS months , SUM(Price) FROM Invoice WHERE YEAR(CreationTime) = @Year GROUP BY DATEPART(month, CreationTime)
+	RETURN
+END 
+/*
+Select * from Invoice
+Select * from func_ListStatisticsYear(2022)
+*/
+
+GO
+CREATE OR ALTER FUNCTION func_ListStatisticsDay (@Day int = null) 
+RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
+AS
+BEGIN
+	IF @Day IS NULL
+		set @Day = DAY(GETDATE())
+	INSERT INTO @ListStatistics(Title,Value)
+	SELECT CreationTime , SUM(Price) FROM Invoice WHERE DAY(CreationTime) = @Day and YEAR(CreationTime) = YEAR(GETDATE()) and MONTH(CreationTime) = MONTH(GETDATE()) GROUP BY CreationTime
+	RETURN
+END
+/*
+Select * from Invoice
+Select * from func_ListStatisticsDay(null)
+*/
+
+GO
+CREATE OR ALTER FUNCTION func_ListTop10Drink () 
+RETURNS @ListTop10Drink TABLE(Title nvarchar(100),Value bigint)
+AS
+BEGIN
+	INSERT INTO @ListTop10Drink(Title,Value)
+	SELECT TOP(10) d.NameProduct ,sum(Quantity) as value FROM DrinksView d inner join OrderDetails o on d.ProductID = o.ProductID GROUP BY d.NameProduct ORDER BY value DESC
+	RETURN
+END 
+/*
+SELECT * FROM DrinksView
+SELECT * FROM OrderDetails
+Select * from func_ListTop10Drink() 
+*/
+
+GO
+CREATE OR ALTER FUNCTION func_InvoiceHistory (@date Date = null) 
+RETURNS @ListInvoice TABLE(InvoiceID nvarchar(10),CreationTime datetime, Price bigint, Discount int, TotalPrice bigint)
+AS
+BEGIN
+	IF @date IS NULL
+		set @date = GETDATE()
+	INSERT INTO @ListInvoice(InvoiceID,CreationTime,Price, Discount, TotalPrice)
+	SELECT InvoiceID, CreationTime,Price - Discount,Discount,Price FROM Invoice WHERE DAY(CreationTime) = DAY(@date) and YEAR(CreationTime) = YEAR(@date) and MONTH(CreationTime) = MONTH(@date)
+	RETURN
+END
+/*
+Select * from Invoice
+Select * from func_InvoiceHistory('2023-02-12')
+*/
+GO
+CREATE OR ALTER FUNCTION func_InvoiceDetails (@InvoiceID nvarchar(10)) 
+RETURNS @ListDetails TABLE(NameProduct nvarchar(100), Quantity int, Price bigint, Discount int, TotalPrice bigint)
+AS
+BEGIN
+	INSERT INTO @ListDetails(NameProduct, Quantity, Price, Discount, TotalPrice)
+	SELECT NameProduct ,Quantity, Price, Discount, TotalPriceAfterDiscount FROM InvoiceOrderView WHERE InvoiceID = @InvoiceID
+	RETURN
+END
+/*
+Select * from Invoice
+Select * from func_InvoiceDetails('IN001')
+*/
+

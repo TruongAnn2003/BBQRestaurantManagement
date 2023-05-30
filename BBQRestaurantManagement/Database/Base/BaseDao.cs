@@ -21,6 +21,10 @@ namespace BBQRestaurantManagement.Database.Base
         public const string DRINKS_VIEW = "DrinksView";
         public const string SERVICES_VIEW = "ServicesView";
 
+        public const string TITLE_STATISTICAL_UNIT = "Title";
+        public const string VALUE_STATISTICAL_UNIT = "Value";
+
+
         public const string INVOICE_ORDER_DETAILS_VIEW = "InvoiceOrderView";
         public const string INVOICE_ORDER_DETAILS_INVOICE_ID = "InvoiceID";
         public const string INVOICE_ORDER_DETAILS_TABLE_ID = "TableID";

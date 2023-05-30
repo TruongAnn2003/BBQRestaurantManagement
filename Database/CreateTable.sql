@@ -58,20 +58,22 @@ CREATE TABLE BookingStatus
 CREATE TABLE Booking
 (
 	BookingID nvarchar(10) CONSTRAINT IDBookingkey PRIMARY KEY,
-	BookingDate date NOT NULL,
+	BookingDate datetime NOT NULL,
+	BookingCreate datetime NOT NULL,
 	BookingStatus nvarchar(10),
 	Duration int,
 	Note nvarchar(100),
 	NumberCustomer int,
 	CustomerBooking nvarchar(10),
 	TableBooking nvarchar(10), 
-	BookingInvoice nvarchar(10),
+	--BookingInvoice nvarchar(10),
 	CONSTRAINT FK_CustomerBooking FOREIGN KEY (CustomerBooking) REFERENCES Customers(CustomerID),
 	CONSTRAINT FK_TableBooking FOREIGN KEY (TableBooking) REFERENCES TablesCustomer(TablesID),
-	CONSTRAINT FK_BookingInvoice FOREIGN KEY (BookingInvoice) REFERENCES Invoice(InvoiceID),
+	--CONSTRAINT FK_BookingInvoice FOREIGN KEY (BookingInvoice) REFERENCES Invoice(InvoiceID),
 	CONSTRAINT FK_BookingStatus FOREIGN KEY (BookingStatus) REFERENCES BookingStatus(IDStatus),
 	--Trạng thái đặt bàn sẽ bao gồm xác nhận đặt bàn thành công, đã nhận bàn và huỷ đặt bàn
-	CONSTRAINT RightNumberCustomer CHECK(NumberCustomer >= 1)
+	CONSTRAINT RightNumberCustomer CHECK(NumberCustomer >= 1),
+	CONSTRAINT RightBookingCreate CHECK(BookingCreate <= BookingDate)
 );
 
 go
