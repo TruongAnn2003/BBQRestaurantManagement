@@ -998,3 +998,17 @@ Select * from StatusInvoice_Details
 
 exec PayTheInvoice 'IN036'
 */
+
+--Top 10 Best Selling Foods
+CREATE OR ALTER FUNCTION func_ListTop10Food() 
+RETURNS @ListTop10Food TABLE(Title nvarchar(100),Value bigint)
+AS
+BEGIN
+	INSERT INTO @ListTop10Food(Title,Value)
+	SELECT TOP(10) f.NameProduct ,sum(Quantity) as value 
+	FROM FoodsView f inner join OrderDetails o on f.ProductID = o.ProductID 
+	GROUP BY f.NameProduct 
+	ORDER BY value DESC
+	RETURN
+END
+--SELECT * FROM dbo.func_ListTop10Food();
