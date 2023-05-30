@@ -1012,3 +1012,33 @@ BEGIN
 	RETURN
 END
 --SELECT * FROM dbo.func_ListTop10Food();
+GO
+CREATE OR ALTER FUNCTION func_ListStatisticsMonth (@Month int) 
+RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
+AS
+BEGIN
+	INSERT INTO @ListStatistics(Title,Value)
+	SELECT CreationTime , SUM(Price) FROM Invoice WHERE MONTH(CreationTime) = @Month and YEAR(CreationTime) = YEAR(GETDATE()) GROUP BY CreationTime
+	RETURN
+END 
+
+Select * from Invoice
+Select * from func_ListStatisticsMonth(1)
+
+
+GO
+CREATE OR ALTER FUNCTION func_ListStatisticsYear (@Year int = null) 
+RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
+AS
+BEGIN
+	if @Year is null
+		set @Year = YEAR(GETDATE())
+	INSERT INTO @ListStatistics(Title,Value)
+	SELECT DATEPART(month, CreationTime) AS months , SUM(Price) FROM Invoice WHERE YEAR(CreationTime) = @Year GROUP BY DATEPART(month, CreationTime)
+	RETURN
+END 
+/*
+Select * from Invoice
+Select * from func_ListStatisticsYear(2022)
+*/
+
