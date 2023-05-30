@@ -84,7 +84,7 @@ namespace BBQRestaurantManagement.ViewModels.Windows
 
         private void ShowOrderView(object b)
         {
-            CurrentChildView = new OrderUC();
+            CurrentChildView = new MainUC();
             VisibilityTabView = Visibility.Collapsed;
         }
 

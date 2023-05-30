@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="BBQRestaurantManagement.Views.UserControls.StatisticsUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
+              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:uc ="clr-namespace:BBQRestaurantManagement.Views.UserControls"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}" 
+             mc:Ignorable="d">
+    <Grid>
+        <materialDesign:DrawerHost Grid.Column="0" IsLeftDrawerOpen="False">
+            <materialDesign:DrawerHost.LeftDrawerContent >
+                <Border CornerRadius="30" BorderThickness="1">
+                    <StackPanel Width="250">
+                        <Border Height="60">
+                            <StackPanel Orientation="Horizontal">
+                                <Button HorizontalAlignment="Center" 
+                                    VerticalAlignment="Top"
+                                    Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                                    CommandParameter="{x:Static Dock.Left}"
+                                    Style="{StaticResource MaterialDesignIconButton}"
+                                    Margin="5">
+                                    <materialDesign:PackIcon Kind="ChartTimelineVariant" />
+                                </Button>
+                                <TextBlock Text="Thống kê" 
+                                           Style="{StaticResource MaterialDesignButtonTextBlock}" 
+                                           FontSize="20" 
+                                           Margin="20 0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="DeepPink"></TextBlock>
+                            </StackPanel>
+                        </Border>
+                        <RadioButton
+                            Height="80"
+                            Margin="4"    
+                             Command="{Binding ShowCurrentDayRevenueViewCommand}"
+                            IsChecked="{Binding StatusCurrentDayRevenueView}"
+                            BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                            Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
+                            <TextBlock Text="Current Day Revenue" Margin="14 0"></TextBlock>
+                        </RadioButton>
+                        <RadioButton
+                            Height="80"
+                            Margin="4"
+                            BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                            Command="{Binding ShowTopSellingProductsViewCommand}"
+                            IsChecked="{Binding StatusTopSellingProductsView}"
+                            Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
+                            <TextBlock Text="Top-Selling Product"></TextBlock>
+                        </RadioButton>
+                        <RadioButton
+                            Height="80"
+                            Margin="4"  
+                             Command="{Binding ShowMonthlyRevenueViewCommand}"
+                            IsChecked="{Binding StatusMonthlyRevenueView}"
+                            BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                            Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
+                            <TextBlock Text="Monthly Revenue"></TextBlock>
+                        </RadioButton>
+                        <RadioButton
+                            Height="80"
+                            Margin="4"        
+                            Command="{Binding ShowYearlyRevenueViewCommand}"
+                            IsChecked="{Binding StatusYearlyRevenueView}"
+                            BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                            Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
+                            <TextBlock Text="Yearly Revenue"></TextBlock>
+                        </RadioButton>
+                    </StackPanel>
+                </Border>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0"  Background="Transparent">
+                    <Button Style="{StaticResource MaterialDesignIconButton}"
+                            Width="20"
+                            Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Left}"   >
+                        <materialDesign:PackIcon Kind="ChevronRight"></materialDesign:PackIcon>
+                    </Button>
+                </Border>
+                <Grid Grid.Column="1">
+                    <Border>
+                        <ContentControl 
+                            Content="{Binding CurrentChildView,UpdateSourceTrigger=PropertyChanged}" >
+                        </ContentControl>
+                    </Border>
+                </Grid>
+            </Grid>
+        </materialDesign:DrawerHost>
+    </Grid>
+</UserControl>
