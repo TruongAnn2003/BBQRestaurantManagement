@@ -108,7 +108,6 @@ INSERT INTO StatusInvoice_Details(InvoiceDetailsID, CheckIn_Time, CheckOut_Time,
 ('DEID034', null, null, 'STATUS003'),
 ('DEID035', null, null, 'STATUS001'),
 ('DEID036', null, null, 'STATUS001'),
-
 ('DEID037', '14:21:33', null, 'STATUS001'),
 ('DEID038', '17:00:02', null, 'STATUS001'),
 ('DEID039', '19:00:12', null, 'STATUS001'),
@@ -168,7 +167,7 @@ INSERT INTO Invoice(InvoiceID, CreationTime, Price,Discount, InvoiceDetails) VAL
 ('IN033', '2023/04/04 19:02:00', 72000,0, 'DEID033'),
 ('IN034', '2023/02/28 10:32:11', 100000,0, 'DEID034'),
 ('IN035', '2023/01/28 12:48:21', 20000,0, 'DEID035'),
-('IN036', '2023/05/01 13:50:21', 60000,0, 'DEID036'),
+('IN036', '2023/05/01 13:50:21', 60000,0, 'DEID036')
 
 --('IN037', '2023/05/15 15:23:09', , 0, 'DEID037'),
 --('IN038', '2023/05/15 17:23:09', , 0, 'DEID038'),
@@ -365,7 +364,6 @@ INSERT INTO Orders (OrderID, DatetimeOrder, StateOrder, CustomerOrder, OrderStaf
 ('ORD058', '2023/02/28', 1, 'CUS008', 'SAS009', 'IN034', null),
 ('ORD059', '2023/01/28', 1, 'CUS009', 'SAS004', 'IN035', null),
 ('ORD060', '2023/05/01', 1, 'CUS010', 'ADMIN001', 'IN036', null),
-
 ('ORD061', '2023/05/29', 1, 'CUS001', 'CAS005', null, null),
 ('ORD062', '2023/05/29', 1, 'CUS002', 'CAS006', null, null),
 ('ORD063', '2023/05/29', 1, 'CUS003', 'WAIT008', null, null),
@@ -530,7 +528,6 @@ INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
 ('ODETAIL069', 'PRO011', '1', 'ORD004'),
 ('ODETAIL070', 'PRO002', '1', 'ORD001'),
 ('ODETAIL071', 'PRO004', '2', 'ORD001'),
-
 ('ODETAIL072', 'PRO001', 1, 'ORD005'), 
 ('ODETAIL073', 'PRO002', 1, 'ORD005'), 
 ('ODETAIL074', 'PRO003', 1, 'ORD005'), 

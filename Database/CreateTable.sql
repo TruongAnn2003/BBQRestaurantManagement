@@ -147,18 +147,19 @@ CREATE TABLE OrderDetails
 
 --Drop Table
 
-
---Drop table Account
---Drop table Booking
---Drop table BookingStatus
---Drop table Invoice
---Drop table StatusInvoice_Details
---Drop table StatusInvoice
---Drop table Orders
---Drop table OrderDetails
---Drop table TablesCustomer
---Drop table Staff
---Drop table Staff_Position
---Drop table Customers
---Drop table Product
---Drop table Product_Type
+/*
+Drop table Account
+Drop table Booking
+Drop table BookingStatus
+Drop table Invoice
+Drop table StatusInvoice_Details
+Drop table StatusInvoice
+Drop table Orders
+Drop table OrderDetails
+Drop table TablesCustomer
+Drop table Staff
+Drop table Staff_Position
+Drop table Customers
+Drop table Product
+Drop table Product_Type
+*/
