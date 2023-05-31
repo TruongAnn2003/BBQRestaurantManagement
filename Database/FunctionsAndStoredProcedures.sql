@@ -482,7 +482,7 @@ begin
 end
 --check--
 --select * from dbo.Product
---exec SP_Product_Add 'PRO022', 'sdf', 332334, 'haha', 1, 'PROTYPE007'
+--exec proc_Product_Add 'PRO022', 'sdf', 332334, 'haha', 1, 'PROTYPE007'
 ---------
 --------UPDATE PROC OF Account, Customers, Product TABLE-------------
 GO
@@ -775,10 +775,10 @@ END
 go
 CREATE OR ALTER FUNCTION func_GetInvoiceOrderDetails(@invoiceID nvarchar(10)) 
 RETURNS @InvoiceOrderDetailsTable 
-Table  (InvoiceID nvarchar(10),TableID nvarchar(10),ProductName nvarchar(100),CreationTime datetime,Quantity int,Price bigint,TotalPrice bigint,Discount int,TotalPriceAfterDiscount bigint,NameStatusInvoice nvarchar(50),CheckInTime datetime,CheckOutTime datetime)
+Table  (InvoiceID nvarchar(10),TableID nvarchar(10),ProductName nvarchar(100),CreationTime datetime,Quantity int,Price bigint,TotalPrice bigint,Discount int,TotalPriceAfterDiscount bigint,NameStatusInvoice nvarchar(50))
 AS
 BEGIN
-	INSERT INTO @InvoiceOrderDetailsTable(InvoiceID,TableID,ProductName,CreationTime,Quantity,Price,TotalPrice,Discount,TotalPriceAfterDiscount,NameStatusInvoice,CheckInTime,CheckOutTime)
+	INSERT INTO @InvoiceOrderDetailsTable(InvoiceID,TableID,ProductName,CreationTime,Quantity,Price,TotalPrice,Discount,TotalPriceAfterDiscount,NameStatusInvoice)
 	SELECT * FROM InvoiceOrderView
 	WHERE InvoiceID = @invoiceID
 	RETURN 
@@ -904,16 +904,13 @@ exec proc_ShowInvoiceDetailsView 'IN001'
 */
 -------------------------------------------------------------DESTROY INVOICE--------------------------------------------------------------
 go
-CREATE OR ALTER PROC proc_DesTroyInvoice(@orderID nvarchar(10),@invoiceID nvarchar(10))
+CREATE OR ALTER PROC proc_DesTroyInvoice(@invoiceID nvarchar(10))
 AS
 BEGIN
 	BEGIN TRANSACTION
-	IF EXISTS
-    (
-      SELECT 1
-      FROM Orders
-      WHERE OrderID = @orderID
-    )
+	DECLARE @orderID nvarchar(10)
+	SET @orderID = (SELECT OrderID FROM Orders WHERE Invoice = @invoiceID)
+	IF @orderID NOT LIKE ''
 	BEGIN
 		IF EXISTS
 		(
@@ -946,14 +943,17 @@ BEGIN
 	ELSE
 	BEGIN 
 		ROLLBACK TRANSACTION
-		RAISERROR ('Order bạn yêu cầu không tồn tại! Vui lòng kiểm tra lại!', 16, 1)
+		RAISERROR ('Hóa đơn chưa có Order! Vui lòng kiểm tra lại!', 16, 1)
 	END
 END;
 
 /*
 	Select * from Orders
 	Select * from Invoice
-	exec proc_DesTroyInvoice 'ORD040','IN111'
+	exec proc_DesTroyInvoice 'IN130'
+	DECLARE @orderID nvarchar(10)
+	SET @orderID = (SELECT OrderID FROM Orders WHERE Invoice = 'IN130')
+	select @orderID
 */
 ---------------------------------------------------------UPDATE DISCOUNT THE INVOICE--------------------------------------
 go
@@ -999,6 +999,7 @@ BEGIN
 	BEGIN
 		BEGIN TRY
 			UPDATE StatusInvoice_Details SET StatusInvoice = 'STATUS002' FROM Invoice AS I WHERE I.InvoiceID = @invoiceID AND InvoiceDetailsID = I.InvoiceDetails
+
 			COMMIT TRANSACTION
 		END TRY
 		BEGIN CATCH
@@ -1023,46 +1024,6 @@ exec PayTheInvoice 'IN036'
 
 
 -------CREATE BOOKING PROCEDURE------------
-go
-create or alter proc proc_CreateBooking
-(@bookingID nvarchar(10), @bookingStatus nvarchar(10), @duration int, @note nvarchar(100), @numberCustomer int, @customerBooking nvarchar(10), @tableBooking nvarchar(10), @nameCustomer nvarchar(100), @phone nvarchar(20))
-as
-begin
-	begin transaction
-		declare @countBookingID int
-		select @countBookingID = count(*)
-		from Booking
-		where BookingID = @bookingID
-		if (@countBookingID > 0)
-		begin
-			rollback
-			raiserror('BookingID existed', 16, 1)
-		end
-		else
-		begin
-			declare @count int
-			select @count = count(*)
-			from Customers
-			where CustomerID = @customerBooking
-			if (@count = 0) --thực khách này chưa có trong bảng Customers
-			begin
-				exec proc_Customers_Add @customerBooking, @nameCustomer, @phone
-			end
-			begin try
-				insert into Booking (BookingID, BookingDate, BookingStatus, Duration, Note, NumberCustomer, CustomerBooking, TableBooking, BookingInvoice)
-				values (@bookingID, cast(getdate() as date), @bookingStatus, @duration, @note, @numberCustomer, @customerBooking, @tableBooking, null)
-				commit tran
-			end try
-			begin catch
-				rollback tran
-				raiserror('Booking failed', 16, 1)
-			end catch
-		end
-end
-
-select * from Customers
-select * from Booking
-exec proc_CreateBooking 'BI041', 'BSTA002', 3, 'None note', 3, 'CUS027', 'TAB002', N'Minh Tien', '322312312'
 
 --Top 10 Best Selling Foods
 CREATE OR ALTER FUNCTION func_ListTop10Food() 
@@ -1106,7 +1067,7 @@ BEGIN
 END 
 /*
 Select * from Invoice
-Select * from func_ListStatisticsYear(2022)
+Select * from func_ListStatisticsYear(2023)
 */
 
 --GO
@@ -1133,7 +1094,7 @@ BEGIN
 END
 /*
 Select * from Invoice
-Select dbo.func_GetRevenueDay('2023/05/01')
+Select dbo.func_GetRevenueDay(null)
 */
 
 
@@ -1247,4 +1208,127 @@ Select * from TablesCustomer;
 Select * from Orders
 exec proc_SelectTableOrder 'ORD001','TAB016'
 */
-exec proc_ShowInvoiceDetailsView 'IN08309'
+go
+create or alter proc proc_CreateBooking
+(@bookingDate datetime, @duration int, @note nvarchar(100), @numberCustomer int, @nameCustomer nvarchar(100), @phone nvarchar(20), @tableBooking nvarchar(10))
+as
+begin	
+	begin transaction
+	declare @customerID nvarchar(10)
+	select @customerID = CustomerID
+	from Customers
+	where NumberPhone = @phone
+	if (@customerID is null) --thực khách này chưa có trong bảng Customers
+	begin
+		SET @customerID = dbo.GenerateCustomerID();
+		insert into Customers (CustomerID, NameCustomer, NumberPhone)
+		values (@customerID, @nameCustomer, @phone)
+	end
+		
+	begin try
+		DECLARE @bookingID nvarchar(10)
+		SET @bookingID = dbo.GenerateBookingID();
+		insert into Booking (BookingID, BookingDate, BookingCreate, BookingStatus, Duration, Note, NumberCustomer, CustomerBooking, TableBooking)
+		values (@bookingID, @bookingDate, getdate(), 'BSTA001', @duration, @note, @numberCustomer, @customerID, @tableBooking)
+		commit tran
+	end try
+	begin catch
+		rollback tran
+		raiserror('Booking failed', 16, 1)
+	end catch
+end
+/*
+select * from Customers
+select * from Booking
+
+exec proc_CreateBooking '2023-10-20', 3, 'None note', 3,  N'Minh Tien', '322312312','TAB015'
+
+*/
+
+go
+CREATE OR ALTER PROC proc_CheckCustomerBooking(@numberPhone nvarchar(20))
+AS
+BEGIN
+	SELECT * FROM CustomerBookingView
+	WHERE NumberPhone = @numberPhone
+END
+
+--exec proc_CheckCustomerBooking '343-339-3821'
+go
+create or alter function GenerateCustomerID()
+returns nvarchar(10)
+as
+begin
+	declare @id nvarchar(10)
+	select @id = 'CUS' + right('0000' + cast((isnull(max(right(CustomerID, 3)), 0) + 1) as nvarchar(3)), 3)
+	from Customers
+	return @id
+end
+/*
+select dbo.GenerateCustomerID()
+--select * from Customers
+--go
+--insert into Customers (CustomerID, NameCustomer, NumberPhone)
+--values (dbo.GenerateCustomerID(), 'Hung', '23234234234')
+*/
+
+
+go
+create or alter function GenerateInvoiceID()
+returns nvarchar(10)
+as
+begin
+	declare @id nvarchar(10)
+	select @id = 'IN' + right('0000' + cast((isnull(max(right(InvoiceID, 3)), 0) + 1) as nvarchar(3)), 3)
+	from dbo.Invoice
+	return @id
+end
+
+--go
+--select * from dbo.Invoice
+--insert into dbo.Invoice (InvoiceID, CreationTime, Price, Discount, InvoiceDetails)
+--values (dbo.GenerateInvoiceID(), getdate(), 1231231, 0, 'DEID007')
+
+go
+create or alter function GenerateOrderID()
+returns nvarchar(10)
+as
+begin
+	declare @id nvarchar(10)
+	select @id = 'ORD' + right('0000' + cast((isnull(max(right(OrderID, 3)), 0) + 1) as nvarchar(3)), 3)
+	from dbo.Orders
+	return @id
+end
+
+--select * from dbo.Orders
+--insert into dbo.Orders(OrderID, DatetimeOrder, StateOrder, CustomerOrder, OrderStaff, Invoice, TableID)
+--values (dbo.GenerateOrderID(), getdate(), 1, 'CUS002', 'CAS005', 'IN0121', null)
+go
+create or alter function GenerateBookingID()
+returns nvarchar(10)
+as
+begin
+	declare @id nvarchar(10)
+	select @id = 'BI' + right('0000' + cast((isnull(max(right(BookingID, 3)), 0) + 1) as nvarchar(4)), 3)
+	from dbo.Booking
+	return @id
+end
+/*
+select * from dbo.Booking
+insert into dbo.Booking (BookingID, BookingDate, BookingCreate, BookingStatus, Duration, Note, NumberCustomer, CustomerBooking, TableBooking)
+values (dbo.GenerateBookingID(), '2023/06/13', getdate(), 'BSTA003', 2, 'None note', 2, 'CUS022', null)
+*/
+go
+create or alter function GenerateProductID()
+returns nvarchar(10)
+as
+begin
+	declare @id nvarchar(10)
+	select @id = 'PRO' + right('0000' + cast((isnull(max(right(ProductID, 3)), 0) + 1) as nvarchar(3)), 3)
+	from dbo.Product
+	return @id
+end
+
+--select * from dbo.Product
+--insert into dbo.Product (ProductID, NameProduct, Price, Description, ProductState, Product_Type)
+--values (dbo.GenerateProductID(), N'Mì xào giòn', 60000, N'Tôm và mì chiên giòn', 1, 'PROTYPE007')

@@ -42,7 +42,7 @@ WHERE	pt.IDType = p.Product_Type
 Go
 CREATE OR ALTER VIEW InvoiceOrderView
 AS
-SELECT	i.InvoiceID,o.TableID,p.NameProduct, i.CreationTime,od.Quantity, p.Price, (p.Price * od.Quantity) as TotalPrice,i.Discount, (p.Price * od.Quantity * (1-i.Discount * 0.01)) as TotalPriceAfterDiscount, si.NameStatusInvoice, s.CheckIn_Time, s.CheckOut_Time
+SELECT	i.InvoiceID,o.TableID,p.NameProduct, i.CreationTime,od.Quantity, p.Price, (p.Price * od.Quantity) as TotalPrice,i.Discount, (p.Price * od.Quantity * (1-i.Discount * 0.01)) as TotalPriceAfterDiscount, si.NameStatusInvoice
 FROM	OrderDetails od, Orders o, Invoice i, Product p, StatusInvoice_Details s, StatusInvoice si
 WHERE	i.InvoiceID = o.Invoice
 		AND o.OrderID = od.OrderID
@@ -52,15 +52,12 @@ WHERE	i.InvoiceID = o.Invoice
 --
 --SELECT * FROM InvoiceOrderView
 
---Go
---CREATE OR ALTER VIEW  InvoiceBookingView
---AS
---SELECT	i.InvoiceID, b.BookingID, 
---		b.CustomerBooking, b.TableBooking, b.BookingDate, 
---		b.BookingStatus, b.Duration, 
---		ts.Price, i.Price as TotalPrice, si.StatusInvoice
---FROM	Invoice i, Booking b, TypeServices ts, StatusInvoice_Details si
---WHERE	i.InvoiceID = b.BookingInvoice
---		AND b.ServiceBooking = ts.IDType
---		AND i.InvoiceDetails = si.InvoiceDetailsID
---SELECT * FROM InvoiceBookingView
+go
+CREATE OR ALTER VIEW CustomerBookingView
+AS
+SELECT	c.NameCustomer as UserName, c.NumberPhone,b.BookingCreate as CreationTime, b.BookingDate,b.Duration,b.NumberCustomer as NumberOfPeople, b.TableBooking as ReservedTable,bs.NameStatus as Status
+FROM	Booking b, Customers c, BookingStatus bs
+							 
+WHERE	b.CustomerBooking = c.CustomerID AND b.BookingStatus = bs.IDStatus
+
+--select * from CustomerBookingView 

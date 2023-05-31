@@ -15,21 +15,19 @@ namespace BBQRestaurantManagement.Database
         //code Add, Update, Delete trong đây
         public void Add(Product product)
         {
-            string sqlStr = $"INSERT INTO {PRODUCT_TABLE} ({PRODUCT_ID}, {PRODUCT_NAME}, {PRODUCT_PRICE}, {PRODUCT_DESCRIPTION}, {PRODUCT_STATE}, {PRODUCT_TYPE})" +
-                            $"VALUES ({product.ID}, {product.Name}, {product.Price}, {product.Description}, {product.State}, {product.TypeID})";
+            string sqlStr = $"exec proc_Product_Add '{product.ID}', '{product.Name}', {product.Price}, '{product.Description}', {product.State}, '{product.TypeID}'";
             dbConnection.ExecuteNonQuery(sqlStr);
         }
 
         public void Delete(string productID)
         {
-            string sqlStr = $"DELETE FROM {PRODUCT_TABLE} WHERE {PRODUCT_ID}='{productID}'";
+            string sqlStr = $"exec proc_Product_Delete '{productID}'";
             dbConnection.ExecuteNonQuery(sqlStr);
         }
 
         public void Update(Product product)
         {
-            string sqlStr = $"UPDATE {PRODUCT_TABLE} SET " +
-                            $"{PRODUCT_NAME}='{product.Name}', {PRODUCT_PRICE} = '{product.Price}', {PRODUCT_DESCRIPTION} = '{product.Description}', {PRODUCT_STATE} = '{product.State}', {PRODUCT_TYPE} = '{product.TypeID}' WHERE {PRODUCT_ID} = '{product.ID}'";
+            string sqlStr = $"exec proc_Product_Update '{product.ID}', '{product.Name}', {product.Price}, '{product.Description}', {product.State}, '{product.TypeID}'";
             dbConnection.ExecuteNonQuery(sqlStr);
         }
         #endregion
@@ -39,6 +37,25 @@ namespace BBQRestaurantManagement.Database
             string sqlStr = $"SELECT * FROM {PRODUCT_TABLE} WHERE {PRODUCT_ID}='{productID}'";
             return (Product)dbConnection.GetSingleObject(sqlStr, reader => new Product(reader));
         }
+
+        public List<Product> GetAll()
+        {
+            string sqlStr = $"Select * from {PRODUCT_TABLE}";
+            return dbConnection.GetList(sqlStr, reader => new Product(reader));
+        }
+
+        public List<ProductType> GetAllType()
+        {
+            string sqlStr = $"Select * from {PRODUCT_TYPE_TABLE}";
+            return dbConnection.GetList(sqlStr, reader => new ProductType(reader));
+        }
+
+        public ProductType GetTypeProduct(string id)
+        {
+            string sqlStr = $"Select * from {PRODUCT_TYPE_TABLE} where {PRODUCT_TYPE_ID} = '{id}'";
+            return (ProductType)dbConnection.GetSingleObject(sqlStr, reader => new ProductType(reader));
+        }
+
         #endregion
         #region Stored Procedures
         //code Stored Procedures trong đây
@@ -64,6 +81,7 @@ namespace BBQRestaurantManagement.Database
             string sqlStr = $"exec SP_Product_Search '{id}'";
             return (Product)dbConnection.GetSingleObject(sqlStr, reader => new Product(reader));
         }
+    
         #endregion
         #region Functions
         //code Functions trong đây

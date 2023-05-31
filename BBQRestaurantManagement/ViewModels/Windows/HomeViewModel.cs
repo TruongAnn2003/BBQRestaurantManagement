@@ -15,7 +15,6 @@ namespace BBQRestaurantManagement.ViewModels.Windows
     {
         private ReservationUC ReservationView = new ReservationUC();
         private HomeViewUC HomeView = new HomeViewUC();
-        private HomeViewMenuUC HomeViewMenuView = new HomeViewMenuUC();
       
         private bool statusLoginView = false;
         public bool StatusLoginView { get => statusLoginView; set { statusLoginView = value; OnPropertyChanged(); } }
@@ -48,18 +47,7 @@ namespace BBQRestaurantManagement.ViewModels.Windows
             ShowLoginView = new RelayCommand<object>(ExecuteShowLoginView);
             ShowReservationView = new RelayCommand<object>(ExecuteShowReservationView);
             ShowHomeView = new RelayCommand<object>(ExecuteShowHomeView);
-            ShowHomeViewMenuView = new RelayCommand<object>(ExecuteShowHomeViewMenuView);
         }
-
-        private void ExecuteShowHomeViewMenuView(object obj)
-        {
-           
-            CurrentChildView = HomeViewMenuView;
-            StatusHomeViewMenuView = true;
-            
-           
-        }
-
       
         private void ExecuteShowHomeView(object obj)
         {

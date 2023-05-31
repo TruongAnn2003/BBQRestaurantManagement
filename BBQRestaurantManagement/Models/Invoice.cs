@@ -83,7 +83,7 @@ namespace BBQRestaurantManagement.Models
 
         public static Invoice CreateInvoiceIns()
         {
-            return new Invoice(AutoGenerateInvoiceID(),DateTime.Now,0,0,"");
+            return new Invoice(invoicesDao.GenerateInvoiceID(),DateTime.Now,0,0,"");
         }
 
         public static string AutoGenerateInvoiceID()

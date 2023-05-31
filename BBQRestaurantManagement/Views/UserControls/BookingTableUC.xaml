@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BBQRestaurantManagement.Views.UserControls"
              mc:Ignorable="d"         
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"
              TextElement.FontWeight="Regular"
@@ -12,6 +13,7 @@
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              Background="White"
+             Name="bookingTableUC"
              FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
         <Grid.RowDefinitions>
@@ -19,17 +21,20 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Background="#00796b">
+            <Button Command="{Binding ResetCommand}" Margin="5" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignIconButton}">
+                <materialDesign:PackIcon Kind="Reload" Foreground="White"/>
+            </Button>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Command="{Binding BackDateCommand}" 
+                <Button Command="{Binding BackDayCommand}" 
                         Style="{StaticResource MaterialDesignIconButton}">
                     <materialDesign:PackIcon Kind="ChevronLeft"  Width="20" Height="20" Foreground="White" />
                 </Button>
                 <DatePicker
                       BorderBrush="White"
                       Width="80"
-                      SelectedDate="{Binding ElementName=leaveRequestUC,Path=DataContext.TimeCreateLeave,UpdateSourceTrigger=PropertyChanged}"
+                      SelectedDate="{Binding ElementName=bookingTableUC,Mode=TwoWay, Path=DataContext.BookingDate, StringFormat='dd/MM/yyyy',UpdateSourceTrigger=PropertyChanged}"
                       FlowDirection="RightToLeft" />
-                <Button Command="{Binding NextDateCommand}" 
+                <Button Command="{Binding NextDayCommand}" 
                         Style="{StaticResource MaterialDesignIconButton}">
                     <materialDesign:PackIcon Kind="ChevronRight"  Width="20" Height="20" Foreground="White"/>
                 </Button>
@@ -44,56 +49,112 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <TextBox
+                             Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"
                          BorderBrush="#00796b"
                         Grid.Column="0"
                         Margin="10"
                          MaxLength="50"
                       VerticalAlignment="Center"
-                      materialDesign:HintAssist.Hint="Tên khách hàng"
+                      materialDesign:HintAssist.Hint="Full Name"
                       Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
                         <TextBox
+                             Text="{Binding NumberPhone, UpdateSourceTrigger=PropertyChanged}"
                             BorderBrush="#00796b"
                         Grid.Column="1"
                         Margin="10"
                          MaxLength="10"
                       VerticalAlignment="Center"
-                      materialDesign:HintAssist.Hint="Số điện thoại"
+                      materialDesign:HintAssist.Hint="Phone Number"
                       Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
                     </Grid>
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <materialDesign:TimePicker
                             BorderBrush="#00796b"
                         Grid.Column="0"
+                            SelectedTime="{Binding BookingDate,StringFormat= 'hh:mm:ss'}"
                         Margin="10"
-                      materialDesign:HintAssist.Hint="Thời gian"
+                      materialDesign:HintAssist.Hint="Booking Date: "
                       Is24Hours="True"
                       Style="{StaticResource MaterialDesignOutlinedTimePicker}" />
                         <TextBox
+                            Width="200"
+                             Text="{Binding NumberOfPeople, UpdateSourceTrigger=PropertyChanged}"
                             BorderBrush="#00796b"
                         Grid.Column="1"
                         Margin="10"
                       VerticalAlignment="Center"
-                      materialDesign:HintAssist.Hint="Số người"
+                      materialDesign:HintAssist.Hint="Number Of People: "
+                      Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                        <TextBox
+                             Width="110"
+                             Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}"
+                            BorderBrush="#00796b"
+                        Grid.Column="2"
+                        Margin="10"
+                      VerticalAlignment="Center"
+                      materialDesign:HintAssist.Hint="Duration :"
                       Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
                     </Grid>
                     <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
                         <TextBox
+                             Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}"
+                            Grid.Column="0"
                             BorderBrush="#00796b"
                         Margin="10"
-                        Height="80"
                         VerticalAlignment="Center"
-                        materialDesign:HintAssist.Hint="Ghi chú"
+                        materialDesign:HintAssist.Hint="Notes"
                         MaxLength="100"
                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
                         TextWrapping="Wrap"
                         VerticalScrollBarVisibility="Auto" />
+                        <TextBox
+                             Width="120"
+                            Text="{Binding TableID, UpdateSourceTrigger=PropertyChanged}"
+                            Grid.Column="1"
+                            BorderBrush="#00796b"
+                        Margin="10"
+                        VerticalAlignment="Center"
+                        materialDesign:HintAssist.Hint="Table ID: "
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
                     </Grid>
-                    <TextBlock Margin="10" Foreground="Red" VerticalAlignment="Center"></TextBlock>
-                    <Button Margin="200 10" Background="#00796b" BorderThickness="0"  Content="Đặt"/>
+                    
+                    <Border Margin="10" Height="200" BorderBrush="#00796b" BorderThickness="0.5">
+                       
+                        <DataGrid  Name="datagridTables" CanUserAddRows="False" Background="White" 
+                                Grid.Row="1"
+                                SelectionMode="Single"
+                                IsReadOnly="True"
+                                AutoGenerateColumns="False"
+                                ItemsSource="{Binding ElementName=bookingTableUC,Path=DataContext.ListTableIsEmpty,UpdateSourceTrigger=PropertyChanged}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="SelectionChanged">
+                                    <b:InvokeCommandAction Command="{Binding SelectedTableCommand}" CommandParameter="{Binding ElementName=datagridTables,Path=SelectedItem}" />
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Width="50" Height="50" Source="/Pictures/Table.png"></Image>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Table ID" Binding="{Binding TablesID}"/>
+                                <DataGridTextColumn Header="MaxSeats" Binding="{Binding MaxSeats}"/>
+                                <DataGridTextColumn Header="Status" Binding="{Binding StatusTable}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
+                    <Button Margin="200 10" Command="{Binding CreateBookingCommand}" Background="#00796b" BorderThickness="0"  Content="Đặt"/>
                 </StackPanel>
             </Border>
         </Grid>

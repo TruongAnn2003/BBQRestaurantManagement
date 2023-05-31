@@ -41,9 +41,9 @@ namespace BBQRestaurantManagement.Database
             dbConnection.ExecuteNonQuery($"exec proc_CreateNewInvoice '{orderID}', '{invoiceID}'");
         }
 
-        public void DestroyInvoice(string orderID, string invoiceID)
+        public void DestroyInvoice( string invoiceID)
         {
-            dbConnection.ExecuteNonQuery($"exec proc_DesTroyInvoice '{orderID}', '{invoiceID}'");
+            dbConnection.ExecuteNonQuery($"exec proc_DesTroyInvoice '{invoiceID}'");
         }
 
         public void UpdateDiscountTheInvoice(string invoiceID, int discount)
@@ -62,7 +62,11 @@ namespace BBQRestaurantManagement.Database
         }
         #endregion
         #region Functions
-
+        public string GenerateInvoiceID()
+        {
+            var result = dbConnection.GetSingleValueFromFunction($" select dbo.GenerateInvoiceID()", null);
+            return Convert.ToString(result);
+        }
         #endregion
         #region Views
         //code Views trong đây

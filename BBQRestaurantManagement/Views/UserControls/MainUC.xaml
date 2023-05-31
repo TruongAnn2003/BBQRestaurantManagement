@@ -79,28 +79,6 @@
                         </RadioButton>
                         <RadioButton
                             Height="50"
-                            Margin="4"        
-                            Command="{Binding ShowCheckInOutView}"
-                            IsChecked="{Binding StatusCheckInOutView}"
-                            BorderBrush="{DynamicResource PrimaryHueMidBrush}"
-                            Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="TimerCheck" />
-                                <TextBlock Text="Check in/out" Margin="28 0"></TextBlock>
-                            </StackPanel>
-                        </RadioButton>
-                        <RadioButton
-                            Height="50"
-                            Margin="4"                           
-                            BorderBrush="{DynamicResource PrimaryHueMidBrush}"
-                            Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="History" />
-                                <TextBlock Text="Lịch sử bán hàng" Margin="14 0"></TextBlock>
-                            </StackPanel>
-                        </RadioButton>
-                        <RadioButton
-                            Height="50"
                             Margin="4" 
                             Command="{Binding ShowUserView}"
                             IsChecked="{Binding StatusUserView}"
@@ -121,6 +99,18 @@
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="ChartTimelineVariant" />
                                 <TextBlock Text="Thống Kê" Margin="35 0"></TextBlock>
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton
+                            Height="50"
+                            Margin="4"    
+                            Command="{Binding ShowProductsView}"
+                            IsChecked="{Binding StatusProductsView}"
+                            BorderBrush="{DynamicResource PrimaryHueMidBrush}"
+                            Style="{StaticResource MaterialDesignTabRadioButtonRight}" >
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="BreadSliceOutline" />
+                                <TextBlock Text="Sản phẩm" Margin="35 0"></TextBlock>
                             </StackPanel>
                         </RadioButton>
                     </StackPanel>
@@ -163,15 +153,6 @@
                             Style="{StaticResource MaterialDesignIconButton}"                                                              
                             BorderThickness="0">
                             <materialDesign:PackIcon Kind="TableFurniture" Foreground="White" />
-                        </Button>
-                        <Button HorizontalAlignment="Right"          
-                            Height="80"
-                            Width="50"
-                            Margin="0 50"                                
-                            Command="{Binding ShowCheckInOutView}"
-                            Style="{StaticResource MaterialDesignIconButton}"                                                             
-                            BorderThickness="0">
-                            <materialDesign:PackIcon Kind="TimerCheck" Foreground="White" />
                         </Button>
                     </StackPanel>
                 </Border>

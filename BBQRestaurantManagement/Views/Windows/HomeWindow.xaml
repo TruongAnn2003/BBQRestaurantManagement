@@ -67,15 +67,6 @@
                         IsChecked="{Binding StatusReservationView}"
                         Content="Đặt trước"
                         Style="{StaticResource MaterialDesignTabRadioButtonBottom}" />
-                    <RadioButton
-                        Margin="5 2"
-                        Width="150"
-                        Command="{Binding ShowHomeViewMenuView}"
-                        IsChecked="{Binding StatusHomeViewMenuView}"
-                        Content="Menu"
-                        Foreground="White"
-                        BorderBrush="White" 
-                        Style="{StaticResource MaterialDesignTabRadioButtonBottom}" />
                 </StackPanel>
             </Grid>
             <ContentControl Grid.Row="1" 

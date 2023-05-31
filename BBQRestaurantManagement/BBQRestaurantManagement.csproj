@@ -135,6 +135,7 @@
     <Compile Include="Database\Base\BaseDao.cs" />
     <Compile Include="Database\AccountDao.cs" />
     <Compile Include="Database\Base\DBConnection.cs" />
+    <Compile Include="Database\BookingDao.cs" />
     <Compile Include="Database\CustomerDao.cs" />
     <Compile Include="Database\InvoicesDao.cs" />
     <Compile Include="Database\OrdersDao.cs" />
@@ -161,12 +162,12 @@
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
     <Compile Include="ViewModels\UserControls\BookingTableViewModel.cs" />
     <Compile Include="ViewModels\UserControls\CurrentDayRevenueViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\HomeViewMenuViewModel.cs" />
     <Compile Include="ViewModels\UserControls\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserControls\MenuViewModel.cs" />
     <Compile Include="ViewModels\UserControls\MainViewModel.cs" />
     <Compile Include="ViewModels\UserControls\MonthlyRevenueViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ProductViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ReservationViewModel.cs" />
     <Compile Include="ViewModels\UserControls\StatisticsViewModel.cs" />
     <Compile Include="ViewModels\UserControls\TableOrderViewModel.cs" />
@@ -186,9 +187,6 @@
     <Compile Include="Views\UserControls\CurrentDayRevenueUC.xaml.cs">
       <DependentUpon>CurrentDayRevenueUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\HomeViewMenuUC.xaml.cs">
-      <DependentUpon>HomeViewMenuUC.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UserControls\HomeViewUC.xaml.cs">
       <DependentUpon>HomeViewUC.xaml</DependentUpon>
     </Compile>
@@ -203,6 +201,9 @@
     </Compile>
     <Compile Include="Views\UserControls\MonthlyRevenueUC.xaml.cs">
       <DependentUpon>MonthlyRevenueUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ProductsUC.xaml.cs">
+      <DependentUpon>ProductsUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\ReservationUC.xaml.cs">
       <DependentUpon>ReservationUC.xaml</DependentUpon>
@@ -241,10 +242,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\HomeViewMenuUC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\UserControls\HomeViewUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -266,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\MonthlyRevenueUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\ProductsUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

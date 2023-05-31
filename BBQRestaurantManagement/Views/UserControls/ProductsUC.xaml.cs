@@ -4,14 +4,14 @@ using System.Windows.Controls;
 namespace BBQRestaurantManagement.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for HomeViewMenuUC.xaml
+    /// Interaction logic for ProductsUC.xaml
     /// </summary>
-    public partial class HomeViewMenuUC : UserControl
+    public partial class ProductsUC : UserControl
     {
-        public HomeViewMenuUC()
+        public ProductsUC()
         {
             InitializeComponent();
-            DataContext = new HomeViewMenuViewModel();
+            DataContext = new ProductViewModel();
         }
     }
 }

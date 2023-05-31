@@ -90,5 +90,9 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         {
             InvoiceIns = invoicesDao.SearchByID(InvoiceID);
         }
+        public void DestroyInvoice()
+        {
+            invoicesDao.DestroyInvoice(InvoiceID);
+        }
     }
 }

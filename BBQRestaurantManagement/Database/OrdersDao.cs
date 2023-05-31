@@ -1,6 +1,7 @@
 ﻿using BBQRestaurantManagement.Database.Base;
 using BBQRestaurantManagement.Models;
 using BBQRestaurantManagement.Utilities;
+using System;
 using System.Collections.Generic;
 
 namespace BBQRestaurantManagement.Database
@@ -60,6 +61,11 @@ namespace BBQRestaurantManagement.Database
         }
         #endregion
         #region Functions
+        public string GenerateOrderID()
+        {
+            var result = dbConnection.GetSingleValueFromFunction($" select dbo.GenerateOrderID()", null);
+            return Convert.ToString(result);
+        }
         #endregion
         #region Views
         #endregion
