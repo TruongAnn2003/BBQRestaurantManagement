@@ -59,7 +59,7 @@ namespace BBQRestaurantManagement.Models
 
         public static Order CreateOrderIns()
         {
-            return new Order(AutoGenerateOrderID(), DateTime.Now, 1,null, CurrentUser.Ins.Staff.ID, null,null);
+            return new Order(orderDao.GenerateOrderID(), DateTime.Now, 1,null, CurrentUser.Ins.Staff.ID, null,null);
         }
 
         public static string AutoGenerateOrderID()

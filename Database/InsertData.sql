@@ -212,7 +212,7 @@ INSERT INTO StatusInvoice_Details(InvoiceDetailsID, CheckIn_Time, CheckOut_Time,
 ('DEID123', '14:00:12', '15:45:23', 'STATUS002'),
 ('DEID124', '18:33:00', '19:12:23', 'STATUS002'),
 ('DEID125', '17:29:01', '18:45:02', 'STATUS002'),
-('DEID126', '18:33:00', '20:00:01', 'STATUS002'),
+('DEID126', '18:33:00', '20:00:01', 'STATUS002')
 
 
 
@@ -894,7 +894,6 @@ INSERT INTO OrderDetails (OrderDetailsID, ProductID, Quantity, OrderID) VALUES
 ('ODETAIL243', 'PRO002', 2, 'ORD060'),
 ('ODETAIL244', 'PRO003', 2, 'ORD060'),
 ('ODETAIL245', 'PRO004', 1, 'ORD060'),
-
 ('ODETAIL246', 'PRO001', 1, 'ORD061'),
 ('ODETAIL247', 'PRO001', 1, 'ORD062'),
 ('ODETAIL248', 'PRO001', 1, 'ORD063'),

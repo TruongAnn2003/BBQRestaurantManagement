@@ -22,7 +22,7 @@
                         <ItemsControl Name="ListEmptyTable" ItemsSource="{Binding ListTableIsEmpty,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Height="300" Width="250" BorderBrush="Pink" BorderThickness="0.5" Margin="10">
+                                    <Border Background="White" Height="300" Width="250" BorderBrush="Pink" BorderThickness="0.5" Margin="10">
                                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                                             <Image Width="100" Source="/Pictures/Table.png"></Image>
                                             <TextBox Text="{Binding TablesID}"  

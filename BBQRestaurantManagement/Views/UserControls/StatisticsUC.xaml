@@ -17,7 +17,7 @@
             FontFamily="{DynamicResource MaterialDesignFont}" 
              mc:Ignorable="d">
     <Grid>
-        <materialDesign:DrawerHost Name="dialogStatistics" Grid.Column="0" IsLeftDrawerOpen="True">
+        <materialDesign:DrawerHost Name="dialogStatistics" Grid.Column="0" IsLeftDrawerOpen="False">
             <materialDesign:DrawerHost.LeftDrawerContent >
                 <Border CornerRadius="30" BorderThickness="1">
                     <StackPanel Width="250">
