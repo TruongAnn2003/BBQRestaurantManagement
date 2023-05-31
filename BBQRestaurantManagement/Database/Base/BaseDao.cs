@@ -83,7 +83,6 @@ namespace BBQRestaurantManagement.Database.Base
         protected const string TABLES_CUSTOMER_TABLE = "TablesCustomer";
         public const string TABLES_CUSTOMER_ID = "TablesID";
         public const string TABLES_CUSTOMER_MAX_SEATS = "MaxSeats";
-        public const string TABLES_CUSTOMER_ROOM_TYPE = "RoomType";
         public const string TABLES_CUSTOMER_STATUS = "Status";
 
         protected const string CUSTOMERS_TABLE = "Customers";

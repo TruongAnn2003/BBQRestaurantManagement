@@ -392,18 +392,18 @@ BEGIN
         RETURN;
     END;
 
-	--IF (@TableID IS NOT NULL) AND (NOT EXISTS(SELECT TablesID FROM TablesCustomer WHERE TablesID = @TableID))
- --   BEGIN
-	--	ROLLBACK TRAN
-	--	PRINT 'Invalid TableID'
-	--	RETURN;
- --   END;
+	IF (@TableID IS NOT NULL) AND (NOT EXISTS(SELECT TablesID FROM TablesCustomer WHERE TablesID = @TableID))
+    BEGIN
+		ROLLBACK TRAN
+		PRINT 'Invalid TableID'
+		RETURN;
+    END;
 END
 /*
-INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder) VALUES 
-('ORD0111', '2023/02/12', 1200000, 1)
+INSERT INTO Orders (OrderID, DatetimeOrder, StateOrder,OrderStaff) VALUES 
+('ORD152', '2023/02/12', 1,'CAS008')
 INSERT INTO Orders (OrderID, DatetimeOrder, Total_Unit_Price, StateOrder,CustomerOrder) VALUES 
-('ORD0111', '2023/02/12', 1200000, 1,'CUS027')
+('ORD152', '2023/02/12', 1200000, 1,'CUS027')
 */
 --Xóa Orders thì không ảnh hưởng các bảng khác nên không cần trigger
 --DeleteOrderDetails

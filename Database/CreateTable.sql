@@ -124,14 +124,12 @@ CREATE TABLE Orders
 (
 	OrderID nvarchar(10) CONSTRAINT Orderskey PRIMARY KEY,
 	DatetimeOrder datetime NOT NULL,
-	--Total_Unit_Price BIGINT NOT NULL,
 	StateOrder bit NOT NULL,
 	CustomerOrder nvarchar(10),
 	OrderStaff nvarchar(10),
 	Invoice nvarchar(10),
 	TableID nvarchar(10),
-	CONSTRAINT RightOrderID CHECK(OrderID LIKE 'ORD%'),
-	--CONSTRAINT RightTotal_Unit_Price CHECK(Total_Unit_Price >= 0),
+	CONSTRAINT RightOrderID CHECK(OrderID LIKE 'ORD%')
 );
 
 CREATE TABLE OrderDetails

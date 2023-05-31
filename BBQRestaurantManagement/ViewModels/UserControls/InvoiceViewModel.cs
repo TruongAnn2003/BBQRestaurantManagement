@@ -4,6 +4,7 @@ using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.ViewModels.Base;
 using System;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Windows.Input;
 
 namespace BBQRestaurantManagement.ViewModels.UserControls
@@ -34,11 +35,11 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         private Staff staffCreation = CurrentUser.Ins.Staff;
         public Staff StaffCreation { get => staffCreation; set => staffCreation = value; }
 
-        private ObservableCollection<InvoiceOrderDetail> listInvoiceOrderDetails;
-        public ObservableCollection<InvoiceOrderDetail> ListInvoiceOrderDetails 
+        private DataTable listInvoiceOrderDetails;
+        public DataTable ListInvoiceOrderDetails 
         { get => listInvoiceOrderDetails; set { listInvoiceOrderDetails = value; OnPropertyChanged(); } }
 
-        private InvoiceOrderDetailsDao invoiceOrderDetailsDao = new InvoiceOrderDetailsDao();
+       
         private InvoicesDao invoicesDao = new InvoicesDao();
 
         public ICommand PaymentCommand { get; private set; }
@@ -69,8 +70,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         public void LoadListInvoiceOrderDetails()
         {
-            var listItem = invoiceOrderDetailsDao.GetInvoiceDetailsView(InvoiceIns.ID);
-            ListInvoiceOrderDetails = new ObservableCollection<InvoiceOrderDetail>(listItem);
+            ListInvoiceOrderDetails = invoicesDao.GetInvoiceDetailsView(InvoiceIns.ID);
             TotalTheInvoice();        
         }
 
@@ -79,7 +79,6 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
             invoicesDao.UpdateDiscountTheInvoice(InvoiceID,Discount);
             LoadListInvoiceOrderDetails();
         }
-
 
         private void TotalTheInvoice()
         {

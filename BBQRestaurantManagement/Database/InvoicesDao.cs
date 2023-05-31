@@ -4,6 +4,7 @@ using BBQRestaurantManagement.Utilities;
 using BBQRestaurantManagement.Views.UserControls;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,6 +54,11 @@ namespace BBQRestaurantManagement.Database
         public void PayTheInvoice(string invoiceID)
         {
             dbConnection.ExecuteNonQuery($"exec PayTheInvoice '{invoiceID}'");
+        }
+        public DataTable GetInvoiceDetailsView(string invoiceID)
+        {
+            string sqlStr = $"exec proc_ShowInvoiceDetailsView '{invoiceID}'";
+            return dbConnection.GetList(sqlStr);
         }
         #endregion
         #region Functions

@@ -11,8 +11,8 @@ namespace BBQRestaurantManagement.Database
  
         public void AddNonCustomerAndInvoice(Order order)
         {
-            string sqlStr = $"INSERT INTO {ORDER_TABLE} ({ORDER_ID}, {ORDER_DATETIME_ORDER},{ORDER_STATE},{ORDER_ORDER_STAFF},{ORDER_TABLE_ID})" +
-                            $"VALUES ('{order.ID}','{Utils.ToSQLFormat(order.DatetimeOrder)}',{order.State},'{order.StaffID}','{order.TableID}')";
+            string sqlStr = $"INSERT INTO {ORDER_TABLE} ({ORDER_ID}, {ORDER_DATETIME_ORDER},{ORDER_STATE},{ORDER_ORDER_STAFF})" +
+                            $"VALUES ('{order.ID}','{Utils.ToSQLFormat(order.DatetimeOrder)}',{order.State},'{order.StaffID}')";
             Log.Instance.Information(nameof(OrdersDao), sqlStr);
             dbConnection.ExecuteNonQuery(sqlStr);
         }
@@ -40,6 +40,23 @@ namespace BBQRestaurantManagement.Database
         public void AddOrderProduct(string orderID, string productID, int quantity)
         {
             dbConnection.ExecuteNonQuery($"Exec proc_AddOrderProduct '{orderID}','{productID}','{quantity}'");
+        }
+
+        public List<TablesCustomer> ShowTableIsEmpty()
+        {
+            string sqlStr = $"Exec proc_GetAllTablesIsEmpty";
+            return dbConnection.GetList(sqlStr, reader => new TablesCustomer(reader));
+        }
+
+        public List<TablesCustomer> ShowTableIsOccupied()
+        {
+            string sqlStr = $"Exec proc_GetAllTablesIsOccupied";
+            return dbConnection.GetList(sqlStr, reader => new TablesCustomer(reader));
+        }
+
+        public void SelectTableOrder(string orderID,string tableID) 
+        {
+            dbConnection.ExecuteNonQuery($"exec proc_SelectTableOrder '{orderID}','{tableID}'");
         }
         #endregion
         #region Functions

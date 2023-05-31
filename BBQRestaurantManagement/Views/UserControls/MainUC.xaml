@@ -196,12 +196,13 @@
                     <RowDefinition Height="50"></RowDefinition>
                 </Grid.RowDefinitions>
                 <materialDesign:ColorZone Height="50"  Grid.Row="0" Background="#880e4f">
-                    <TextBlock HorizontalAlignment="Center" 
-                    Text="Danh sách chọn"
-                    Foreground="White"
-                    FontSize="17"
-                    FontWeight="Bold"
-                    VerticalAlignment="Center"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center"
+                        Text="Order Details"
+                        Foreground="White"
+                        FontSize="17"
+                        FontWeight="Bold"
+                        VerticalAlignment="Center"></TextBlock>
+
                 </materialDesign:ColorZone>
                 <ListView  Grid.Row="1" Margin="5" ItemsSource="{Binding ListOrderItem, UpdateSourceTrigger=PropertyChanged}">
                     <ListView.View>

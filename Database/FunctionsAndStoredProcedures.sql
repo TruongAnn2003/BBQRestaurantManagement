@@ -108,8 +108,18 @@ BEGIN
 	WHERE Status = 0
 END
 
+go
+CREATE OR ALTER PROC proc_GetAllTablesIsOccupied
+AS
+BEGIN
+	SELECT *
+	FROM TablesCustomer 
+	WHERE Status = 1
+END
 /*
+	
 	Exec proc_GetAllTablesIsEmpty 
+	Exec proc_GetAllTablesIsOccupied 
 */
 
 -------------------------------- ADD ORDER PRODUCT --------------------------------------------------
@@ -367,20 +377,31 @@ go
 CREATE OR ALTER PROC proc_DeleteOrder(@OrderID nvarchar(10)) 
 AS
 BEGIN
-	BEGIN TRY
+	BEGIN TRANSACTION
+	DECLARE @StableID nvarchar(10)
+	BEGIN TRY		
+		SET @StableID = (SELECT TableID From Orders Where OrderID = @OrderID)
+		IF(@StableID != '')
+		BEGIN
+			UPDATE TablesCustomer 
+			SET Status  = 0
+			WHERE TablesID = @StableID
+		END
 		DELETE FROM OrderDetails WHERE OrderID = @OrderID;
+		COMMIT TRANSACTION
 	END TRY
 	BEGIN CATCH
+		ROLLBACK TRANSACTION
 		RAISERROR('Xóa Order không thành công!', 16, 1)
 	END CATCH
 	--Không có xóa trong Order vì có trigger tg_DeleteOrderDetails xóa giúp
 END
-
---exec proc_DeleteOrder 'ORD025'
---select * from Orders
---select * from OrderDetails
-
-
+/*
+exec proc_DeleteOrder 'ORD025'
+select * from Orders
+Select * from TablesCustomer
+select * from OrderDetails
+*/
 /*
 print dbo.func_CheckLogin('STA001','@123456')
 */
@@ -878,6 +899,7 @@ IF EXISTS
 		RAISERROR ('Hóa đơn bạn yêu cầu không tồn tại! Vui lòng kiểm tra lại!', 16, 1)
 END
 /*
+ SELECT * FROM Invoice WHERE InvoiceID='IN07835'
 exec proc_ShowInvoiceDetailsView 'IN001'
 */
 -------------------------------------------------------------DESTROY INVOICE--------------------------------------------------------------
@@ -1161,3 +1183,43 @@ Select * from func_InvoiceDetails('IN001')
 
 */
 
+go
+CREATE OR ALTER PROC proc_SelectTableOrder(@orderID nvarchar(10), @tableID nvarchar(10))
+AS
+BEGIN
+    -- Kiểm tra xem @orderID đã tồn tại trong bảng Orders hay không
+    IF EXISTS(SELECT 1 FROM Orders WHERE OrderID = @orderID)
+	BEGIN
+		-- Kiểm tra xem @tableID đã tồn tại trong bảng TablesCustomer và có trạng thái = 0 hay không
+		IF EXISTS(SELECT 1 FROM TablesCustomer WHERE TablesID = @tableID AND Status = 0)	
+		BEGIN
+			BEGIN TRANSACTION
+			BEGIN TRY
+				UPDATE Orders
+				SET TableID = @tableID
+				WHERE OrderID = @orderID
+				UPDATE TablesCustomer
+				SET Status = 1
+				WHERE TablesID = @tableID
+				COMMIT TRANSACTION
+			END TRY
+			BEGIN CATCH
+				ROLLBACK TRANSACTION
+				RAISERROR('Chọn bàn Không thành công!', 16, 1)
+			END CATCH
+		END
+		ELSE
+		BEGIN
+			RAISERROR('Bàn Không có Sẵn!', 16, 1)
+		END
+	END
+	ELSE
+		BEGIN
+			RAISERROR('Order Chưa được tạo!', 16, 1)
+		END	
+END
+/*
+Select * from TablesCustomer;
+Select * from Orders
+exec proc_SelectTableOrder 'ORD030','TAB026'
+*/
