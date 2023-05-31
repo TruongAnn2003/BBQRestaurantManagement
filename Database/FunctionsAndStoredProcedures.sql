@@ -1190,28 +1190,52 @@ BEGIN
     -- Kiểm tra xem @orderID đã tồn tại trong bảng Orders hay không
     IF EXISTS(SELECT 1 FROM Orders WHERE OrderID = @orderID)
 	BEGIN
-		-- Kiểm tra xem @tableID đã tồn tại trong bảng TablesCustomer và có trạng thái = 0 hay không
-		IF EXISTS(SELECT 1 FROM TablesCustomer WHERE TablesID = @tableID AND Status = 0)	
-		BEGIN
-			BEGIN TRANSACTION
-			BEGIN TRY
-				UPDATE Orders
-				SET TableID = @tableID
-				WHERE OrderID = @orderID
-				UPDATE TablesCustomer
-				SET Status = 1
-				WHERE TablesID = @tableID
-				COMMIT TRANSACTION
-			END TRY
-			BEGIN CATCH
-				ROLLBACK TRANSACTION
-				RAISERROR('Chọn bàn Không thành công!', 16, 1)
-			END CATCH
-		END
-		ELSE
-		BEGIN
-			RAISERROR('Bàn Không có Sẵn!', 16, 1)
-		END
+		DECLARE @currentTableID nvarchar(10)
+		SET @currentTableID = (SELECT TableID FROM Orders WHERE OrderID = @orderID)
+		IF  @currentTableID LIKE ''
+			BEGIN
+					IF EXISTS(SELECT 1 FROM TablesCustomer WHERE TablesID = @tableID AND Status = 0)	
+					BEGIN
+						BEGIN TRANSACTION
+						BEGIN TRY
+							UPDATE Orders
+							SET TableID = @tableID
+							WHERE OrderID = @orderID
+							UPDATE TablesCustomer
+							SET Status = 1
+							WHERE TablesID = @tableID
+							COMMIT TRANSACTION
+						END TRY
+						BEGIN CATCH
+							ROLLBACK TRANSACTION
+							RAISERROR('Chọn bàn Không thành công!', 16, 1)
+						END CATCH
+					END
+					ELSE
+					BEGIN
+						RAISERROR('Bàn Không có Sẵn!', 16, 1)
+					END
+			END
+			ELSE
+			BEGIN
+				BEGIN TRANSACTION
+				BEGIN TRY
+					UPDATE Orders
+					SET TableID = @tableID
+					WHERE OrderID = @orderID
+					UPDATE TablesCustomer
+					SET Status = 1
+					WHERE TablesID = @tableID
+					UPDATE TablesCustomer
+					SET Status = 0
+					WHERE TablesID = @currentTableID					
+					COMMIT TRANSACTION
+				END TRY
+				BEGIN CATCH
+					ROLLBACK TRANSACTION
+					RAISERROR('Chọn bàn Không thành công!', 16, 1)
+				END CATCH
+			END
 	END
 	ELSE
 		BEGIN
@@ -1221,5 +1245,6 @@ END
 /*
 Select * from TablesCustomer;
 Select * from Orders
-exec proc_SelectTableOrder 'ORD030','TAB026'
+exec proc_SelectTableOrder 'ORD001','TAB016'
 */
+exec proc_ShowInvoiceDetailsView 'IN08309'
