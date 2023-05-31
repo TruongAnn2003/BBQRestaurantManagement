@@ -136,7 +136,6 @@
     <Compile Include="Database\AccountDao.cs" />
     <Compile Include="Database\Base\DBConnection.cs" />
     <Compile Include="Database\CustomerDao.cs" />
-    <Compile Include="Database\InvoiceOrderDetailsDao.cs" />
     <Compile Include="Database\InvoicesDao.cs" />
     <Compile Include="Database\OrdersDao.cs" />
     <Compile Include="Database\ProductsDao.cs" />
@@ -146,7 +145,6 @@
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Invoice.cs" />
-    <Compile Include="Models\InvoiceOrderDetail.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetails.cs" />
     <Compile Include="Models\Product.cs" />
@@ -171,6 +169,7 @@
     <Compile Include="ViewModels\UserControls\MonthlyRevenueViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ReservationViewModel.cs" />
     <Compile Include="ViewModels\UserControls\StatisticsViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\TableOrderViewModel.cs" />
     <Compile Include="ViewModels\UserControls\TopSellingProductsViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserInfomationViewModel.cs" />
     <Compile Include="ViewModels\UserControls\YearlyRevenueViewModel.cs" />
@@ -211,8 +210,8 @@
     <Compile Include="Views\UserControls\StatisticsUC.xaml.cs">
       <DependentUpon>StatisticsUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\TableEmptyUC.xaml.cs">
-      <DependentUpon>TableEmptyUC.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\TableOrderUC.xaml.cs">
+      <DependentUpon>TableOrderUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\TopSellingProductsUC.xaml.cs">
       <DependentUpon>TopSellingProductsUC.xaml</DependentUpon>
@@ -278,7 +277,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\TableEmptyUC.xaml">
+    <Page Include="Views\UserControls\TableOrderUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

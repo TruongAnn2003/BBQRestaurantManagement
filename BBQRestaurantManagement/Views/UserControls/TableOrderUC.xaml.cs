@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BBQRestaurantManagement.ViewModels.UserControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,14 @@ using System.Windows.Shapes;
 namespace BBQRestaurantManagement.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for TableEmptyUC.xaml
+    /// Interaction logic for TableOrderUC.xaml
     /// </summary>
-    public partial class TableEmptyUC : UserControl
+    public partial class TableOrderUC : UserControl
     {
-        public TableEmptyUC()
+        public TableOrderUC()
         {
             InitializeComponent();
+            DataContext = new TableOrderViewModel();
         }
     }
 }

@@ -14,8 +14,8 @@ namespace BBQRestaurantManagement.Models
     {
         private string tablesID;
         private int maxSeats;
-        private string roomType;
-        private bool status;
+        private int status;
+        private string statusTable;
 
         public string TablesID
         {
@@ -29,25 +29,31 @@ namespace BBQRestaurantManagement.Models
             set { maxSeats = value; }
         }
 
-        public string RoomType
-        {
-            get { return roomType; }
-            set { roomType = value; }
-        }
-
-        public bool Status
+        public int Status
         {
             get { return status; }
             set { status = value; }
         }
 
+        public string StatusTable
+        {
+            get
+            {
+                if (Status == 0)
+                    return "Empty";             
+                else
+                    return "Occupied";
+            }
+            set => statusTable = value;
+        }
+
+
         public TablesCustomer() { }
 
-        public TablesCustomer(string id, int max, string roomType, bool status)
+        public TablesCustomer(string id, int max, int status)
         {
             this.tablesID = id;
-            this.maxSeats = max;
-            this.roomType = roomType;
+            this.maxSeats = max;          
             this.status = status;
         }
 
@@ -56,9 +62,8 @@ namespace BBQRestaurantManagement.Models
             try
             {
                 this.tablesID = (string)reader[BaseDao.TABLES_CUSTOMER_ID];
-                this.maxSeats = (int)reader[BaseDao.TABLES_CUSTOMER_MAX_SEATS];
-                this.roomType = (string)reader[BaseDao.TABLES_CUSTOMER_ROOM_TYPE];
-                this.status = (bool)reader[BaseDao.TABLES_CUSTOMER_STATUS];
+                this.maxSeats = Convert.ToInt32(reader[BaseDao.TABLES_CUSTOMER_MAX_SEATS]);
+                this.status = Convert.ToInt32( reader[BaseDao.TABLES_CUSTOMER_STATUS]);
             }
             catch(Exception e)
             {

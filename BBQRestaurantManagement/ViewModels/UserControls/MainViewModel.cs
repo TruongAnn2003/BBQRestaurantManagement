@@ -19,7 +19,6 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
     {
         private MenuUC MenuView = new MenuUC();
         private InvoiceUC InvoiceView = new InvoiceUC();
-        private TableEmptyUC TableEmptyView = new TableEmptyUC();
         private CheckInOutUC CheckInOutView = new CheckInOutUC();
         private UserInfomationUC UserView = new UserInfomationUC();
 
@@ -99,6 +98,11 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
             StatusStatisticsView = true;
         }
 
+        public void ReceiveOrderIns(Order order)
+        {
+            OrderIns = order;
+        }
+
         private void ExecuteShowUserView(object obj)
         {
             UserView.DataContext = new UserInfomationViewModel();
@@ -172,7 +176,10 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
 
         private void ExecuteShowTableEmptyView(object obj)
         {
-            CurrentChildView = TableEmptyView;
+            CurrentChildView = new TableOrderUC();
+            ((TableOrderViewModel)CurrentChildView.DataContext).OrderIns = OrderIns;
+            ((TableOrderViewModel)(CurrentChildView.DataContext)).LoadOrderItemView = new Action<string>(LoadOrderItem);
+            ((TableOrderViewModel)(CurrentChildView.DataContext)).ReceiveOrderIns = new Action<Order>(ReceiveOrderIns);
             StatusTableEmptyView = true;
         }
 
