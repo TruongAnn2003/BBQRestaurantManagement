@@ -50,7 +50,7 @@ WHERE	i.InvoiceID = o.Invoice
 		AND s.InvoiceDetailsID = i.InvoiceDetails
 		AND s.StatusInvoice = si.StatusInvoiceID
 --
---SELECT * FROM InvoiceOrderView
+SELECT * FROM InvoiceOrderView
 
 go
 CREATE OR ALTER VIEW CustomerBookingView
