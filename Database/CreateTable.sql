@@ -5,10 +5,9 @@ USE BBQRestaurantManagement
 
 CREATE TABLE Customers
 (
-	CustomerID nvarchar(10) CONSTRAINT IDkey PRIMARY KEY,
+	CustomerID nvarchar(10),
 	NameCustomer nvarchar(100),
-	NumberPhone nvarchar(20) NOT NULL,
-	CONSTRAINT RightID CHECK(CustomerID LIKE 'CUS%')
+	NumberPhone nvarchar(20) NOT NULL
 );
 
 CREATE TABLE TablesCustomer
@@ -67,7 +66,7 @@ CREATE TABLE Booking
 	CustomerBooking nvarchar(10),
 	TableBooking nvarchar(10), 
 	--BookingInvoice nvarchar(10),
-	CONSTRAINT FK_CustomerBooking FOREIGN KEY (CustomerBooking) REFERENCES Customers(CustomerID),
+	--CONSTRAINT FK_CustomerBooking FOREIGN KEY (CustomerBooking) REFERENCES Customers(CustomerID),
 	CONSTRAINT FK_TableBooking FOREIGN KEY (TableBooking) REFERENCES TablesCustomer(TablesID),
 	--CONSTRAINT FK_BookingInvoice FOREIGN KEY (BookingInvoice) REFERENCES Invoice(InvoiceID),
 	CONSTRAINT FK_BookingStatus FOREIGN KEY (BookingStatus) REFERENCES BookingStatus(IDStatus),

@@ -212,7 +212,11 @@ INSERT INTO StatusInvoice_Details(InvoiceDetailsID, CheckIn_Time, CheckOut_Time,
 ('DEID123', '14:00:12', '15:45:23', 'STATUS002'),
 ('DEID124', '18:33:00', '19:12:23', 'STATUS002'),
 ('DEID125', '17:29:01', '18:45:02', 'STATUS002'),
+<<<<<<< HEAD
 ('DEID126', '18:33:00', '20:00:01', 'STATUS002')
+=======
+('DEID126', '18:33:00', '20:00:01', 'STATUS002');
+>>>>>>> f03b8f9 (#26 trigger Trigger_Insert_Customer)
 
 
 
