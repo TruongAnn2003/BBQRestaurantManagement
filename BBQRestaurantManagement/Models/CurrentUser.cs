@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BBQRestaurantManagement.Database.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,9 @@ namespace BBQRestaurantManagement.Models
 
         private Staff staff;
         public Staff Staff { get => staff; set => staff = value; }
+
+        private Account accountLogin;
+        public Account AccountLogin { get => accountLogin; set => accountLogin = value; }
 
         public static bool StatusLogin { get; set; } = false;
 
@@ -30,6 +34,7 @@ namespace BBQRestaurantManagement.Models
         private CurrentUser()
         {
             staff = new Staff();
+            accountLogin = new Account(BaseDao.UserName, BaseDao.Passwords);
         }
 
         private void Logout()

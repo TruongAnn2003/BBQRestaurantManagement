@@ -25,16 +25,15 @@ INSERT INTO Staff(StaffID,NameStaff,NumberPhone,Position) VALUES
 ('WAIT008',N'Nguyễn Văn Hoàng','0364562321','POS003'),
 ('WAIT009',N'Lê Xuân Huỳnh','0364562321','POS003')
 -------------------------------------------------------------------------------------------------------------------------------------------------------
-INSERT INTO Account(AccountID,Passwords) VALUES
-('ADMIN001','@123456'),
-('MAN002','@123456'),
-('MAN003','@123456'),
-('MAN004','@123456'),
-('CAS005','@123456'),
-('CAS006','@123456'),
-('CAS007','@123456'),
-('CAS008','@123456'),
-('CAS009','@123456')
+INSERT INTO Account(AccountID,Passwords) VALUES ('ADMIN001','@123456')
+INSERT INTO Account(AccountID,Passwords) VALUES ('MAN002','@123456')
+INSERT INTO Account(AccountID,Passwords) VALUES ('MAN003','@123456')
+INSERT INTO Account(AccountID,Passwords) VALUES ('MAN004','@123456')
+INSERT INTO Account(AccountID,Passwords) VALUES ('CAS005','@123456')
+INSERT INTO Account(AccountID,Passwords) VALUES ('CAS006','@123456')
+INSERT INTO Account(AccountID,Passwords) VALUES ('CAS007','@123456')
+INSERT INTO Account(AccountID,Passwords) VALUES ('CAS008','@123456')
+INSERT INTO Account(AccountID,Passwords) VALUES ('CAS009','@123456')
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Customers (CustomerID, NameCustomer, NumberPhone)VALUES
 ('CUS001', 'John Smith', '123-456-7890'),

@@ -115,7 +115,9 @@ namespace BBQRestaurantManagement.Database.Base
         public const string PRODUCT_TYPE_ID = "IDType";
         public const string PRODUCT_TYPE_PRODUCT_TYPE = "ProductType";
 
+        public const string UserName = "PubCus";
+        public const string Passwords = "@123456";
         protected DBConnection dbConnection = new DBConnection();
-       // SqlTransaction transaction = dbConnection..BeginTransaction();
+       
     }
 }

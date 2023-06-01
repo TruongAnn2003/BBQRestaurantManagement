@@ -136,6 +136,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                 dialog.Show();
             }      
         }
+
         private void CheckCloseInvoice()
         {          
             if (StatusInvoiceView == true)
@@ -286,8 +287,11 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                    "Create new order?",
                    () =>
                    {
-                       OrderIns = Order.CreateOrderIns();
-                       ordersDao.AddNonCustomerAndInvoice(OrderIns);
+                       var item = Order.CreateOrderIns();
+                       ordersDao.AddNonCustomerAndInvoice(item);
+                       if (ordersDao.SearchByID(item.ID) == null)
+                           return;
+                       OrderIns = item;
                        ((MenuViewModel)MenuView.DataContext).OrderIns = OrderIns;
                    }, null);
             dialog.Show();

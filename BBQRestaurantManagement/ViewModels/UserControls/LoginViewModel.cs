@@ -11,6 +11,7 @@ using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.ViewModels.Base;
 using BBQRestaurantManagement.Database;
 using System.Windows;
+using BBQRestaurantManagement.Database.Base;
 
 namespace BBQRestaurantManagement.ViewModels.UserControls
 {
@@ -37,12 +38,14 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
             LoginCommand = new RelayCommand<object>(ExecuteLoginCommand);
         }
 
-        private void ExecuteLoginCommand(object obj)
+        public void ExecuteLoginCommand(object obj)
         {
             if (accountDao.CheckLogin(ID,Password)==1)
             {
+                
                 CurrentUser.StatusLogin = true;
                 CurrentUser.Ins.Staff = accountDao.SearchByAccountID(ID);
+                CurrentUser.Ins.AccountLogin = new Account(ID,Password);
                 Log.Instance.Information(nameof(LoginViewModel), "CurrentUser:" + CurrentUser.Ins.Staff.Name + "ID= "+ CurrentUser.Ins.Staff.ID);
                 LoginOrderView(null);
                 return;
