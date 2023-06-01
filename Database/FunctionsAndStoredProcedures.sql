@@ -1046,12 +1046,12 @@ BEGIN
 	if @Month is null
 		set @Month = Month(GETDATE())
 	INSERT INTO @ListStatistics(Title,Value)
-	SELECT  CreationTime, SUM(Price) FROM Invoice WHERE MONTH(CreationTime) = @Month and YEAR(CreationTime) = YEAR(GETDATE()) GROUP BY CreationTime
+	SELECT  DATEPART(day, CreationTime) , SUM(Price) FROM Invoice WHERE MONTH(CreationTime) = @Month and YEAR(CreationTime) = YEAR(GETDATE()) GROUP BY DATEPART(day, CreationTime)
 	RETURN
 END 
 /*
 Select * from Invoice
-Select * from func_ListStatisticsMonth(null)
+Select * from func_ListStatisticsMonth(5)
 */
 
 GO
