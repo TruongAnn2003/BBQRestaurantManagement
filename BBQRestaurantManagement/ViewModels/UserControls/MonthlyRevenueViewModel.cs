@@ -69,12 +69,6 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                 {
                     Values = InitialData.Select(p=> new ObservableValue(Convert.ToInt32( p.ValueIns))).ToList(),
                     Stroke = null,
-                    DataLabelsPaint = new SolidColorPaint(new SKColor(245, 245, 245))
-                    {
-                        Color = new SKColor(255, 0, 0)
-                    },
-                    DataLabelsPosition = DataLabelsPosition.Top,
-                    DataLabelsFormatter = point => $"{point.PrimaryValue.ToString("##,#")}$"
                 },
                 new LineSeries<ObservableValue>()
                {
@@ -88,7 +82,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
                         new Axis
                         {
                             Name = "Ngày",
-                            Labels =InitialData.Select(p=> (Convert.ToDateTime( p.Title)).Date.ToString("dd/MM")).ToList(),
+                            Labels =InitialData.Select(p=> p.Title).ToList(),
                             LabelsRotation = 15,
                         }
                    };

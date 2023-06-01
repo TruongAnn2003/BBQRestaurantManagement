@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Windows;
+using BBQRestaurantManagement.Models;
 using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.Utilities;
 
@@ -13,10 +15,8 @@ namespace BBQRestaurantManagement.Database.Base
         private SqlConnection conn;
        
         public DBConnection()
-        {
-
-            string strConnection = $"Data Source=LAPTOP-BOP0FMBM;Initial Catalog=BBQRestaurantManagement;Persist Security Info=True;User ID=sa;Password=123456";
-
+        {    
+            string strConnection = $"Data Source=LAPTOP-BOP0FMBM;Initial Catalog=BBQRestaurantManagement;Persist Security Info=True;User ID={CurrentUser.Ins.AccountLogin.ID};Password={CurrentUser.Ins.AccountLogin.Password}";
             conn = new SqlConnection(strConnection);
         }
         

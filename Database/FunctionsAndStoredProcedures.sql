@@ -472,7 +472,7 @@ begin
 	else
 	begin
 		begin try
-			insert into dbo.Product (ProductID, NameProduct, Price, Description, ProductState, Product_Type)
+			insert into Product (ProductID, NameProduct, Price, Description, ProductState, Product_Type)
 			values (@id, @name, @price, @description, @state, @typeID)
 		end try
 		begin catch
@@ -557,7 +557,7 @@ BEGIN
 	ELSE
 	BEGIN
 		BEGIN TRY
-			UPDATE dbo.Product
+			UPDATE Product
 			SET NameProduct = @name,
 				Price = @price,
 				Description = @description,
@@ -657,7 +657,7 @@ begin
 	else
 	begin
 		begin try
-			delete from dbo.Product
+			delete from Product
 			where ProductID = @id
 		end try
 		begin catch
@@ -1026,6 +1026,7 @@ exec PayTheInvoice 'IN036'
 -------CREATE BOOKING PROCEDURE------------
 
 --Top 10 Best Selling Foods
+go
 CREATE OR ALTER FUNCTION func_ListTop10Food() 
 RETURNS @ListTop10Food TABLE(Title nvarchar(100),Value bigint)
 AS

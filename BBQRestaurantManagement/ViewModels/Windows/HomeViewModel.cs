@@ -1,4 +1,5 @@
-﻿using BBQRestaurantManagement.Models;
+﻿using BBQRestaurantManagement.Database.Base;
+using BBQRestaurantManagement.Models;
 using BBQRestaurantManagement.Services;
 using BBQRestaurantManagement.ViewModels.Base;
 using BBQRestaurantManagement.ViewModels.UserControls;
@@ -38,6 +39,7 @@ namespace BBQRestaurantManagement.ViewModels.Windows
 
         public HomeViewModel()
         {
+ 
             SetCommand();
             ExecuteShowHomeView(null);
         }
@@ -62,6 +64,7 @@ namespace BBQRestaurantManagement.ViewModels.Windows
                      StatusReservationView = false;
                      StatusLoginView = false;
                      CurrentUser.Ins.Staff = null;
+                     CurrentUser.Ins.AccountLogin = new Account(BaseDao.UserName, BaseDao.Passwords);
                      CurrentUser.StatusLogin = false;
                  }, null);
                     dialog.Show();
