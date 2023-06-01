@@ -1224,8 +1224,7 @@ begin
 		SET @customerID = dbo.GenerateCustomerID();
 		insert into Customers (CustomerID, NameCustomer, NumberPhone)
 		values (@customerID, @nameCustomer, @phone)
-	end
-		
+	end		
 	begin try
 		DECLARE @bookingID nvarchar(10)
 		SET @bookingID = dbo.GenerateBookingID();
@@ -1234,8 +1233,8 @@ begin
 		commit tran
 	end try
 	begin catch
-		rollback tran
 		raiserror('Booking failed', 16, 1)
+		rollback tran
 	end catch
 end
 /*
@@ -1243,7 +1242,6 @@ select * from Customers
 select * from Booking
 
 exec proc_CreateBooking '2023-10-20', 3, 'None note', 3,  N'Minh Tien', '322312312','TAB015'
-
 */
 
 go

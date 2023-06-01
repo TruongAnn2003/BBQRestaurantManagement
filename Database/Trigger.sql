@@ -153,7 +153,9 @@ INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
 ('IN11111', GETDATE(), 1220000, NULL)
 */
 
---Insert Staff
+
+
+Insert Staff
 GO
 CREATE OR ALTER TRIGGER tg_InsertStaff
 ON	  Staff 
@@ -174,50 +176,50 @@ BEGIN
 
 END
 
-GO
-CREATE OR ALTER TRIGGER tg_InsertCustomer
-ON	  Customers 
-FOR	  INSERT
-AS
-BEGIN 
-	DECLARE  @IDCus nvarchar(10), @IDCused nvarchar(10)
+--GO
+--CREATE OR ALTER TRIGGER tg_InsertCustomer
+--ON	  Customers 
+--FOR	  INSERT
+--AS
+--BEGIN 
+--	DECLARE  @IDCus nvarchar(10), @IDCused nvarchar(10)
 
-	SELECT @IDCus = i.CustomerID, @IDCused = i.CustomerID
-	FROM INSERTED i
+--	SELECT @IDCus = i.CustomerID, @IDCused = i.CustomerID
+--	FROM INSERTED i
 
-	IF ((SELECT count(*) FROM  Customers WHERE CustomerID =@IDCus AND CustomerID IS NOT NULL) >1)
-	BEGIN
-		ROLLBACK TRAN
-		PRINT 'CustomerID already exist'
-		RETURN
-	END 
+--	IF ((SELECT count(*) FROM  Customers WHERE CustomerID =@IDCus AND CustomerID IS NOT NULL) >1)
+--	BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'CustomerID already exist'
+--		RETURN
+--	END 
 
-	SET @IDCus = CONCAT('CUS',CAST(RAND() * 10000 AS INT));
-	WHILE @IDCus IN (SELECT CustomerID FROM Customers)
-	BEGIN
-		SET @IDCus = CONCAT('CUS',CAST(RAND() * 10000 AS INT));
-	END
+--	SET @IDCus = CONCAT('CUS',CAST(RAND() * 10000 AS INT));
+--	WHILE @IDCus IN (SELECT CustomerID FROM Customers)
+--	BEGIN
+--		SET @IDCus = CONCAT('CUS',CAST(RAND() * 10000 AS INT));
+--	END
 
-	UPDATE Customers SET CustomerID = @IDCus WHERE CustomerID = @IDCused or CustomerID IS NULL
-END
-/*
-INSERT INTO Customers(CustomerID, NameCustomer, NumberPhone) VALUES
-(null, 'Jeni', '09281626222')
-*/
-GO
-CREATE OR ALTER TRIGGER Check_FK_Booking
-ON Booking
-FOR INSERT, UPDATE
-AS
-BEGIN
-    DECLARE @CusID nvarchar(10)
-	SELECT @CusID = CustomerBooking
-	FROM INSERTED
+--	UPDATE Customers SET CustomerID = @IDCus WHERE CustomerID = @IDCused or CustomerID IS NULL
+--END
+--/*
+--INSERT INTO Customers(CustomerID, NameCustomer, NumberPhone) VALUES
+--(null, 'Jeni', '09281626222')
+--*/
+--GO
+--CREATE OR ALTER TRIGGER Check_FK_Booking
+--ON Booking
+--FOR INSERT, UPDATE
+--AS
+--BEGIN
+--    DECLARE @CusID nvarchar(10)
+--	SELECT @CusID = CustomerBooking
+--	FROM INSERTED
     
-    IF (@CusID NOT IN (SELECT CustomerID FROM Customers))
-    BEGIN
-		ROLLBACK TRAN
-		PRINT 'Invalid InvoiceDetails'
-		RETURN;
-    END;
-END
+--    IF (@CusID NOT IN (SELECT CustomerID FROM Customers))
+--    BEGIN
+--		ROLLBACK TRAN
+--		PRINT 'Invalid CustomerID'
+--		RETURN;
+--    END;
+--END
