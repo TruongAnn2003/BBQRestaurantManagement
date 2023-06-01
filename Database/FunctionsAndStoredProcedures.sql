@@ -1246,14 +1246,27 @@ exec proc_CreateBooking '2023-10-20', 3, 'None note', 3,  N'Minh Tien', '3223123
 */
 
 go
-CREATE OR ALTER PROC proc_CheckCustomerBooking(@numberPhone nvarchar(20))
+CREATE OR ALTER PROC proc_SearchCustomerBooking(@numberPhone nvarchar(20))
 AS
 BEGIN
-	SELECT * FROM CustomerBookingView
-	WHERE NumberPhone = @numberPhone
+	IF EXISTS
+	(
+		SELECT 1
+		FROM CustomerBookingView
+		WHERE NumberPhone = @numberPhone
+	)
+	BEGIN
+		SELECT * FROM CustomerBookingView
+		WHERE NumberPhone = @numberPhone
+	END
+	ELSE 
+	BEGIN
+		RAISERROR ('Không tìm thấy Booking phù hợp! Vui lòng kiểm tra lại số điện thoại', 16, 1)
+	END
 END
 
---exec proc_CheckCustomerBooking '343-339-3821'
+--exec proc_SearchCustomerBooking '343-339-3821'
+--exec proc_SearchCustomerBooking '1255'
 go
 create or alter function GenerateCustomerID()
 returns nvarchar(10)
@@ -1332,3 +1345,53 @@ end
 --select * from dbo.Product
 --insert into dbo.Product (ProductID, NameProduct, Price, Description, ProductState, Product_Type)
 --values (dbo.GenerateProductID(), N'Mì xào giòn', 60000, N'Tôm và mì chiên giòn', 1, 'PROTYPE007')
+
+go
+CREATE OR ALTER PROC proc_BookingApproval(@bookingID nvarchar(10))
+AS
+BEGIN
+	If(SELECT BookingStatus FROM Booking WHERE BookingID = @bookingID ) LIKE 'BSTA002'
+	BEGIN
+		RAISERROR('Booking đã được chấp nhận trước đó', 16, 1)
+	END	
+	ELSE
+		BEGIN
+		UPDATE	Booking
+		SET		BookingStatus = 'BSTA002'
+		WHERE	BookingID = @bookingID
+	END
+END
+--exec proc_BookingApproval 'BI024'
+
+go
+CREATE OR ALTER PROC proc_BookingCancel(@bookingID nvarchar(10))
+AS
+BEGIN
+	If(SELECT BookingStatus FROM Booking WHERE BookingID = @bookingID ) LIKE 'BSTA003'
+	BEGIN
+		RAISERROR('Booking đã được hủy trước đó', 16, 1)
+	END	
+	ELSE
+		BEGIN
+		UPDATE	Booking
+		SET		BookingStatus = 'BSTA003'
+		WHERE	BookingID = @bookingID
+	END
+END
+
+go
+CREATE OR ALTER PROC proc_BookingComplete(@bookingID nvarchar(10))
+AS
+BEGIN
+	If(SELECT BookingStatus FROM Booking WHERE BookingID = @bookingID ) LIKE 'BSTA004'
+	BEGIN
+		RAISERROR('Booking đã được hoàn thành trước đó', 16, 1)
+	END	
+	ELSE
+		BEGIN
+		UPDATE	Booking
+		SET		BookingStatus = 'BSTA004'
+		WHERE	BookingID = @bookingID
+	END
+END
+--exec proc_BookingCancel 'BI024'

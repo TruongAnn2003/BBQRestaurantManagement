@@ -46,6 +46,10 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         private bool statusProductsView = false;
         public bool StatusProductsView { get => statusProductsView; set { statusProductsView = value; OnPropertyChanged(); } }
 
+        private bool statusCustomerBookingView = false;
+        public bool StatusCustomerBookingView { get => statusCustomerBookingView; set { statusCustomerBookingView = value; OnPropertyChanged(); } }
+
+
         private List<OrderDetails> listOrderItem;
         public List<OrderDetails> ListOrderItem { get => listOrderItem; set { listOrderItem = value; OnPropertyChanged(); } }
 
@@ -62,6 +66,7 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
         public ICommand ShowUserView { get; private set; }
         public ICommand ShowStatisticsView { get; private set; }
         public ICommand ShowProductsView { get; private set; }
+        public ICommand ShowCustomerBookingView { get; private set; }
 
         private OrdersDao ordersDao = new OrdersDao();
         private InvoicesDao invoicesDao = new InvoicesDao();
@@ -89,6 +94,19 @@ namespace BBQRestaurantManagement.ViewModels.UserControls
             MinusCommand = new RelayCommand<OrderDetails>(ExecuteMinusCommand);
             CancelOrderCommand = new RelayCommand<object>(ExecuteCancelOrderCommand);
             ShowProductsView = new RelayCommand<object>(ExecuteShowProductsView);
+            ShowCustomerBookingView = new RelayCommand<object>(ExecuteShowCustomerBookingView);
+        }
+
+        private void ExecuteShowCustomerBookingView(object obj)
+        {
+            CheckCloseOrder();
+            CheckCloseInvoice();
+            if (orderIns == null && StatusInvoiceView == false)
+            {
+                VisibilityOrderDetailsView = Visibility.Collapsed;
+                CurrentChildView = new BookingCustomerUC();
+                StatusCustomerBookingView = true;
+            }
         }
 
         private void ExecuteShowProductsView(object obj)

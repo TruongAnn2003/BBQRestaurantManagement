@@ -55,7 +55,7 @@ SELECT * FROM InvoiceOrderView
 go
 CREATE OR ALTER VIEW CustomerBookingView
 AS
-SELECT	c.NameCustomer as UserName, c.NumberPhone,b.BookingCreate as CreationTime, b.BookingDate,b.Duration,b.NumberCustomer as NumberOfPeople, b.TableBooking as ReservedTable,bs.NameStatus as Status
+SELECT	b.BookingID,c.NameCustomer as UserName, c.NumberPhone,b.BookingCreate as CreationTime, b.BookingDate,b.Duration,b.NumberCustomer as NumberOfPeople, b.TableBooking as ReservedTable,bs.NameStatus as Status
 FROM	Booking b, Customers c, BookingStatus bs
 							 
 WHERE	b.CustomerBooking = c.CustomerID AND b.BookingStatus = bs.IDStatus

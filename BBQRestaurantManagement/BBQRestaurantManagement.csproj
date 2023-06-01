@@ -160,6 +160,7 @@
     <Compile Include="Utilities\Log.cs" />
     <Compile Include="Utilities\Utils.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\BookingCustomerViewModel.cs" />
     <Compile Include="ViewModels\UserControls\BookingTableViewModel.cs" />
     <Compile Include="ViewModels\UserControls\CurrentDayRevenueViewModel.cs" />
     <Compile Include="ViewModels\UserControls\InvoiceViewModel.cs" />
@@ -177,6 +178,9 @@
     <Compile Include="ViewModels\Windows\HomeViewModel.cs" />
     <Compile Include="Views\Dialogs\AlertDialog.xaml.cs">
       <DependentUpon>AlertDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\BookingCustomerUC.xaml.cs">
+      <DependentUpon>BookingCustomerUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\BookingTableUC.xaml.cs">
       <DependentUpon>BookingTableUC.xaml</DependentUpon>
@@ -227,6 +231,10 @@
       <DependentUpon>HomeWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Dialogs\AlertDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\BookingCustomerUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
