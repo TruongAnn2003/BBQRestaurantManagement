@@ -212,11 +212,8 @@ INSERT INTO StatusInvoice_Details(InvoiceDetailsID, CheckIn_Time, CheckOut_Time,
 ('DEID123', '14:00:12', '15:45:23', 'STATUS002'),
 ('DEID124', '18:33:00', '19:12:23', 'STATUS002'),
 ('DEID125', '17:29:01', '18:45:02', 'STATUS002'),
-<<<<<<< HEAD
-('DEID126', '18:33:00', '20:00:01', 'STATUS002')
-=======
 ('DEID126', '18:33:00', '20:00:01', 'STATUS002');
->>>>>>> f03b8f9 (#26 trigger Trigger_Insert_Customer)
+
 
 
 
@@ -409,7 +406,8 @@ INSERT INTO TablesCustomer(TablesID,MaxSeats,Status) VALUES
 INSERT INTO BookingStatus (IDStatus,NameStatus) VALUES	
 ('BSTA001','Waiting'),
 ('BSTA002','Approved'),
-('BSTA003','Cancel');
+('BSTA003','Cancel'),
+('BSTA004','Completed');
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 INSERT INTO Booking (BookingID,BookingDate,BookingCreate,BookingStatus,Duration,Note,NumberCustomer,CustomerBooking,TableBooking) VALUES	
 ('BI001','2022/03/04 7:0:0','2022/01/01 7:0:0','BSTA002',3,'None note',1,'CUS001','TAB001'),
@@ -419,16 +417,16 @@ INSERT INTO Booking (BookingID,BookingDate,BookingCreate,BookingStatus,Duration,
 ('BI005','2023/01/04 8:0:0','2022/01/01 7:0:0','BSTA002',6,'None note',5,'CUS005','TAB005'),
 ('BI006','2022/02/04 7:0:0','2022/01/01 7:0:0','BSTA002',3,'None note',4,'CUS006','TAB006'),
 ('BI007','2022/03/03 9:0:0','2022/01/01 7:0:0','BSTA002',3,'None note',3,'CUS007','TAB007'),
-('BI008','2022/03/05 10:0:0','2022/01/01 7:0:0','BSTA002',2,'None note',3,'CUS008','TAB008'),
+('BI008','2022/03/05 10:0:0','2022/01/01 7:0:0','BSTA004',2,'None note',3,'CUS008','TAB008'),
 ('BI009','2022/03/07 7:0:0','2022/01/01 7:0:0','BSTA002',3,'None note',2,'CUS009','TAB009'),
 ('BI010','2023/03/08 12:0:0','2022/01/01 7:0:0','BSTA002',4,'None note',2,'CUS010','TAB010'),
 ('BI011','2023/03/09 7:0:0','2022/01/01 8:0:0','BSTA002',3,'None note',6,'CUS011','TAB011'),
 ('BI012','2022/05/04 16:0:0','2022/01/01 8:0:0','BSTA002',5,'None note',7,'CUS012','TAB012'),
-('BI013','2022/06/04 7:0:0','2022/01/01 8:0:0','BSTA002',3,'None note',5,'CUS013','TAB001'),
-('BI014','2022/08/04 8:30:0','2022/01/01 8:0:0','BSTA002',2,'None note',5,'CUS014','TAB002'),
-('BI015','2022/07/04 14:0:0','2022/01/01 8:0:0','BSTA002',3,'None note',3,'CUS015','TAB003'),
-('BI016','2022/03/06 21:0:0','2022/01/01 8:0:0','BSTA002',4,'None note',5,'CUS016','TAB004'),
-('BI017','2022/03/05 22:0:0','2022/01/01 8:0:0','BSTA002',4,'None note',5,'CUS017','TAB005'),
+('BI013','2022/06/04 7:0:0','2022/01/01 8:0:0','BSTA004',3,'None note',5,'CUS013','TAB001'),
+('BI014','2022/08/04 8:30:0','2022/01/01 8:0:0','BSTA004',2,'None note',5,'CUS014','TAB002'),
+('BI015','2022/07/04 14:0:0','2022/01/01 8:0:0','BSTA004',3,'None note',3,'CUS015','TAB003'),
+('BI016','2022/03/06 21:0:0','2022/01/01 8:0:0','BSTA004',4,'None note',5,'CUS016','TAB004'),
+('BI017','2022/03/05 22:0:0','2022/01/01 8:0:0','BSTA004',4,'None note',5,'CUS017','TAB005'),
 ('BI018','2022/06/04 6:0:0','2022/01/01 9:0:0','BSTA002',3,'None note',5,'CUS018','TAB006'),
 ('BI019','2022/04/04 18:0:0','2022/01/01 9:0:0','BSTA002',5,'None note',6,'CUS019','TAB007'),
 ('BI020','2022/03/04 17:0:0','2022/01/01 9:0:0','BSTA002',5,'None note',2,'CUS020','TAB008'),

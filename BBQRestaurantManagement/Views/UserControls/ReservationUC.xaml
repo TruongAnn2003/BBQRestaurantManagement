@@ -24,15 +24,32 @@
                Width="300"
               Grid.Column="0"
               Source="/Pictures/Staff.png"></Image>
-        <Border Grid.Column="1" Margin="20">
-            <Expander Name="expanderBookingTable"  Background="White" 
-                            Foreground="#00796b"
-                            FontWeight="Bold" 
-                            Header="Đặt bàn">
-                <Border Background="Gray" BorderThickness="0.3">
-                    <uc:BookingTableUC></uc:BookingTableUC>
-                </Border>
-            </Expander>
-        </Border>
+        <Grid Grid.Column="1">
+            <ScrollViewer>
+                <StackPanel>
+                    <Border  Margin="20">
+                        <Expander  Background="White" 
+                                Foreground="#00796b"
+                                FontWeight="Bold" 
+                                Header="Đặt bàn">
+                            <Border Background="Gray" BorderThickness="0.3">
+                                <uc:BookingTableUC></uc:BookingTableUC>
+                            </Border>
+                        </Expander>
+                    </Border>
+                    <Border  Margin="20">
+                        <Expander   Background="White" 
+                                Foreground="#00796b"
+                                FontWeight="Bold" 
+                                Header="Tra cứu đặt bàn">
+                            <Border Background="Gray" BorderThickness="0.3">
+                                <uc:BookingCustomerUC></uc:BookingCustomerUC>
+                            </Border>
+                        </Expander>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        
     </Grid>
 </UserControl>

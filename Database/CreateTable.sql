@@ -51,7 +51,7 @@ CREATE TABLE BookingStatus
 (
 	IDStatus  nvarchar(10) CONSTRAINT IDStatuskey PRIMARY KEY,
 	NameStatus nvarchar(50) NOT NULL,
-	CONSTRAINT NameStatus CHECK(NameStatus LIKE 'Waiting' or NameStatus LIKE 'Approved' or NameStatus LIKE 'Cancel')
+	CONSTRAINT NameStatus CHECK(NameStatus LIKE 'Waiting' or NameStatus LIKE 'Approved' or NameStatus LIKE 'Cancel' or NameStatus LIKE 'Completed')
 );
 
 CREATE TABLE Booking
