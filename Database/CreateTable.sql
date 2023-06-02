@@ -5,7 +5,7 @@ USE BBQRestaurantManagement
 
 CREATE TABLE Customers
 (
-	CustomerID nvarchar(10),
+	CustomerID nvarchar(10) CONSTRAINT PK_CustomerID PRIMARY KEY(CustomerID),
 	NameCustomer nvarchar(100),
 	NumberPhone nvarchar(20) NOT NULL
 );
@@ -43,7 +43,6 @@ CREATE TABLE Invoice
 	Price BIGINT NOT NULL,
 	Discount int,
 	InvoiceDetails nvarchar(10),
-	--CONSTRAINT FK_InvoiceDetails FOREIGN KEY (InvoiceDetails) REFERENCES StatusInvoice_Details(InvoiceDetailsID),
 	CONSTRAINT RightPriceInvoice CHECK(Price >= 0)
 )
 
@@ -63,14 +62,11 @@ CREATE TABLE Booking
 	Duration int,
 	Note nvarchar(100),
 	NumberCustomer int,
-	CustomerBooking nvarchar(10),
+	CustomerBooking nvarchar(10) ,
 	TableBooking nvarchar(10), 
-	--BookingInvoice nvarchar(10),
-	--CONSTRAINT FK_CustomerBooking FOREIGN KEY (CustomerBooking) REFERENCES Customers(CustomerID),
+	CONSTRAINT FK_CustomerBooking FOREIGN KEY (CustomerBooking) REFERENCES Customers(CustomerID),
 	CONSTRAINT FK_TableBooking FOREIGN KEY (TableBooking) REFERENCES TablesCustomer(TablesID),
-	--CONSTRAINT FK_BookingInvoice FOREIGN KEY (BookingInvoice) REFERENCES Invoice(InvoiceID),
 	CONSTRAINT FK_BookingStatus FOREIGN KEY (BookingStatus) REFERENCES BookingStatus(IDStatus),
-	--Trạng thái đặt bàn sẽ bao gồm xác nhận đặt bàn thành công, đã nhận bàn và huỷ đặt bàn
 	CONSTRAINT RightNumberCustomer CHECK(NumberCustomer >= 1),
 	CONSTRAINT RightBookingCreate CHECK(BookingCreate <= BookingDate)
 );
@@ -92,7 +88,6 @@ CREATE TABLE Staff
 	CONSTRAINT FK_Position FOREIGN KEY (Position) REFERENCES Staff_Position(IDPosition)
 );
 
----Thêm vào ERD
 CREATE TABLE Account
 (
 	AccountID nvarchar(10) CONSTRAINT AccountIDkey PRIMARY KEY,
