@@ -14,7 +14,6 @@ namespace BBQRestaurantManagement.Database
         {
             string sqlStr = $"INSERT INTO {ORDER_TABLE} ({ORDER_ID}, {ORDER_DATETIME_ORDER},{ORDER_STATE},{ORDER_ORDER_STAFF})" +
                             $"VALUES ('{order.ID}','{Utils.ToSQLFormat(order.DatetimeOrder)}',{order.State},'{order.StaffID}')";
-            Log.Instance.Information(nameof(OrdersDao), sqlStr);
             dbConnection.ExecuteNonQuery(sqlStr);
         }
 

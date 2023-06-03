@@ -160,7 +160,10 @@ BEGIN
 				COMMIT TRANSACTION;
 			END
 			ELSE
-				ROLLBACK TRANSACTION;
+				BEGIN
+					DELETE FROM OrderDetails WHERE OrderID = @orderID AND ProductID = @productID 
+					COMMIT TRANSACTION;
+				END
 		END
 		ELSE
 		BEGIN 
@@ -179,7 +182,7 @@ BEGIN
 END
 -----------Check -----------------------
 /*
-	Exec proc_AddOrderProduct 'ORD019','PRO001',5
+	Exec proc_AddOrderProduct 'ORD019','PRO004',-4
 	SELECT * FROM OrderDetails
 	Exec proc_AddOrderProduct 'ORD019','PRO001',2
 	SELECT * FROM OrderDetails
@@ -358,18 +361,6 @@ BEGIN
 END
 --exec proc_UpdateOrders 'ORD061', '2023/02/12', 0, 'CUS001', 'STA001', 'IN001','TAB015'
 
---go
---DECLARE @ResultCount INT;
---SELECT @ResultCount = COUNT(*)
---FROM dbo.func_SearchOrders('ORD001');
---IF @ResultCount = 0
---BEGIN
---    SELECT 'Khong tim thay' AS Message;
---END
---ELSE
---BEGIN
---    Select * from dbo.func_SearchOrders('ORD001')
---END
 
 -----------
 --xóa order
@@ -834,10 +825,7 @@ BEGIN
 END
 
 /*
-	declare @result bigint
-	exec proc_TotalTheInvoice 'IN008',  @result out
-	Select @result;
-	Select * from Invoice
+	
 */
 
 -------------------------------------------------------------CREATE INVOICE--------------------------------------------------------------
@@ -877,7 +865,10 @@ END
 	Select * from Orders
 	Select * from Invoice
 	Select * from StatusInvoice_Details
-	exec proc_CreateNewInvoice 'ORD040','IN111'
+	Declare @invoiceID nvarchar(10)
+	SET @invoiceID = (SELECT dbo.GenerateInvoiceID())
+	SELECT @invoiceID
+	exec proc_CreateNewInvoice 'ORD027', @invoiceID
 
 */
 ------------------------------------------------------ SHOW INVOICE ORDER VIEW BY INVOICE ID---------------------------------------------
@@ -1071,17 +1062,7 @@ Select * from Invoice
 Select * from func_ListStatisticsYear(2023)
 */
 
---GO
---CREATE OR ALTER FUNCTION func_ListStatisticsDay (@Day int = null) 
---RETURNS @ListStatistics TABLE(Title nvarchar(20),Value bigint)
---AS
---BEGIN
---	IF @Day IS NULL
---		set @Day = DAY(GETDATE())
---	INSERT INTO @ListStatistics(Title,Value)
---	SELECT CreationTime , SUM(Price) FROM Invoice WHERE DAY(CreationTime) = @Day and YEAR(CreationTime) = YEAR(GETDATE()) and MONTH(CreationTime) = MONTH(GETDATE()) GROUP BY CreationTime
---	RETURN
---END
+
 GO
 CREATE OR ALTER FUNCTION func_GetRevenueDay (@date datetime = null) 
 RETURNS  bigint
@@ -1094,8 +1075,7 @@ BEGIN
 	RETURN @result
 END
 /*
-Select * from Invoice
-Select dbo.func_GetRevenueDay(null)
+
 */
 
 
