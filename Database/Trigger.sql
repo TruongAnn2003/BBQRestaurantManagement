@@ -34,9 +34,12 @@ BEGIN
     WHERE OrderDetailsID IS NULL OR OrderDetailsID NOT LIKE 'ODETAIL%';
 END
 
---INSERT INTO OrderDetails (ProductID, Quantity, OrderID) VALUES
---('PRO003', '4', 'ORD001')
-
+/*
+INSERT INTO OrderDetails (ProductID, Quantity, OrderID) VALUES
+('PRO003', '4', 'ORD003')
+select * from OrderDetails where OrderID = 'ORD003'
+select * from Orders where OrderID = 'ORD003'
+*/
 ----Check FK Order can null
 
 GO
@@ -155,7 +158,7 @@ INSERT INTO Invoice(InvoiceID, CreationTime, Price, InvoiceDetails) VALUES
 
 
 
-Insert Staff
+--Insert Staff
 GO
 CREATE OR ALTER TRIGGER tg_InsertStaff
 ON	  Staff 
